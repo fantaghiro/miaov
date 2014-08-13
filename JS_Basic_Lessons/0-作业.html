@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS基础 热身课练习</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			position: relative;
+		}
+		p {
+			padding: 20px;
+			margin-right: 20px;
+		}
+		#box {
+			width: 100px;
+			height: 100px;
+			border: 5px solid black;
+			margin-left: 20px;
+		}
+		#mask {
+			position: fixed;
+			height:100%;
+			width: 100%;
+			background: rgba(0, 0, 0, 0.4);
+			display: none;
+		}
+		#setting {
+			width: 350px;
+			height: 300px;
+			border: 10px solid gray;
+			background: white;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		.options {
+			padding: 20px;
+		}
+		.options span {
+			display: inline-block;
+			border: 1px solid black;
+			padding: 5px;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+		#bgRed {
+			background: red;
+		}
+		#bgYellow {
+			background: yellow;
+		}
+		#bgGreen {
+			background: green;
+		}
+		.last {
+			text-align: center;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oBox = document.getElementById('box'),
+				oBgRed = document.getElementById('bgRed'),
+				oBgYellow = document.getElementById('bgYellow'),
+				oBgGreen = document.getElementById('bgGreen'),
+				oWidth200 = document.getElementById('width200'),
+				oWidth300 = document.getElementById('width300'),
+				oWidth400 = document.getElementById('width400'),
+				oHeight200 = document.getElementById('height200'),
+				oHeight300 = document.getElementById('height300'),
+				oHeight400 = document.getElementById('height400'),
+				oReset = document.getElementById('reset'),
+				oOk = document.getElementById('ok'),
+				oMask = document.getElementById('mask'),
+				oSet = document.getElementById('set');
+
+			// 设置背景颜色的函数
+			function setBgColor(bgcolor) {
+				oBox.style.background = bgcolor;
+			} 
+			// 设置宽度的函数
+			function setWidth(x) {
+				oBox.style.width = x + 'px';
+			}
+			// 设置高度的函数
+			function setHeight(y) {
+				oBox.style.height = y + 'px';
+			}
+			// 重置的函数
+			function reset() {
+				setBgColor('transparent');
+				setWidth(100);
+				setHeight(100);
+			}
+
+
+			oSet.onclick = function(){
+				oMask.style.display = 'block';
+			}
+			oOk.onclick = function(){
+				oMask.style.display = 'none';
+			}
+			oBgRed.onclick = function(){
+				setBgColor('red');
+			}
+			oBgYellow.onclick = function(){
+				setBgColor('yellow');
+			}
+			oBgGreen.onclick = function(){
+				setBgColor('green');
+			}
+			oWidth200.onclick = function(){
+				setWidth(200);
+			}
+			oWidth300.onclick = function(){
+				setWidth(300);
+			}
+			oWidth400.onclick = function(){
+				setWidth(400);
+			}
+			oHeight200.onclick = function(){
+				setHeight(200);
+			}
+			oHeight300.onclick = function(){
+				setHeight(300);
+			}
+			oHeight400.onclick = function(){
+				setHeight(400);
+			}
+			oReset.onclick = reset;
+
+
+		}
+	</script>
+</head>
+<body>
+	<div id="mask">
+		<div id="setting">
+		<div class="options">
+			选择背景：
+			<span id="bgRed">红</span>
+			<span id="bgYellow">黄</span>
+			<span id="bgGreen">绿</span>
+		</div>
+		<div class="options">
+			选择宽度：
+			<span id="width200">200</span>
+			<span id="width300">300</span>
+			<span id="width400">400</span>
+		</div>
+		<div class="options">
+			选择高度：
+			<span id="height200">200</span>
+			<span id="height300">300</span>
+			<span id="height400">400</span>
+		</div>
+		<div class="options last">
+			<span id="reset">恢复</span>
+			<span id="ok">确定</span>
+		</div>
+	</div>
+	</div>
+	<p>请为下面的div设置样式：<input id="set" type="button" value="点击设置样式"></p>
+	<div id="box"></div>
+</body>
+</html>

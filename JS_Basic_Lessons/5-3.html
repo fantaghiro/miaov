@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>搜狐视频记录片列表展示</title>
+	<style>
+        html, body, div, h2, ul, li, p {
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            list-style: none;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        #ranking {
+            padding-left: 5px;
+            padding-right: 8px;
+            background-color: #DEE7E7;
+            width: 267px;
+            overflow: hidden;
+        }
+        h2 {
+            height: 38px;
+            line-height: 38px;
+            font-size: 18px;
+            color: #2C4C5D;
+            padding-left: 13px;
+            padding-right: 43px;
+            float: left;
+            border-bottom: 1px solid #B4CFDD;
+        }
+        #tabNav {
+            overflow: hidden;
+            margin-top: 13px;
+        }
+        #tabNav li {
+            float: left;
+            font-size: 12px;
+            line-height: 24px;
+            height: 24px;
+            border: 1px solid #b4cfdd;
+            border-right: 0px;
+            padding: 0 6px;
+            color: #497790;
+            cursor: pointer;
+        }
+        #tabNav li:last-child {
+            border-right: 1px solid #b4cfdd;
+        }
+        #tabContent {
+            clear: left;
+        }
+        #tabContent ul li {
+            line-height: 28px;
+            font-size: 12px;
+            position: relative;
+        }
+        #tabContent ul span {
+            position: absolute;
+            height: 14px;
+            line-height: 18px;
+            width: 18px;
+            text-align: center;
+            background-color: #1A68A2;
+            color: #fff;
+            font-size: 8px;
+            font-weight: bold;
+            left: 6px;
+            top: 6px;
+            z-index: 1;
+        }
+        #tabContent li a {
+            display: inline-block;
+            margin-left: 37px;
+        }
+        #tabContent li {
+            border-bottom: 1px dashed #fff;
+            cursor: pointer;
+        }
+        #tabContent ul li:last-child {
+            border-bottom: none;
+        }
+        #tabContent ul div {
+            height: 82px;
+            background: #fff;
+            overflow: hidden;
+            display: none;
+        }
+        #tabContent div img {
+            height: 70px;
+            border: 1px solid #000;
+            margin: 6px;
+            margin-left: 30px;
+            float: left;
+        }
+        #tabContent p {
+            float: left;
+            width: 150px;
+            line-height: 16px;
+            padding-top: 10px;
+        }
+        #tabContent div a {
+            position: absolute;
+            right: 10px;
+            bottom: 4px;
+            color: #fff;
+            background: #1A68A2;
+            padding: 0 5px;
+            font-size: 10px;
+            line-height: 20px;
+        }
+        #tabContent ul li:last-child {
+            text-align: right;
+        }
+        #daily, #monthly, #all {
+            display: none;
+        }
+        .show {
+            display: block !important;
+        }
+        .active {
+            color: #000;
+            font-weight: bold;
+            background: #fff;
+            border-bottom: 1px solid #fff !important;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oDaily = document.getElementById('daily'),
+                oMonthly = document.getElementById('monthly'),
+                oAll = document.getElementById('all'),
+                oTabNav = document.getElementById('tabNav'),
+                aNav = oTabNav.getElementsByTagName('li'),
+                oContent = document.getElementById('tabContent'),
+                aUl = oContent.getElementsByTagName('ul');
+                prevTab = aNav[0];
+
+             function fnTab(num){
+             	for(var i=0; i<aNav.length; i++) {
+             		aNav[i].className = '';
+             		aUl[i].className = '';
+             	}
+             	aNav[num].className = 'active';
+             	aUl[num].className = 'show';
+             }
+
+             for (var i=0; i<aNav.length; i++) {
+             	aNav[i].index = i;
+             	aNav[i].onclick = function(){
+             		num = this.index;
+             		fnTab(num);
+             	}
+             }
+            
+            for (var i=0; i<aUl.length; i++) {
+                hover(aUl[i]);
+            }
+            
+            function hover(ul) {
+                var aLi = ul.getElementsByTagName('li');
+                for(var i=0; i<aLi.length; i++){
+                    aLi[i].onmouseover = function(){
+                        this.getElementsByTagName('a')[0].style.display = 'none';
+                        this.getElementsByTagName('div')[0].style.display = 'block';
+                    }
+                    aLi[i].onmouseout = function(){
+                        this.getElementsByTagName('a')[0].style.display = 'block';
+                        this.getElementsByTagName('div')[0].style.display = 'none';
+                    }
+                }
+                    
+            }
+        }
+    </script>
+</head>
+<body>
+	<div id="ranking">
+		<h2>观看排行榜</h2>
+        <ul id="tabNav">
+            <li class="active">每日</li>
+            <li>每周</li>
+            <li>全部</li>
+        </ul>
+        <div id="tabContent">
+            <ul id="daily" class="show">
+                <li> 
+                    <span>1</span> 
+                    <a href="#" onclick = "javascript:">解密：关于地球与人类的一千零一问</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>2</span>
+                    <a href="#" onclick = "javascript:">经典传奇：探索全世界重大历史事件</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>3</span>
+                    <a href="#" onclick = "javascript:">眼界：展现普通人的曲折命运和动人...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>4</span>
+                    <a href="#" onclick = "javascript:">档案（BTV）：惊人事件和传奇背...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>5</span>
+                    <a href="#" onclick = "javascript:">世界十最：30个震惊世界的Top...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>6</span>
+                    <a href="#" onclick = "javascript:">身边的毛泽东：警卫员解密毛泽东秘...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>7</span>
+                    <a href="#" onclick = "javascript:">新电影传奇：每一步电影都有自己的...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>8</span>
+                    <a href="#" onclick = "javascript:">档案（上视纪实频道）：解密档案中...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>9</span>
+                    <a href="#" onclick = "javascript:">探寻传世国宝的千古传奇</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>10</span>
+                    <a href="#" onclick = "javascript:">纪实系列：讲述社会百态，透视事实...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">更多>></a>
+                </li>
+            </ul>
+            <ul id="monthly" >
+                <li>  
+                    <span>1</span>
+                    <a href="#" onclick = "javascript:">每月：关于地球与人类的一千零一问</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>2</span>
+                    <a href="#" onclick = "javascript:">每月传奇：探索全世界重大历史事件</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>3</span>
+                    <a href="#" onclick = "javascript:">每月：展现普通人的曲折命运和动人...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>4</span>
+                    <a href="#" onclick = "javascript:">每月（BTV）：惊人事件和传奇背...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>5</span>
+                    <a href="#" onclick = "javascript:">每月十最：30个震惊世界的Top...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>6</span>
+                    <a href="#" onclick = "javascript:">每月的毛泽东：警卫员解密毛泽东秘...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>7</span>
+                    <a href="#" onclick = "javascript:">每月影传奇：每一步电影都有自己的...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>8</span>
+                    <a href="#" onclick = "javascript:">每月（上视纪实频道）：解密档案中...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>9</span>
+                    <a href="#" onclick = "javascript:">每月传世国宝的千古传奇</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>10</span>
+                    <a href="#" onclick = "javascript:">每月系列：讲述社会百态，透视事实...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">更多>></a>
+                </li>
+            </ul>
+            <ul id="all" >
+                <li>  
+                    <span>1</span>
+                    <a href="#" onclick = "javascript:">全部：关于地球与人类的一千零一问</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>2</span>
+                    <a href="#" onclick = "javascript:">全部传奇：探索全世界重大历史事件</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>3</span>
+                    <a href="#" onclick = "javascript:">全部：展现普通人的曲折命运和动人...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>4</span>
+                    <a href="#" onclick = "javascript:">全部（BTV）：惊人事件和传奇背...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>5</span>
+                    <a href="#" onclick = "javascript:">全部十最：30个震惊世界的Top...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>6</span>
+                    <a href="#" onclick = "javascript:">全部的毛泽东：警卫员解密毛泽东秘...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>7</span>
+                    <a href="#" onclick = "javascript:">全部影传奇：每一步电影都有自己的...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>8</span>
+                    <a href="#" onclick = "javascript:">全部（上视纪实频道）：解密档案中...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>9</span>
+                    <a href="#" onclick = "javascript:">全部传世国宝的千古传奇</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <span>10</span>
+                    <a href="#" onclick = "javascript:">全部系列：讲述社会百态，透视事实...</a>
+                    <div>
+                        <img src="5-img/pen.png" alt="pen">
+                        <p>
+                           解密：关于地球与人类的一千零一问 
+                        </p>
+                        <a href="#">播放</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#">更多>></a>
+                </li>
+            </ul>
+        </div>
+	</div>
+</body>
+</html>

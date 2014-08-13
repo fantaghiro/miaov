@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>for循环练习之一：创建100个DIV</title>
+	<style>
+		ul {
+			margin: 0;
+			padding: 0;
+			position: relative;
+		}
+		ul li {
+			position: absolute;
+			list-style: none;
+			width: 30px;
+			height: 30px;
+			background: green;
+			margin: 5px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oBtn = document.getElementById('btn'),
+				oWrapper = document.getElementById('wrapper'),
+				aColor = ['#41b5b2', '#4bb571', '#5e8ab5', '#907cb5'],
+				left,
+				top,
+				row = 10,
+				column = 10;
+
+			for(var i=0; i<row; i++){
+				top = i * 35 + 'px';
+				for (var j=0; j<column; j++){
+					left = j * 35 + 'px';
+					bgColor = aColor[(row*i+j)%4];
+					oWrapper.innerHTML += '<li style="top: ' + top + '; left: ' + left + '; background: ' + bgColor +'"></li>';
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="100个格子" id="btn">
+	<ul id="wrapper">
+
+	</ul>
+</body>
+</html>

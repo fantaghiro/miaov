@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动生成V字型（升级版）</title>
+	<style>
+		#canvas {
+			position: relative;
+		}
+		div {
+			width: 50px;
+			height: 50px;
+			color: white;
+			background: red;
+			line-height: 50px;
+			font-size: 28px;
+			font-weight: bold;
+			position: absolute;
+			text-align: center;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oBtn = document.getElementsByTagName('input')[0],
+				oCanvas = document.getElementById('canvas'),
+				str = '',
+				length = 5,
+				top,
+				left,
+				flag = 0;
+
+			oBtn.onclick = function(){
+				if(flag == 0) {
+					str = '';
+					for (var i=0; i<length; i++) {
+						left = i*50 + 'px';
+						if (i<length/2) {
+							top = ((length-1)/2-i)*50 + 'px';
+						} else {
+							top = (i-(length-1)/2)*50 + 'px';
+						}
+						str += '<div style="top:' + top + '; left:' + left + '">' + i + '</div>'
+					}
+
+					flag ++;	
+				} else if (flag == 1) {
+					str = '';
+					for (var i=0; i<length; i++) {
+						top = i*50 + 'px';
+						if (i<length/2) {
+							left = i*50 + 'px';
+						} else {
+							left = (length-i-1)*50 + 'px';
+						}
+						str += '<div style="top:' + top + '; left:' + left + '">' + i + '</div>'
+					}
+					
+					flag ++;
+				} else if (flag == 2) {
+					str = '';
+					for (var i=0; i<length; i++) {
+						left = i*50 + 'px';
+						if (i<length/2) {
+							top = i*50 + 'px';
+						} else {
+							top = (length-i-1)*50 + 'px';
+						}
+						str += '<div style="top:' + top + '; left:' + left + '">' + i + '</div>'
+					}
+
+					flag ++;
+				} else {
+					str = '';
+					for (var i=0; i<length; i++) {
+						top = i*50 + 'px';
+						if (i<length/2) {
+							left = ((length-1)/2-i)*50 + 'px';
+						} else {
+							left = (i-(length-1)/2)*50 + 'px';
+						}
+						str += '<div style="top:' + top + '; left:' + left + '">' + i + '</div>'
+					}
+					flag = 0;
+				}
+
+				oCanvas.innerHTML = str;
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="按钮" />
+	<section id="canvas"></section>
+</body>
+</html>

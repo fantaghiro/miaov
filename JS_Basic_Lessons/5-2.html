@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改文本框的值</title>
+    <style>
+                html, body, div, ul {
+            margin: 0;
+            padding: 0;
+        }
+        div {
+            width: 569px;
+        }
+        h2 {
+            background: #6BA542;
+            color: white;
+            font-size: 16px;
+            line-height: 30px;
+            font-weight: bold;
+            vertical-align: middle;
+            text-indent: 20px;
+            margin: 0;
+        }
+        li {
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            line-height: 40px;
+        }
+        li p {
+            display: inline-block;
+            text-indent: 20px;
+            padding-right: 5px;
+            font-size: 16px;
+            color: gray;
+            line-height: 40px;
+            margin: 0;
+        }
+        li span {
+            color: #6BA542;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 0 3px;
+            cursor: pointer;
+        }
+        img {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        input {
+            margin-left: 16px;
+            line-height: 22px;
+            vertical-align: middle;
+            font-size: 16px;
+            padding: 0 2px;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var oUl = document.getElementsByTagName('ul')[0],
+                aImg = oUl.getElementsByTagName('img'),
+                aLi = oUl.getElementsByTagName('li'),
+                aInput = oUl.getElementsByTagName('input'),
+                aP = oUl.getElementsByTagName('p'),
+                aSpan = oUl.getElementsByTagName('span');
+            
+            /* 初始化页面 */
+            for(var i=0; i<aInput.length; i++) {
+                aInput[i].value = aP[i].innerHTML;
+                aInput[i].className = 'hide';
+            }
+            for(var i=0; i<aSpan.length; i++) {
+                aSpan[i].className = 'hide';
+            }
+            
+            for(var i=0; i<aImg.length; i++) {
+                edit(aLi[i]);
+            }
+            
+            
+            
+            function edit(li) {
+                var oP = li.getElementsByTagName('p')[0],
+                    oImg = li.getElementsByTagName('img')[0], 
+                    oInput = li.getElementsByTagName('input')[0],
+                    oSpan1 = li.getElementsByTagName('span')[0],
+                    oSpan2 = li.getElementsByTagName('span')[1];
+                
+                oImg.onclick = function(){
+                    oP.className = oImg.className = 'hide';
+                    oInput.className = oSpan1.className = oSpan2.className = '';
+                }
+                
+                oSpan1.onclick = function(){
+                    oP.innerHTML = oInput.value;
+                    oP.className = oImg.className = '';
+                    oInput.className = oSpan1.className = oSpan2.className = 'hide';
+                }
+                
+                oSpan2.onclick = function(){
+                    oP.className = oImg.className = '';
+                    oInput.className = oSpan1.className = oSpan2.className = 'hide';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h2>分类名称</h2>
+        <ul>
+            <li>
+                <p>妙味远程课堂</p>
+                <img src="5-img/pen.png" alt="pen">
+                <input type="text" value="" />
+                <span>保存</span>
+                <span>取消</span>
+            </li>
+            <li>
+                <p>妙味远程课堂</p>
+                <img src="5-img/pen.png" alt="pen">
+                <input type="text" value="" />
+                <span>保存</span>
+                <span>取消</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
