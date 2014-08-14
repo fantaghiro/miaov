@@ -87,6 +87,8 @@
                 aImg = oContent.getElementsByTagName('img'),
                 num = 0,
                 aSubLi = aUl[0].getElementsByTagName('li');
+
+            fnSmallTab(aUl[0]);
             
             for(var i=0; i<aLi.length; i++){
                 aLi[i].index = i;
@@ -101,38 +103,26 @@
                     aUl[num].className = 'show'; 
                     aImg[num].style.display = 'block';
 
-                    aSubLi = aUl[num].getElementsByTagName('li');
-                    for(var j=0; j<aSubLi.length; j++){
-                    	if(aSubLi[j].className){
-                    		aImg[num].src = arrImg[num][j];
-                    	}
-                    }
-
-                    for(var i=0; i<aSubLi.length; i++){
-            			aSubLi[i].index = i;
-            			aSubLi[i].onclick = function(){
-            				for(var i=0; i<aSubLi.length; i++){
-            					aSubLi[i].className = '';
-            				}
-            			this.className = 'active';
-            			aImg[num].src = arrImg[num][this.index];
-            			}
-            		}
+                    fnSmallTab(aUl[num]);
                 }
             }
 
-            // 如果打开页面没有点击左侧按钮，就直接点击下面横向的按钮的话，没反应。所以要在初始化的时候，给左侧第一个大类下面的小类添加点击事件
-            for(var i=0; i<aSubLi.length; i++){
-    			aSubLi[i].index = i;
-    			aSubLi[i].onclick = function(){
-    				for(var i=0; i<aSubLi.length; i++){
-    					aSubLi[i].className = '';
-    				}
-    			this.className = 'active';
-    			aImg[num].src = arrImg[num][this.index];
-    			}
-    		}
-
+            function fnSmallTab(smallUl){
+            	lis = smallUl.getElementsByTagName('li');
+	            for(var i=0; i<lis.length; i++){
+	            	if(lis[i].className){
+	            		aImg[num].src = arrImg[num][i];
+	            	}
+	    			lis[i].index = i;
+	    			lis[i].onclick = function(){
+	    				for(var i=0; i<lis.length; i++){
+	    					lis[i].className = '';
+	    				}
+	    			this.className = 'active';
+	    			aImg[num].src = arrImg[num][this.index];
+	    			}
+	    		}
+			}
         }
     </script>
 </head>
