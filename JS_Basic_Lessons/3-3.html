@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>控制多组图片切换</title>
+	<style>
+		.clear {
+			zoom: 1;
+		}
+		.clear:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		#left {
+			width: 500px;
+			height: 450px;
+			background: orange;
+			float: left;
+			text-align: center;
+		}
+		#left img {
+			width: 480px;
+			height: 380px;
+			margin: 10px;
+			cursor: pointer;
+		}
+		#right {
+			width: 300px;
+			height: 450px;
+			background: green;
+			float: left;
+			text-align: center;
+		}
+		#right img {
+			width: 280px;
+			height: 380px;
+			margin: 10px;
+			cursor: pointer;
+		}
+		#left h2, #right h2 {
+			font-size: 18px;
+			margin: 0;
+			padding: 0;
+		}
+		#left p, #right p {
+			text-align: left;
+			margin: 0;
+			padding: 0;
+			padding-left: 10px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oLeftBox = document.getElementById('left'),
+				oRightBox = document.getElementById('right'),
+				oLeftImg = oLeftBox.getElementsByTagName('img')[0],
+				oRightImg = oRightBox.getElementsByTagName('img')[0],
+				arrLeftGroup = ['3-img/pic1.jpg', '3-img/pic2.jpg', '3-img/pic3.jpg', '3-img/pic4.jpg'],
+				arrRightGroup = ['3-img/pic5.jpg', '3-img/pic6.jpg', '3-img/pic7.jpg'],
+				oPrev = document.getElementById('prev'),
+				oNext = document.getElementById('next'),
+				numLeft = 0,
+				numRight = 0;
+
+			function changeLeft (){
+				oLeftImg.src=arrLeftGroup[numLeft];
+			oLeftBox.getElementsByTagName('h2')[0].getElementsByTagName('span')[0].innerHTML = oLeftBox.getElementsByTagName('p')[0].getElementsByTagName('span')[0].innerHTML = numLeft + 1;
+				oLeftBox.getElementsByTagName('p')[0].getElementsByTagName('span')[1].innerHTML = arrLeftGroup.length;
+			}
+
+			function changeRight(){
+				oRightImg.src=arrRightGroup[numRight];
+			oRightBox.getElementsByTagName('h2')[0].getElementsByTagName('span')[0].innerHTML = oRightBox.getElementsByTagName('p')[0].getElementsByTagName('span')[0].innerHTML = numRight + 1;
+				oRightBox.getElementsByTagName('p')[0].getElementsByTagName('span')[1].innerHTML = arrRightGroup.length;
+			}
+			
+
+			changeLeft();
+			changeRight();
+
+
+			oLeftImg.onclick = function(){
+				numLeft++;
+				if(numLeft > arrLeftGroup.length -1) {
+					numLeft = 0;
+				}
+				changeLeft();
+			}
+
+			oRightImg.onclick = function(){
+				numRight++;
+				if(numRight > arrRightGroup.length -1) {
+					numRight = 0;
+				}
+				changeRight();
+			}
+
+			oNext.onclick = function(){
+				numLeft++;
+				numRight++;
+				if(numLeft > arrLeftGroup.length -1) {
+					numLeft = 0;
+				}
+				if(numRight > arrRightGroup.length -1) {
+					numRight = 0;
+				}
+				changeLeft();
+				changeRight();
+			}
+
+			oPrev.onclick = function(){
+				numLeft--;
+				numRight--;
+				if(numLeft < 0) {
+					numLeft = arrLeftGroup.length - 1;
+				}
+				if(numRight < 0) {
+					numRight = arrRightGroup.length -1;
+				}
+				changeLeft();
+				changeRight();			}
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="上一组" id="prev"/>
+	<input type="button" value="下一组" id="next"/>
+	<div id="container" class="clear">
+		<div id="left">
+			<img src="" />
+			<h2>第一组第<span></span>张</h2>
+			<p><span></span>/<span></span></p>
+		</div>
+		<div id="right">
+			<img src="" />
+			<h2>第二组第<span></span>张</h2>
+			<p><span></span>/<span></span></p>
+		</div>
+	</div>
+</body>
+</html>

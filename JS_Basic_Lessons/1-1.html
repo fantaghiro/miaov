@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片轮播的两种方式</title>
+	<style>
+		#controls {
+			width:400px;
+			margin: auto;
+			text-align: center;
+		}
+		#container {
+			width: 400px;
+			height:400px;
+			border: 10px solid #eee;
+			position: relative;
+			background: gray;
+			margin: 10px auto 0;
+		}
+		#prev, #next {
+			position: absolute;
+			background: black;
+			filter:alpha(opacity:40);
+			opacity: 0.4;
+			font-size: 20px;
+			color: white;
+			width: 40px;
+			height: 40px;
+			border: 2px solid white;
+			line-height: 40px;
+			text-align: center;
+			top: 180px;
+			pointer: cursor;
+			text-decoration: none;
+		}
+		#prev:hover, #next:hover {
+			filter:alpha(opacity:80);
+			opacity: 0.8;
+		}
+		#order, #info {
+			position: absolute;
+			width:100%;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			background: black;
+			filter:alpha(opacity:60);
+			opacity: 0.6;
+			font-size: 20px;
+			color: white;
+		}
+		#prev {
+			left: 0;
+		}
+		#next {
+			right: 0;
+		}
+		#picture {
+			height: 400px;
+			width: 400px;
+		}
+		#order {
+			top: 0;
+		}
+		#info {
+			bottom: 0;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oRound = document.getElementById('round'),
+				oSingle = document.getElementById('single'),
+				oPrev = document.getElementById('prev'),
+				oNext = document.getElementById('next'),
+				oOrder = document.getElementById('order'),
+				oInfo = document.getElementById('info'),
+				oPicture = document.getElementById('picture'),
+				arrPic = ["1-img/1.jpg", "1-img/2.jpg", "1-img/3.jpg", "1-img/4.jpg"],
+				arrInfo = ["图片一", "图片二", "图片三", "图片四"],
+				flag = true,
+				i = 0;
+
+			oRound.onclick = function(){
+				flag = true;
+			}
+			oSingle.onclick = function(){
+				flag = false;
+			}
+
+			function changeTab() {
+			oOrder.innerHTML = i + 1 + ' / ' + arrPic.length;
+			oInfo.innerHTML = arrInfo[i];
+			oPicture.src = arrPic[i];
+			}
+			changeTab();
+
+			// 向后翻页
+			oNext.onclick = function(){
+				i++;
+				if(i>3 && flag) {
+					i = 0;
+				} else if(i>3 && !flag) {
+					i = 3;
+					alert("已经是最后一页啦！");
+				};
+				changeTab();
+			}
+			// 向前翻页
+			oPrev.onclick = function(){
+				i--;
+				if(i<0 && flag) {
+					i = arrPic.length - 1;
+				} else if(i<0 && !flag) {
+					i = 0;
+					alert("已经是第一页啦！");
+				};
+				changeTab();
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="controls">
+		<input id="round" type="button" value = "循环播放">
+		<input id="single" type="button" value = "顺序播放">
+	</div>
+	<div id="container">
+        <a href='javascript:' id="prev">&lt;</a>
+        <a href='javascript:' id="next">&gt;</a>
+        <div id="order">图片加载中……</div>
+        <div id="info">图片加载中……</div>
+        <img id="picture">
+	</div>
+</body>
+</html>

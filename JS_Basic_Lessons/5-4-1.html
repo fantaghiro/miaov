@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡里套选项卡</title>
+	<style>
+		body, ul, li, h2 {
+			padding: 0;
+			margin: 0;
+		}
+		h2 {
+			font-size: 14px;
+		}
+		li {
+			list-style: none;
+		}
+		#tabs {
+			width: 960px;
+			background: #E7E7E7;
+			overflow: hidden;
+		}
+		#nav {
+			width: 150px;
+			float: left;
+		}
+		#nav li {
+			width: 143px;
+			height: 82px;
+			border: 1px solid #eee;
+			text-align: center;
+			line-height: 82px;
+			font-size: 12px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+        #nav li.selected {
+            background: #fff;
+        }
+		#contents {
+			width: 810px;
+			height: 335px;
+			float: right;
+            position: relative;
+		}
+        #contents img {
+            width: 810px;
+            height: 335px;
+            display: none;
+        }
+		#contents ul {
+			position: absolute;
+			bottom: 0;
+            width: 100%;
+            text-align: justify;
+			background: #fff;
+			opacity: 0.6;
+            display: none;
+		}
+		#contents  li {			
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #eee;
+            padding: 0 20px;
+            cursor: pointer;
+            display: table-cell;
+		}
+        #contents ul.show {
+            display: table;
+        }
+        #contents li.active {
+            background: red;
+            opacity: 0.8;
+        }
+	</style>
+	<script>
+        window.onload = function(){
+            var arrImg = [
+                ['5-img/pic1.jpg', '5-img/pic2.jpg', '5-img/pic3.jpg'],
+                ['5-img/pic1.jpg', '5-img/pic2.jpg', '5-img/pic3.jpg', '5-img/pic4.jpg'],
+                ['5-img/pic1.jpg', '5-img/pic2.jpg', '5-img/pic3.jpg', '5-img/pic4.jpg', '5-img/pic5.jpg'],
+                ['5-img/pic1.jpg', '5-img/pic2.jpg', '5-img/pic3.jpg', '5-img/pic4.jpg']
+            ],
+                oNav = document.getElementById('nav'),
+                aLi = oNav.getElementsByTagName('li'),
+                oContent = document.getElementById('contents'),
+                aUl = oContent.getElementsByTagName('ul'),
+                aImg = oContent.getElementsByTagName('img'),
+                num = 0,
+                aSubLi = aUl[0].getElementsByTagName('li');
+
+            fnSmallTab(aUl[0]);
+            
+            for(var i=0; i<aLi.length; i++){
+                aLi[i].index = i;
+                aLi[i].onclick = function(){
+                    for(var i=0; i<aLi.length; i++){
+                        num = this.index;
+                        aLi[i].className = '';
+                        aUl[i].className = '';
+                        aImg[i].style.display = 'none';
+                    }
+                    this.className = 'selected';
+                    aUl[num].className = 'show'; 
+                    aImg[num].style.display = 'block';
+
+                    fnSmallTab(aUl[num]);
+                }
+            }
+
+            function fnSmallTab(smallUl){
+            	lis = smallUl.getElementsByTagName('li');
+	            for(var i=0; i<lis.length; i++){
+	            	if(lis[i].className){
+	            		aImg[num].src = arrImg[num][i];
+	            	}
+	    			lis[i].index = i;
+	    			lis[i].onclick = function(){
+	    				for(var i=0; i<lis.length; i++){
+	    					lis[i].className = '';
+	    				}
+	    			this.className = 'active';
+	    			aImg[num].src = arrImg[num][this.index];
+	    			}
+	    		}
+			}
+        }
+    </script>
+</head>
+<body>
+	<div id="tabs">
+		<ul id="nav">
+			<li class="selected">最热团购</li>
+			<li>商城特惠</li>
+			<li>名品推荐</li>
+			<li>缤纷活动</li>
+		</ul>
+		<div id="contents">
+           <img src="5-img/pic1.jpg" style="display: block"/>
+            <ul class="show"><li class="active">最热团购Tab1</li><li>最热团购Tab2</li><li>最热团购Tab3</li></ul>
+            <img src="5-img/pic1.jpg" />
+            <ul><li class="active">商城特惠Tab1</li><li>商城特惠Tab2</li><li>商城特惠Tab3</li><li>商城特惠Tab4</li></ul>
+            <img src="5-img/pic1.jpg" />
+            <ul><li class="active">名品推荐Tab1</li><li>名品推荐Tab2</li><li>名品推荐Tab3</li><li>名品推荐Tab4</li><li>名品推荐Tab5</li></ul>
+            <img src="5-img/pic1.jpg" />
+            <ul><li class="active">缤纷活动Tab1</li><li>缤纷活动Tab2</li><li>缤纷活动Tab3</li><li>缤纷活动Tab4</li></ul>
+		</div>	
+	</div>
+</body>
+</html>

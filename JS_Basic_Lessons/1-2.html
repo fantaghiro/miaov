@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟短信发送</title>
+	<style>
+		#container {
+			height: 620px;
+			width: 300px;
+			background: url("1-img/mobile.png") no-repeat center center;
+			margin: auto;
+			position: relative;
+		}
+		#content {
+			height: 375px;
+			width: 236px;
+			position: absolute;
+			top: 100px;
+			left: 32px;
+			overflow: scroll;
+		}
+		#footer {
+			margin: 0;
+			position: absolute;
+			left: 32px;
+			bottom: 100px;
+			background: #eee;
+			border-top: 1px solid gray;
+			border-bottom: 1px solid gray;
+			width: 236px;
+			text-align: center;
+			display: inline;
+			line-height: 39px;
+		}
+		#avatar {
+			width: 24px;
+			height: 24px;
+			border: 1px solid gray;
+			border-radius: 5px;
+			padding: 2px;
+			vertical-align: middle;
+			cursor: pointer;
+
+		}
+		#message {
+			height: 23px;
+			width: 140px;
+			font-size: 12px;
+			vertical-align: middle;
+		}
+		#send {
+			border: 1px solid gray;
+			padding: 5px;
+			vertical-align: middle;
+			border-radius: 5px;
+			font-size: 14px;
+			color: gray;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		#content p {
+			margin: 2px;
+		}
+		#content span {
+			font-size: 14px;
+			display: inline-block;
+			padding: 5px;
+			border: 1px solid gray;
+			border-radius: 5px;
+			margin: 3px;
+			max-width: 75%;
+			vertical-align: top;
+			word-wrap: break-word;
+		}
+		#content img {
+			height: 24px;
+			width: 24px;
+			border: 1px solid gray;
+			border-radius: 5px;
+			padding: 2px;
+			margin: 3px;
+			vertical-align: top;
+		}
+
+	</style>
+	<script>
+		window.onload = function(){
+			var oAvatar = document.getElementById('avatar'),
+				oMessage = document.getElementById('message'),
+				oSend = document.getElementById('send'),
+				oContent = document.getElementById('content'),
+				flag = 1;
+
+			oAvatar.onclick = function(){
+				if (flag) {
+					oAvatar.src = '1-img/expression2.png';
+					flag = 0;
+				} else if (!flag) {
+					oAvatar.src = '1-img/expression1.png';
+					flag = 1;
+				}
+			}
+
+			oSend.onclick = function(){
+				if (oMessage.value == '') {
+					alert('好歹写点什么吧，哥们!');
+				}
+				if (flag) {
+					oContent.innerHTML = '<p style="text-align: right"><span style="background: #eee">' + oMessage.value + '</span>' + '<img src="1-img/expression1.png">' + '</p>' + oContent.innerHTML;
+				} else if (!flag) {
+					oContent.innerHTML = '<p style="text-align: left">' + '<img src="1-img/expression2.png">' + '<span style="background: #36ff07">' + oMessage.value + '</span></p>' + oContent.innerHTML;
+				}
+			}
+
+			
+
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="container">
+		<div id="content"></div>
+		<p id="footer">
+			<img id="avatar" src="1-img/expression1.png">
+			<input id="message" type="text" placeholder="选头像、输文字、点发送">
+			<a id="send" href="javascript:">发送</a>
+		</p>	
+	</div>
+</body>
+</html>

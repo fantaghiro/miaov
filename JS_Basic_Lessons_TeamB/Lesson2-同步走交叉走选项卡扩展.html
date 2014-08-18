@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>交叉走、同步走的选项卡扩展</title>
+	<style>
+		#wrapper {
+			overflow: hidden;
+			border: 1px solid black;
+			width: 480px;
+		}
+		#wrapper img {
+			width: 240px;
+			height: 323px;
+			float: left;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+			float: left;
+			width: 120px;
+			
+		}
+		li {
+			list-style: none;
+			border-bottom: 1px solid #fff;
+			height: 80px;
+			background: #e7e7e7;
+			line-height: 80px;
+			text-align: center;
+			cursor: pointer;
+		}
+		li:last-child {
+			border-bottom: none;
+		}
+		#rightNav {
+			float: left;
+		}
+		li.selected {
+			background: green;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var aImg = ['Lesson2/1.png', 'Lesson2/2.png', 'Lesson2/3.png', 'Lesson2/4.png'],
+				oImg = document.getElementsByTagName('img')[0],
+				oLeftNav = document.getElementById('leftNav'),
+				oRightNav = document.getElementById('rightNav'),
+				aLeftNav = oLeftNav.getElementsByTagName('li'),
+				aRightNav = oRightNav.getElementsByTagName('li'),
+				num = 0,
+				oNext = document.getElementsByTagName('input')[0],
+				oJiaocha = document.getElementsByTagName('input')[1],
+				oTongbu = document.getElementsByTagName('input')[2],
+				prevLeftLi = aLeftNav[0],
+				prevRightLi = aRightNav[3],
+				flag = 0;
+
+			aLeftNav[0].className = 'selected';
+			aRightNav[3].className = 'selected';
+			oJiaocha.onclick = function(){
+				flag = 0;
+			}
+			oTongbu.onclick = function(){
+				flag = 1;
+			}
+
+			oNext.onclick = function(){
+				if(flag){
+					prevLeftLi.className = prevRightLi.className = '';
+					num = num + 1;
+					if(num == 4){
+						num = 0;
+					}
+					oImg.src = aImg[num];
+					aLeftNav[num].className = aRightNav[num].className = 'selected';
+					prevLeftLi = aLeftNav[num];
+					prevRightLi = aRightNav[num];
+				}
+				if(!flag){
+					prevLeftLi.className = prevRightLi.className = '';
+					num = num + 1;
+					if(num == 4){
+						num = 0;
+					}
+					oImg.src = aImg[num];
+					aLeftNav[num].className = aRightNav[aRightNav.length - num - 1].className = 'selected';
+					prevLeftLi = aLeftNav[num];
+					prevRightLi = aRightNav[aRightNav.length - num - 1];
+				}
+			}
+
+			for(var i=0; i<aLeftNav.length; i++){
+				aLeftNav[i].index = i;
+				aLeftNav[i].onclick = function(){
+					prevLeftLi.className = '';
+					num = this.index;
+					this.className = 'selected';
+					oImg.src = aImg[num];
+					prevLeftLi = this;
+
+					if(flag){
+						prevRightLi.className = '';
+						aRightNav[num].className = 'selected';
+						prevRightLi = aRightNav[num];
+					}
+					if(!flag){
+						prevRightLi.className = '';
+						aRightNav[aRightNav.length - num - 1].className = 'selected';
+						prevRightLi = aRightNav[aRightNav.length - num - 1];
+					}
+				}
+			}
+
+			for(var i=0; i<aRightNav.length; i++){
+				aRightNav[i].index = i;
+				aRightNav[i].onclick = function(){
+					prevRightLi.className = '';
+					num = this.index;
+					this.className = 'selected';
+					oImg.src = aImg[num];
+					prevRightLi = this;
+
+					if(flag){
+						prevLeftLi.className = '';
+						aLeftNav[num].className = 'selected';
+						prevLeftLi = aLeftNav[num];
+					}
+					if(!flag){
+						prevLeftLi.className = '';
+						aLeftNav[aLeftNav.length - num - 1].className = 'selected';
+						prevLeftLi = aLeftNav[aLeftNav.length - num - 1];
+					}
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="下一张">
+	<input type="button" value="交叉">
+	<input type="button" value="同步">
+	<div id="wrapper">
+		<ul id="leftNav">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<img src="Lesson2/1.png" height="479" width="391" alt="">
+		<ul id="rightNav">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+</body>
+</html>

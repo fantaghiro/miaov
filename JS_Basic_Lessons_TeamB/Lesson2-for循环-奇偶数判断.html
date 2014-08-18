@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>for循环练习之一：创建100个DIV</title>
+	<style>
+		body {
+			background: #F7EFEF;	
+		}
+		#wrapper {
+			margin: 0;
+			padding: 0;
+			white-space: nowrap;
+		}
+		#wrapper img {
+			list-style: none;
+			width: 80px;
+			height: 80px;
+			background: green;
+			margin: 10px;
+			border: 10px solid white;
+			border-radius: 80px;
+			transition: all 0.5s;
+		}
+		#wrapper img.selected {
+			border: 10px solid yellow;
+			border-radius: 0px;
+		}
+		#wrapper img.zoom {
+			transform: scale(1.2);
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oBtn1 = document.getElementById('btn1'),
+				oBtn2 = document.getElementById('btn2'),
+				oBtn3 = document.getElementById('btn3'),
+				oBtn4 = document.getElementById('btn4'),
+				oBtn5 = document.getElementById('btn5'),
+				oBtn6 = document.getElementById('btn6'),
+				oBtn7 = document.getElementById('btn7'),
+				oWrapper = document.getElementById('wrapper'),
+				aImg = ['Lesson2/1.png', 'Lesson2/2.png', 'Lesson2/3.png', 'Lesson2/4.png'],
+				left,
+				top,
+				i = 0,
+				column = 7,
+				aPic = oWrapper.getElementsByTagName('img');
+
+			oBtn1.onclick = function(){
+				breakLine = (i+1)%column?'':'<br/>';
+				oWrapper.innerHTML += '<img src="' + aImg[i%aImg.length] + '" />' + breakLine;
+				i++;
+			}
+
+			function clearAll(){
+				for(var i=0; i<aPic.length; i++){
+					aPic[i].className = '';
+				}
+			}
+
+			oBtn2.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if(!(i%2)){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+			oBtn3.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if(i%2){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+
+			oBtn4.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if((Math.floor(i/7))%2 == 0){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+
+			oBtn5.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if((Math.floor(i/7))%2){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+
+			oBtn6.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if( (!(i%2) && (Math.floor(i/7))%2 == 0 ) || (i%2 && (Math.floor(i/7))%2 ) ){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+
+			oBtn7.onclick = function(){
+				clearAll();
+
+				for(var i=0; i<aPic.length; i++){
+					if( ((i%2) && (Math.floor(i/7))%2 == 0 ) || (!(i%2) && (Math.floor(i/7))%2 ) ){
+						aPic[i].className = 'selected';
+					}
+				}
+			}
+			
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="生成1张图片" id="btn1">
+	<input type="button" value="奇数" id="btn2">
+	<input type="button" value="偶数" id="btn3">
+	<input type="button" value="奇数横排" id="btn4">
+	<input type="button" value="偶数横排" id="btn5">
+	<input type="button" value="奇数竖排" id="btn6">
+	<input type="button" value="偶数竖排" id="btn7">
+	<div id="wrapper">
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>带缩略图的图片切换效果</title>
+	<style>
+		body {
+			background: black;
+		}
+		#container {
+			width: 390px;
+			height: 480px;
+			position: relative;
+			margin: 30px auto;
+			text-align: center;
+			border: 1px solid white;
+			background: #eee;
+		}
+		ul {
+			padding: 0;
+			margin: 0;
+		}
+		li {
+			list-style: none;
+		}
+		#showbox {
+			width: 390px;
+			height: 480px;
+			background: url('3-img/loader_ico.gif') center center no-repeat;
+		}
+		#container a {
+			position: absolute;
+			height: 40px;
+			width: 40px;
+			border-radius: 40px;
+			line-height: 40px;
+			color: white;
+			text-align: center;
+			font-size: 30px;
+			background: #ea7c1c;
+			opacity: 0.4;
+			filter:alpha(opacity:40);
+			top: 50%;
+			margin-top: -20px;
+			text-decoration: none;
+		}
+		#container a:hover {
+			opacity: 0.9;
+			filter:alpha(opacity: 90);
+		}
+		#prev {
+			left: 10px;
+		}
+		#next {
+			right: 10px;
+		}
+		#dots {
+			width: 200px;
+			margin: 0 auto;
+			text-align: center;
+			padding: 3px;
+			position: absolute;
+			top: 500px;
+			left: 50%;
+			margin-left: -102px;
+		}
+		#dots li {
+			display: inline-block;
+			width: 15px;
+			height: 15px;
+			background: gray;
+			border-radius: 15px;
+			margin: 0 5px;
+			cursor: pointer;
+			position: relative;
+		}
+		#dots .mini {
+			position: absolute; 
+			width: 39px;
+			height: 48px;
+			bottom: 25px;
+			border: 2px solid #c2ead7;
+			left: -12px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oShowbox = document.getElementById('showbox'),
+				oPrev = document.getElementById('prev'),
+				oNext = document.getElementById('next'),
+				oUl = document.getElementById('dots'),
+				aLi = oUl.getElementsByTagName('li'),
+				arrPic = ['3-img/1.png', '3-img/2.png', '3-img/3.png', '3-img/4.png'],
+				num = 0;
+
+			oShowbox.src = arrPic[num];
+			aLi[num].style.background = '#ea7c1c';
+
+			oNext.onclick = function(){
+				num++;
+				if(num > (arrPic.length - 1)) {
+					num = 0;
+				};
+				oShowbox.src = arrPic[num];
+				for(var i=0; i<aLi.length; i++) {
+					aLi[i].style.background = '';
+					aLi[num].style.background = '#ea7c1c';
+				}
+			}
+
+			oPrev.onclick = function(){
+				num--;
+				if(num < 0) {
+					num = arrPic.length-1;
+				}
+				oShowbox.src = arrPic[num];
+				for(var i=0; i<aLi.length; i++) {
+					aLi[i].style.background = '';
+					aLi[num].style.background = '#ea7c1c';
+				}
+			}
+
+
+			for(var i=0; i<aLi.length; i++) {
+				aLi[i].index = i;
+				aLi[i].onmouseover = function(){
+					aLi[this.index].innerHTML = '<img class="mini" src="' + arrPic[this.index] + '" />';
+				}
+				aLi[i].onmouseout = function(){
+					aLi[this.index].innerHTML = '';
+				}
+				aLi[i].onclick = function(){
+					for(var j=0; j<aLi.length; j++) {
+						aLi[j].style.background = '';
+					}
+					aLi[this.index].style.background = '#ea7c1c';
+					oShowbox.src = arrPic[this.index];
+					num = this.index;
+				}
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div id="container">
+		<img src="" id="showbox">
+		<a id="prev" href="javascript:">&lt;</a>
+		<a id="next" href="javascript:">&gt;</a>
+		<ul id="dots">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</body>
+</html>
