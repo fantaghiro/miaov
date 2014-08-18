@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度文库评分</title>
+	<style>
+	html, body, p {
+		margin: 0;
+		padding: 0;
+	}
+	p {
+		border: 1px solid #eee;
+		width: 400px;
+		margin: 50px auto;
+		text-align: center;
+		padding: 10px 0;
+	}
+	#comment {
+		color: gray;
+		margin-left: 7px;
+	}
+	#rating {
+		font-size: 0;
+	}
+	#rating a {
+		margin: 0 1px;
+	}
+	</style>
+	<script>
+		window.onload = function(){
+			var oRating = document.getElementById('rating'),
+				aA = oRating.getElementsByTagName('a'),
+				oComment = document.getElementById('comment'),
+				arrImg = ['7-img/nst.gif', '7-img/nsg.gif', '7-img/sth.gif', '7-img/st.gif'],
+				lastArrImg = [],
+				lastComment = '&nbsp;&nbsp;&nbsp;&nbsp;',
+				num = 0;
+
+				function rating(index, imgSrc){
+					for(var i=0; i<=index; i++){
+						aA[i].getElementsByTagName('img')[0].src = imgSrc;
+					}
+					switch(index){
+						case 0:
+							oComment.innerHTML = '极差';
+							break;
+						case 1:
+							oComment.innerHTML = '很差';
+							break;
+						case 2:
+							oComment.innerHTML = '还行';
+							break;
+						case 3:
+							oComment.innerHTML = '不错';
+							break;
+						case 4:
+							oComment.innerHTML = '推荐';
+					}
+				}
+
+				for(var i=0; i<aA.length; i++){
+					aA[i].index = i;
+					aA[i].onmouseover = function(){
+						num = this.index;
+
+						for(var i=0; i<aA.length; i++){
+							lastArrImg[i] = aA[i].getElementsByTagName('img')[0].src;
+						}
+
+						rating(aA.length-1, arrImg[0]);
+
+						if( num < 2 ){
+							rating(num, arrImg[1]);
+						} else {
+							rating(num, arrImg[2]);
+						}
+				
+					}
+
+					aA[i].onmouseout = function(){
+						for(var i=0; i<aA.length; i++){
+							aA[i].getElementsByTagName('img')[0].src = lastArrImg[i];
+						}
+						oComment.innerHTML = lastComment;
+					}
+
+					aA[i].onclick = function(){
+						num = this.index;	
+
+						rating(aA.length-1, arrImg[0]);
+						if ( num < 2 ) {
+							rating(num, arrImg[1]);
+						} else {
+							rating(num, arrImg[3]);
+						}
+
+						for(var i=0; i<aA.length; i++){
+							lastArrImg[i] = aA[i].getElementsByTagName('img')[0].src;
+						}
+						lastComment = oComment.innerHTML;
+
+					}
+				}
+
+		}
+	</script>
+</head>
+<body>
+	<p>
+		我的评价：
+		<span id="rating">
+			<a href="javascript:"><img src="7-img/nst.gif" alt=""></a>
+			<a href="javascript:"><img src="7-img/nst.gif" alt=""></a>
+			<a href="javascript:"><img src="7-img/nst.gif" alt=""></a>
+			<a href="javascript:"><img src="7-img/nst.gif" alt=""></a>
+			<a href="javascript:"><img src="7-img/nst.gif" alt=""></a>
+		</span>
+		<span id="comment">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	</p>
+</body>
+</html>
