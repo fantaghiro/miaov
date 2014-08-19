@@ -12,7 +12,7 @@
 			width: 860px;
 			margin: 10px auto;
 		}
-		li {
+		li, #nav div {
 			list-style: none;
 			float: left;
 			height: 100%;
@@ -21,7 +21,7 @@
 		a {
 			text-decoration: none;
 			color: #3C6EA8;
-			padding: 0 20px;
+			padding: 0 15px;
 			border-right: 1px solid #8F77C3;
 		}
 		a:hover {
@@ -51,6 +51,7 @@
 			display: block;
 			border-radius: 10px;
 			padding: 0 30px;
+			border-right: none;
 		}
 		#nav a:hover {
 			background: #7B9CC6;
@@ -63,33 +64,28 @@
 			background: #4273A5;
 		}
 		#home {
-			width: 400px;
+			width: 350px;
 			position: relative;
 			left: 40px;		
 		}
 		#aboutUs {
-			width: 450px;
+			width: 380px;
 			position: relative;
 			left: 140px;
 		}
 		#showcase {
-			width: 360px;
+			width: 330px;
 			position: relative;
 			left: 280px;
 		}  
 		#blog {
-			width: 500px;
+			width: 470px;
 			position: relative;
 			left: 360px;
 		}
 	</style>
 	<script>
 		window.onload = function(){
-			var home = $('nav', 'a')[0],
-				aboutUs = $('nav', 'a')[1],
-				showcase = $('nav', 'a')[2],
-				blog = $('nav', 'a')[3],
-				timer1 = null;
 
 			function $(id, tag){
 				if(tag){
@@ -99,39 +95,26 @@
 				}		
 			}
 
-			function addEvent1(obj, a, timeout) {
-				a.onmouseover = function(){
-					obj.style.display = 'block';
+			for(var i=0; i<$('header', 'ul').length; i++){
+				$('nav', 'a')[i].onmouseover = function(){
+					$('header', 'ul')[i].style.display = 'block';
 				}
-				a.onmouseout = function(){
-					timer1 = setTimeout(function(){
-						obj.style.display = 'none';
-					}, 300)
-				}	
 			}
 			
-			addEvent1($('home'), home);
-			addEvent1($('aboutUs'), aboutUs);
-			addEvent1($('showcase'), showcase);
-			addEvent1($('blog'), blog);
-
-			$('home').onmouseover = function(){
-				clearTimeout(timer1);
-				$('home').style.display = 'block';
-			}
+			
 			
 		}
 	</script>	
 </head>
 <body>
 	<div id="header">
-		<ul id="nav">
-			<li><a href="javascript:">首页</a></li>
-			<li><a href="javascript:">关于我们</a></li>
-			<li><a href="javascript:">作品</a></li>
-			<li><a href="javascript:">博客</a></li>
-			<li class="last"><a href="#">>>更多</a></li>
-		</ul>
+		<div id="nav">
+			<div><a href="javascript:">首页</a></div>
+			<div><a href="javascript:">关于我们</a></div>
+			<div><a href="javascript:">作品</a></div>
+			<div><a href="javascript:">博客</a></div>
+			<div class="last"><a href="#">>>更多</a></div>
+		</div>
 		<ul id="home">
 			<li><a href="#">最近更新</a></li>
 			<li><a href="#">活动</a></li>
