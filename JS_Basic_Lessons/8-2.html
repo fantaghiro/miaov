@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>延时消失的菜单</title>
+	<style>
+		html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		#header {
+			width: 860px;
+			margin: 10px auto;
+		}
+		li {
+			list-style: none;
+			float: left;
+			height: 100%;
+			line-height: 30px;
+		}
+		a {
+			text-decoration: none;
+			color: #3C6EA8;
+			padding: 0 20px;
+			border-right: 1px solid #8F77C3;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		li:last-child a {
+			border-right: none;
+		}
+		ul {
+			overflow: hidden;
+			background: #E3ECF1;
+			border-radius: 10px;
+			display: none;
+		}
+		#nav {
+			background: #4273A5;
+			width: 800px;
+			height: 30px;
+			border-radius: 20px;
+			margin: 10px auto;
+			padding: 4px 10px 4px 50px;
+			color: #fff;
+			display: block;
+		}
+		#nav a {
+			color: #fff;
+			display: block;
+			border-radius: 10px;
+			padding: 0 30px;
+		}
+		#nav a:hover {
+			background: #7B9CC6;
+			text-decoration: none;
+		}
+		#nav .last {
+			float: right;
+		}
+		#nav .last a:hover {
+			background: #4273A5;
+		}
+		#home {
+			width: 400px;
+			position: relative;
+			left: 40px;		
+		}
+		#aboutUs {
+			width: 450px;
+			position: relative;
+			left: 140px;
+		}
+		#showcase {
+			width: 360px;
+			position: relative;
+			left: 280px;
+		}  
+		#blog {
+			width: 500px;
+			position: relative;
+			left: 360px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var home = $('nav', 'a')[0],
+				aboutUs = $('nav', 'a')[1],
+				showcase = $('nav', 'a')[2],
+				blog = $('nav', 'a')[3],
+				timer1 = null;
+
+			function $(id, tag){
+				if(tag){
+					return document.getElementById(id).getElementsByTagName(tag);
+				} else {
+					return document.getElementById(id);
+				}		
+			}
+
+			function addEvent1(obj, a, timeout) {
+				a.onmouseover = function(){
+					obj.style.display = 'block';
+				}
+				a.onmouseout = function(){
+					timer1 = setTimeout(function(){
+						obj.style.display = 'none';
+					}, 300)
+				}	
+			}
+			
+			addEvent1($('home'), home);
+			addEvent1($('aboutUs'), aboutUs);
+			addEvent1($('showcase'), showcase);
+			addEvent1($('blog'), blog);
+
+			$('home').onmouseover = function(){
+				clearTimeout(timer1);
+				$('home').style.display = 'block';
+			}
+			
+		}
+	</script>	
+</head>
+<body>
+	<div id="header">
+		<ul id="nav">
+			<li><a href="javascript:">首页</a></li>
+			<li><a href="javascript:">关于我们</a></li>
+			<li><a href="javascript:">作品</a></li>
+			<li><a href="javascript:">博客</a></li>
+			<li class="last"><a href="#">>>更多</a></li>
+		</ul>
+		<ul id="home">
+			<li><a href="#">最近更新</a></li>
+			<li><a href="#">活动</a></li>
+			<li><a href="#">报名试听</a></li>
+			<li><a href="#">学员反馈</a></li>
+		</ul>
+		<ul id="aboutUs">
+			<li><a href="#">妙味课堂</a></li>
+			<li><a href="#">培训方式</a></li>
+			<li><a href="#">培训理念</a></li>
+			<li><a href="#">联系我们</a></li>
+		</ul>
+		<ul id="showcase">
+			<li><a href="#">般固</a></li>
+			<li><a href="#">MATRIX</a></li>
+			<li><a href="#">留学E网</a></li>
+			<li><a href="#">ECMall</a></li>
+		</ul>
+		<ul id="blog">
+			<li><a href="#">JS教程</a></li>
+			<li><a href="#">弹出层效果</a></li>
+			<li><a href="#">3D球面标签云</a></li>
+			<li><a href="#">Windows计算器</a></li>
+		</ul>
+	</div>
+</body>
+</html>
