@@ -104,12 +104,14 @@
 			oSend.onclick = function(){
 				if (oMessage.value == '') {
 					alert('好歹写点什么吧，哥们!');
+				} else {
+					if (flag) {
+						oContent.innerHTML = '<p style="text-align: right"><span style="background: #eee">' + oMessage.value + '</span>' + '<img src="1-img/expression1.png">' + '</p>' + oContent.innerHTML;
+					} else if (!flag) {
+						oContent.innerHTML = '<p style="text-align: left">' + '<img src="1-img/expression2.png">' + '<span style="background: #36ff07">' + oMessage.value + '</span></p>' + oContent.innerHTML;
+					}
 				}
-				if (flag) {
-					oContent.innerHTML = '<p style="text-align: right"><span style="background: #eee">' + oMessage.value + '</span>' + '<img src="1-img/expression1.png">' + '</p>' + oContent.innerHTML;
-				} else if (!flag) {
-					oContent.innerHTML = '<p style="text-align: left">' + '<img src="1-img/expression2.png">' + '<span style="background: #36ff07">' + oMessage.value + '</span></p>' + oContent.innerHTML;
-				}
+				
 			}
 
 			
