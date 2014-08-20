@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动轮换选项卡</title>
+	<style>
+		html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		#wrap {
+			border: 1px solid #000;
+			margin: 50px auto;
+			width: 240px;
+			padding: 10px;
+			position: relative;
+		}
+		#nav li {
+			display: inline-block;
+			background: #51c73b;
+			padding: 10px 20px;
+		}
+		img {
+			display: block;
+			clear: left;
+		}
+		.subnav {
+			position: absolute;
+			left: 190px;
+			top: 48px;
+		}
+		.subnav li {
+			background: #eee;
+			padding: 21px 10px;
+			margin-top: 1px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var img = ['8-img/1.png', '8-img/2.png', '8-img/3.png', '8-img/4.png', '8-img/5.png', '8-img/6.png', '8-img/7.png', '8-img/8.png'],
+				oNav = document.getElementById('nav'),
+				aUl = document.getElementsByTagName('ul'),
+				oImg = document.getElementsByTagName('img')[0],
+				arrLi = [],
+				flag = 0,
+				num = 0,
+				timer = null;
+
+			for(var i=1; i<aUl.length; i++){
+				var aLi = aUl[i].getElementsByTagName('li');
+				for(var j=0; j<aLi.length; j++){
+					arrLi.push(aLi[j]);
+				}
+			}
+
+			function clearAll(){
+				for(var i=0; i<arrLi.length; i++){
+					arrLi[i].style.background = '#eee';
+					arrLi[i].style.color = '#000';
+				}
+				for(var i=0; i<aUl[0].getElementsByTagName('li').length; i++) {
+					aUl[0].getElementsByTagName('li')[i].style.cssText = 'background: #51c73b; color: #000';
+				}
+			}
+
+			function autoplay(){
+				clearAll();
+
+				arrLi[num].style.cssText = 'background: #639CC6; color: #fff';
+				oImg.src = img[num];
+
+				if(flag == 0){ 
+					oNav.getElementsByTagName('li')[0].style.cssText = 'background: #005A63; color: #fff';
+					aUl[2].style.display = 'none';
+					aUl[1].style.display = 'block';
+
+					
+					num++;
+					if(num == arrLi.length/2) {
+						flag = 1;
+					}
+				} else {
+					oNav.getElementsByTagName('li')[1].style.cssText = 'background: #005A63; color: #fff';
+					aUl[1].style.display = 'none';
+					aUl[2].style.display = 'block';
+
+					num++;
+					if(num == arrLi.length){
+						flag = 0;
+						num = 0;
+					}
+				}
+			}
+
+			timer = setInterval(autoplay, 1000);
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<ul id="nav">
+			<li>菜单一</li>
+			<li>菜单二</li>
+		</ul>
+		<img src="8-img/1.png" />
+		<ul class="subnav">
+			<li>图片1</li>
+			<li>图片2</li>
+			<li>图片3</li>
+		</ul>
+		<ul class="subnav">
+			<li>图片4</li>
+			<li>图片5</li>
+			<li>图片6</li>
+		</ul>
+	</div>
+</body>
+</html>
