@@ -87,8 +87,7 @@
 	</style>
 	<script>
 		window.onload = function(){
-			var timer = [],
-				aA = [];
+			var timer = null;
 
 			function $(id, tag){
 				if(tag){
@@ -108,29 +107,30 @@
 					for(var j=0; j<$('header', 'ul').length; j++){
 						$('header', 'ul')[j].style.display = 'none';
 					}
-					($('header', 'ul')[this.index]).style.display = 'block';
+					$('header', 'ul')[this.index].style.display = 'block';
+					clearTimeout(timer);
 				}
 				
 				// 鼠标离开主导航链接上的动作
 				$('nav', 'a')[i].onmouseout = function(){
-					var num = this.index;
-					timer[num] = setTimeout(function(){
-						($('header', 'ul')[num]).style.display = 'none';
+					var that = this.index;
+					timer = setTimeout(function(){
+						$('header', 'ul')[that].style.display = 'none';
 					}, 200)
 				}
 
 				// 鼠标悬停在子导航条上的动作
-				$('header', 'ul')[i].onmouseover = function(){
-					clearTimeout(timer[this.index]);
+				$('header', 'ul')[i].onmouseover = function(){					
 					this.style.display = 'block';
+					clearTimeout(timer);
 				}
 
 				//鼠标离开子导航条的动作
 				$('header', 'ul')[i].onmouseout = function(){
 					var that = this;
-					setTimeout(function(){
+					timer = setTimeout(function(){
 						that.style.display = 'none';
-					}, 1000)
+					}, 1500)
 				}
 
 			}
