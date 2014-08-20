@@ -63,18 +63,38 @@
 				aLi[i].onmouseout = function(){
 					this.style.background = '#FFF';
 					this.getElementsByTagName('a')[0].style.color = '#000';
+					timer = setInterval(autoplay, 1000);
 				}
 				aLi[i].onmouseover = function(){
+					clearInterval(timer);
 					clearAll();
 					this.style.background = '#FF4A6B';
 					this.getElementsByTagName('a')[0].style.color = '#fff';
-					if(this.index < aLi.length/2){
-						oImg.src = img[this.index];
-					} else {
-						oImg.src = img[img.length - this.index];
+					oImg.src = img[this.index];
+				}
+			}
+
+			function autoplay(){
+				clearAll();
+
+				aLi[num].style.background = '#FF4A6B';
+				aLi[num].getElementsByTagName('a')[0].style.color = '#fff';
+				oImg.src = img[num];
+
+				if(num<aLi.length/2){
+					num++;
+					if (num == aLi.length/2) {
+						num = aLi.length - 1;
+					}
+				} else {
+					num--;
+					if (num == aLi.length/2 - 1) {
+						num = 0;
 					}
 				}
 			}
+
+			timer = setInterval(autoplay, 1000);
 			
 		}
 	</script>
