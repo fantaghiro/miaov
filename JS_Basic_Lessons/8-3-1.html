@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>淘宝商品广告效果</title>
+	<style>
+		html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		img {
+			border: 0;
+			float: left;
+			margin: 0 5px;
+		}
+		li {
+			list-style: none;
+			border: 1px solid #FFADAD;
+			width: 40px;
+			padding: 5px;
+			text-align: center;
+			font-size: 12px;
+		}
+		a {
+			text-decoration: none;
+			display: block;
+			color: #000;
+		}
+		#wrap {
+			border: 1px solid #FF6300;
+			padding: 5px;
+			overflow: hidden;
+			width: 294px;
+			margin: 50px auto;
+		}
+		#left {
+			float: left;
+		}
+		#right {
+			float: left;
+			right: 0;
+			top: 0;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oImg = document.getElementsByTagName('img')[0],
+				aLi = document.getElementsByTagName('li'),
+				timer = null,
+				img = ['8-img/1.png', '8-img/2.png', '8-img/3.png', '8-img/4.png', '8-img/5.png', '8-img/6.png', '8-img/7.png', '8-img/8.png', '8-img/9.png', '8-img/10.png', '8-img/11.png', '8-img/12.png', '8-img/13.png', '8-img/14.png'],
+				num = 0,
+				flag = 0;
+
+			function clearAll(){
+				for(var i=0; i<aLi.length; i++){
+					aLi[i].style.background = '#fff';
+					aLi[i].getElementsByTagName('a')[0].style.color = '#000';
+				}
+			}
+
+			for(var i=0; i<aLi.length; i++){
+				aLi[i].index = i;
+				aLi[i].onmouseout = function(){
+					this.style.background = '#FFF';
+					this.getElementsByTagName('a')[0].style.color = '#000';
+				}
+				aLi[i].onmouseover = function(){
+					clearAll();
+					this.style.background = '#FF4A6B';
+					this.getElementsByTagName('a')[0].style.color = '#fff';
+					if(this.index < aLi.length/2){
+						oImg.src = img[this.index];
+					} else {
+						oImg.src = img[img.length - this.index];
+					}
+				}
+			}
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<ul id="left">
+			<li><a href="#">连衣裙</a></li>
+			<li><a href="#">雪纺</a></li>
+			<li><a href="#">T恤</a></li>
+			<li><a href="#">铅笔裤</a></li>
+			<li><a href="#">婚纱</a></li>
+			<li><a href="#">外套</a></li>
+			<li><a href="#">连体裤</a></li>
+		</ul>
+		<img src="8-img/1.png" />
+		<ul id="right">
+			<li><a href="#">包包</a></li>
+			<li><a href="#">凉鞋</a></li>
+			<li><a href="#">单鞋</a></li>
+			<li><a href="#">太阳镜</a></li>
+			<li><a href="#">丝袜</a></li>
+			<li><a href="#">帆布鞋</a></li>
+			<li><a href="#">情侣装</a></li>
+		</ul>
+	</div>
+</body>
+</html>
