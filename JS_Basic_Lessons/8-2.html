@@ -63,6 +63,7 @@
 		#nav .last a:hover {
 			background: #4273A5;
 		}
+
 		#home {
 			width: 350px;
 			position: relative;
@@ -86,6 +87,8 @@
 	</style>
 	<script>
 		window.onload = function(){
+			var timer = [],
+				aA = [];
 
 			function $(id, tag){
 				if(tag){
@@ -95,14 +98,45 @@
 				}		
 			}
 
-			for(var i=0; i<$('header', 'ul').length; i++){
+			for(var i=0; i<($('header', 'ul').length); i++){
+
+				$('nav', 'a')[i].index = i;
+				$('header', 'ul')[i].index = i;
+				
+				// 鼠标悬停在主导航链接上的动作
 				$('nav', 'a')[i].onmouseover = function(){
-					$('header', 'ul')[i].style.display = 'block';
+					for(var j=0; j<$('header', 'ul').length; j++){
+						$('header', 'ul')[j].style.display = 'none';
+					}
+					($('header', 'ul')[this.index]).style.display = 'block';
 				}
+				
+				// 鼠标离开主导航链接上的动作
+				$('nav', 'a')[i].onmouseout = function(){
+					var num = this.index;
+					timer[num] = setTimeout(function(){
+						($('header', 'ul')[num]).style.display = 'none';
+					}, 200)
+				}
+
+				// 鼠标悬停在子导航条上的动作
+				$('header', 'ul')[i].onmouseover = function(){
+					clearTimeout(timer[this.index]);
+					this.style.display = 'block';
+				}
+
+				//鼠标离开子导航条的动作
+				$('header', 'ul')[i].onmouseout = function(){
+					var that = this;
+					setTimeout(function(){
+						that.style.display = 'none';
+					}, 1000)
+				}
+
 			}
-			
-			
-			
+
+
+						
 		}
 	</script>	
 </head>
