@@ -12,7 +12,7 @@ function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr]
 
 function shake ( obj, attr, endFn ) {
 
-	
+	if( !obj.shaked ) { return; }
 	var pos = parseInt( getStyle(obj, attr) );			// 有隐患的
 	
 	var arr = [];			// 20, -20, 18, -18 ..... 0
@@ -47,7 +47,6 @@ window.onload = function () {
 		aImg[i].shaked = true;
 		
 		aImg[i].onmouseover = function () {
-			if( !this.shaked ) { return; }
 			shake( this, 'top');
 		};
 	}
