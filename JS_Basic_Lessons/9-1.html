@@ -12,7 +12,8 @@ window.onload = function () {
 	var aDiv = document.getElementsByTagName('div');
 	var timer = null;
 	var num = 0;
-	var flag = 0;
+	var flag = true; //flag代表方向
+	var finished = true;
 	
 	for ( var i=0; i<len; i++ ) {
 		str += '<div style="width:50px; height:50px; background:red; position:absolute; top:0px; left:'+ i*60 +'px;"></div>';
@@ -32,27 +33,28 @@ window.onload = function () {
 	// };
 
 	document.onclick = function () {
+		
+		if ( !finished ) { return; } //如果一点击，前一轮没有完成就直接退出
+
+		finished = false; //finished用于检测一轮是否完成，新一轮开始所以finished为false
+
 		clearInterval( timer );
 		timer = setInterval( function (){
-			if(!flag){
-				doMove( aDiv[num], 'top', 23, 500 );
-				num ++;
-				if ( num === len ) {
-					clearInterval( timer );
-					flag = 1;
-					num = 0;
-				}
-			} else {
-				doMove( aDiv[num], 'top', 23, 0 );
-				num ++;
-				if ( num === len ) {
-					clearInterval( timer );
-					flag = 0;
-					num = 0;
-				}
+
+			doMove( aDiv[num], 'top', 23, flag?500:0, num == len - 1 ? function(){
+					finished = true; //当且仅当最后一个aDiv落定的时候，finished才算完成，改为true
+					flag = !flag;
+					// alert("完成了一轮！");
+				} : null);
+			num ++;
+
+			if ( num === len ) {
+				clearInterval( timer );
+				num = 0;
 			}
 			
 		}, 100 );
+		
 	};
 };
 </script>
