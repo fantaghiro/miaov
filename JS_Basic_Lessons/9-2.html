@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>无标题文档</title>
+<title>修复抖函数的问题</title>
 <style>
 img { width:100px; height:100px; position:absolute; top:200px; }
 </style>
@@ -11,6 +11,7 @@ img { width:100px; height:100px; position:absolute; top:200px; }
 function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
 
 function shake ( obj, attr, endFn ) {
+
 	
 	var pos = parseInt( getStyle(obj, attr) );			// 有隐患的
 	
@@ -22,14 +23,17 @@ function shake ( obj, attr, endFn ) {
 		arr.push( i, -i );
 	}
 	arr.push(0);
-		
+
+	obj.shaked = false;		
 	clearInterval( obj.shake );
 	obj.shake = setInterval(function (){
 		obj.style[attr] = pos + arr[num] + 'px';
 		num++;
 		if ( num === arr.length ) {
 			clearInterval( obj.shake );
+			obj.shaked = true;
 			endFn && endFn();
+
 		}
 	}, 50);
 }
@@ -39,9 +43,12 @@ window.onload = function () {
 	
 	for ( var i=0; i<aImg.length; i++ ) {
 		aImg[i].style.left = 80+i*110 + 'px';
+
+		aImg[i].shaked = true;
 		
 		aImg[i].onmouseover = function () {
-			shake( this, 'top' );
+			if( !this.shaked ) { return; }
+			shake( this, 'top');
 		};
 	}
 };
