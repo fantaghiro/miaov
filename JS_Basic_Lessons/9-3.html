@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>点击加分效果——可重复点击</title>
+	<style>
+		#wrap {
+			position: relative;
+			border: 1px solid #000;
+			height: 50px;
+			width: 590px;
+			margin: 200px auto;
+		}
+		#bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 50px;
+			width: 0px;
+			background: #31F7EF;
+		}
+		span {
+			width: 50px;
+			height: 50px;
+			font-size: 28px; line-height: 50px;
+			text-align: center;
+			position: absolute;
+			top: 0;
+		}
+	</style>
+	<script>
+		function getStyle(obj, attr){
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+		}
+
+		function doMove (obj, attr, step, frequency, target, endFn){
+
+			clearInterval(obj.timer);
+			step = parseInt(getStyle(obj, attr)) < target ? step : -step; 
+
+			obj.timer = setInterval(function(){
+				var displace = parseInt(getStyle( obj, attr )) + step; // 位移
+				if ( step > 0 && displace > target || step < 0 && displace < target) {
+					displace = target;
+				}
+				
+				obj.style[attr] = displace + 'px';
+				if( displace == target ) {
+					clearInterval(obj.timer);
+					endFn && endFn();
+				}
+			}, frequency);
+		}
+		
+		window.onload = function(){
+			var oWrap = document.getElementById('wrap'),
+				oBg = document.getElementById('bg'),
+				aSpan = oWrap.getElementsByTagName('span'),
+				num = 0,
+				timer = null;
+
+			for(var i=0; i<10; i++){
+				aSpan[i].style.left = 60 * i + 'px';
+			}
+
+			oWrap.onclick = function(){
+				doMove(oBg, 'width', 50, 90, 590);
+				clearInterval(timer);
+				timer = setInterval(function(){
+					doMove(aSpan[num], 'top', 10, 50, -250);
+					num ++;
+					if ( num == aSpan.length) {
+						clearInterval(timer);
+					}
+				}, 100);
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="bg"></div>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>
+		<span>+1</span>		
+	</div>
+</body>
+</html>
