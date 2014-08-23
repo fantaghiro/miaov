@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>无标题文档</title>
+<title>商品价格统计</title>
 <script>
 window.onload = function () {
 	var oUl = document.getElementById('list');
@@ -57,6 +57,8 @@ window.onload = function () {
         }
         aEm.sort(function(a, b){return b-a});
         
+        aEm[0] = aEm[0]?aEm[0]:0;
+
         oP.innerHTML = "商品合计共：" + total + "件，共花费了：" + cost + "元" + "<br />" + 
 "其中最贵的商品单价是：" + aEm[0] + "元。"
     }
