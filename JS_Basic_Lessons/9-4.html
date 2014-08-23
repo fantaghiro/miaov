@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片自动切换</title>
+	<style>
+		img {
+			border: none;
+			margin: 0;
+			padding: 0;
+		}
+		#showbox {
+			width: 600px;
+			height: 399px;
+			margin: 50px auto;
+			
+			border: 5px solid #c0c0c0;
+			font-size: 0;
+			position: relative;
+			overflow: hidden;
+		}
+		#wrap {
+			width: 3600px;
+			position: absolute;
+			left: 0;
+		}
+		h1 {
+			margin: 0;
+			padding: 0;
+			font-size: 24px;
+			line-height:36px;
+			padding: 5px;
+		}
+		p {
+			margin: 0;
+			padding: 5px;
+			line-height: 20px;
+			padding-bottom: 10px;
+		}
+		#info {
+			font-size: 14px;
+			position: absolute;
+			width: 600px;
+			top: 399px;
+			left: 0;
+		}
+		#info div {
+			position: absolute;
+			top: 0px;
+			left: 0;
+			width: 600px;
+			background: #000;
+			opacity: 0.7;
+			color: #fff;
+		}
+	</style>
+	<script>
+		function getStyle(obj, attr){
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+		}
+
+		function doMove (obj, attr, step, frequency, target, endFn){
+
+			clearInterval(obj.timer);
+			step = parseInt(getStyle(obj, attr)) < target ? step : -step; 
+
+			obj.timer = setInterval(function(){
+				var displace = parseInt(getStyle( obj, attr )) + step; // 位移
+				if ( step > 0 && displace > target || step < 0 && displace < target) {
+					displace = target;
+				}
+				
+				obj.style[attr] = displace + 'px';
+				if( displace == target ) {
+					clearInterval(obj.timer);
+					endFn && endFn();
+				}
+			}, frequency);
+		}
+
+		window.onload = function(){
+			var oWrap = document.getElementById('wrap')
+				aImg = oWrap.getElementsByTagName('img'),
+				num = 0,
+				timer = null,
+				oInfo = document.getElementById('info'),
+				aDiv = oInfo.getElementsByTagName('div');
+
+			doMove(aDiv[0], 'top', 20, 50, -97, function(){
+
+				setTimeout(function(){
+					doMove(aDiv[num], 'top', 20, 50, 0);
+
+				}, 1500)
+					
+			});
+
+			timer = setInterval(function(){
+				var target = -600 * (num + 1);
+				doMove(oWrap, 'left', 20, 20, target, function(){
+
+					doMove(aDiv[num], 'top', 20, 50, -97, function(){
+
+						setTimeout(function(){
+							doMove(aDiv[num], 'top', 20, 50, 0);
+
+							if(num == aImg.length - 1) {
+								oWrap.style.left = 0;
+								num = 0;
+							}
+
+						}, 1500)
+							
+					});
+						
+				});
+				num ++;
+			}, 3000);
+			
+				
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="showbox">
+		<div id="wrap">
+			<img src="9-img/pic1.jpg" alt="">
+			<img src="9-img/pic2.jpg" alt="">
+			<img src="9-img/pic3.jpg" alt="">
+			<img src="9-img/pic4.jpg" alt="">
+			<img src="9-img/pic5.jpg" alt="">
+			<img src="9-img/pic1.jpg" alt="">
+		</div>
+		<div id="info">
+			<div>
+				<h1>离婚律师：第1集</h1>
+				<p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第2集</h1>
+				<p>2：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第3集</h1>
+				<p>3：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第4集</h1>
+				<p>4：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第5集</h1>
+				<p>5：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第1集</h1>
+				<p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

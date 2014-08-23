@@ -815,6 +815,24 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/9-3.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/9-3.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/9-3（有bug，待问）.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/9-3（有bug，待问）.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/9-img\/1.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -899,6 +917,61 @@
 		"initialSize": 42151,
 		"inputAbbreviatedPath": "\/9-img\/8.jpg",
 		"outputAbbreviatedPath": "\/9-img\/8.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/9-img\/pic1.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 96148,
+		"inputAbbreviatedPath": "\/9-img\/pic1.jpg",
+		"outputAbbreviatedPath": "\/9-img\/pic1.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/9-img\/pic2.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 103121,
+		"inputAbbreviatedPath": "\/9-img\/pic2.jpg",
+		"outputAbbreviatedPath": "\/9-img\/pic2.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/9-img\/pic3.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 90292,
+		"inputAbbreviatedPath": "\/9-img\/pic3.jpg",
+		"outputAbbreviatedPath": "\/9-img\/pic3.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/9-img\/pic4.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 85738,
+		"inputAbbreviatedPath": "\/9-img\/pic4.jpg",
+		"outputAbbreviatedPath": "\/9-img\/pic4.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/9-img\/pic5.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 97962,
+		"inputAbbreviatedPath": "\/9-img\/pic5.jpg",
+		"outputAbbreviatedPath": "\/9-img\/pic5.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
