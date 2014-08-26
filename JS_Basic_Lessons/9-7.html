@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>小球抖动后依次下落</title>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+		#wrap {
+			position: relative;
+			background: #eee;
+			width: 430px;
+			height: 670px;
+			margin: 50px auto;
+		}
+	</style>
+	<script>
+
+		function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
+
+		function shake ( obj, attr, endFn ) {
+
+			// if( !obj.shaked ) { return; }
+			var pos = parseInt( getStyle(obj, attr) );			// 有隐患的
+			
+			var arr = [];			// 20, -20, 18, -18 ..... 0
+			var num = 0;
+				
+			for ( var i=10; i>0; i-=2 ) {
+				arr.push( i, -i );
+			}
+			arr.push(0);
+
+			// obj.shaked = false;		
+			clearInterval( obj.shake );
+			obj.shake = setInterval(function (){
+				obj.style[attr] = pos + arr[num] + 'px';
+				num++;
+				if ( num === arr.length ) {
+					clearInterval( obj.shake );
+					// obj.shaked = true;
+					endFn && endFn();
+
+				}
+			}, 10);
+		}
+
+		function move(obj, attr, distance, step, frequency, endFn) {
+			// if(!obj.moved) return;
+			var startVal = parseInt(getStyle(obj, attr));
+			var times = 0;
+			// obj.moved = false;
+			step = distance > 0 ? step : -step;
+			clearInterval(obj.move);
+			obj.move = setInterval(function(){
+				obj.style[attr] = parseInt(getStyle(obj, attr)) + step + 'px';
+				times ++;
+				if(Math.abs(step * times) > Math.abs(distance)) {
+					clearInterval(obj.move);
+					obj.style[attr] = startVal + distance + 'px';
+					// obj.moved = true;
+					endFn && endFn();
+				}
+
+			}, frequency);
+		}
+
+		window.onload = function(){
+			var oWrap = document.getElementById('wrap'),
+				str = '',
+				len = 24,
+				arrImg = ['9-img/1.jpg', '9-img/2.jpg', '9-img/3.jpg', '9-img/4.jpg', '9-img/5.jpg'],
+				aDiv = oWrap.getElementsByTagName('div'),
+				num = 0,
+				timer = null;
+
+			for(var i=0; i<len; i++){
+				str += '<div style="position: absolute; top: ' + (Math.floor(i/6)*70+10) + 'px; left: ' + (i%6*70+10) + 'px; width: 60px; height: 60px; border-radius: 60px; background: url(' + arrImg[i%arrImg.length] + ')"></div>'
+			}
+			oWrap.innerHTML = str;
+
+			for(var i=0; i<aDiv.length; i++){
+				// aDiv[i].shaked = true;
+				// aDiv[i].moved = true;
+				aDiv[i].index = i;
+				aDiv[i].onmouseover = function(){
+					// this.style.transition = '0.2s';
+					// this.style.transform = 'scale(1.5)';
+					this.style.zIndex = '1';
+				}
+				aDiv[i].onmouseout = function(){
+					// this.style.transform = 'scale(1)';
+					this.style.zIndex = '0';
+				}
+			}
+
+			for(var i=0; i<aDiv.length; i++){
+				aDiv[i].shaked = true;
+				aDiv[i].moved = true;
+
+				aDiv[i].onclick = function(){
+
+					// for(var i=0; i<aDiv.length; i++){
+					// 	aDiv[i].style.transition = '0s';
+					// 	aDiv[i].style.transform = 'scale(1)';
+					// }
+
+					var arr = [];
+
+					arr.push(this.index);
+					if(this.index >= aDiv.length/2) {
+						for(var i=1; i<aDiv.length-this.index; i++){
+							arr.push(this.index - i, this.index + i);
+						}
+						for(var j=2*this.index- aDiv.length; j >= 0; j--){
+							arr.push(j);
+						}
+					} else {
+						for(var i=1; i<=this.index; i++){
+							arr.push(this.index - i, this.index + i);
+						}
+						for(var j=2*this.index+1; j<aDiv.length; j++){
+							arr.push(j);
+						}
+					}
+
+					timer = setInterval(function(){
+						if(num == arr.length) {
+							clearInterval(timer);
+						}
+						shake(aDiv[arr[num]], 'left', function(){
+							move(aDiv[arr[num]], 'top', 390, 40, 50);
+							
+							
+						})
+						num++;
+						
+					}, 200);
+					
+					
+
+				}
+			}
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap"></div>
+</body>
+</html>
