@@ -28,7 +28,7 @@
 			var arr = [];			// 20, -20, 18, -18 ..... 0
 			var num = 0;
 				
-			for ( var i=10; i>0; i-=2 ) {
+			for ( var i=20; i>0; i-=2 ) {
 				arr.push( i, -i );
 			}
 			arr.push(0);
@@ -44,7 +44,7 @@
 					endFn && endFn();
 
 				}
-			}, 10);
+			}, 5);
 		}
 
 		function move(obj, attr, distance, step, frequency, endFn) {
@@ -76,40 +76,29 @@
 				num = 0,
 				timer = null;
 
+			// 在页面中生成小球
 			for(var i=0; i<len; i++){
-				str += '<div style="position: absolute; top: ' + (Math.floor(i/6)*70+10) + 'px; left: ' + (i%6*70+10) + 'px; width: 60px; height: 60px; border-radius: 60px; background: url(' + arrImg[i%arrImg.length] + ')"></div>'
+				str += '<div style="position: absolute; top: ' + (Math.floor(i/6)*70+10) + 'px; left: ' + (i%6*70+10) + 'px; width: 60px; height: 60px; border-radius: 60px; transition: 0.2s; background: url(' + arrImg[i%arrImg.length] + ')"></div>'
 			}
 			oWrap.innerHTML = str;
 
-			for(var i=0; i<aDiv.length; i++){
-				// aDiv[i].shaked = true;
-				// aDiv[i].moved = true;
-				aDiv[i].index = i;
-				aDiv[i].onmouseover = function(){
-					// this.style.transition = '0.2s';
-					// this.style.transform = 'scale(1.5)';
-					this.style.zIndex = '1';
-				}
-				aDiv[i].onmouseout = function(){
-					// this.style.transform = 'scale(1)';
-					this.style.zIndex = '0';
+			function clearAll(){
+				for(var i=0; i<aDiv.length; i++){
+					aDiv[i].style.transition = '0s';
+					aDiv[i].style.transform = 'scale(1)';
 				}
 			}
 
 			for(var i=0; i<aDiv.length; i++){
-				aDiv[i].shaked = true;
-				aDiv[i].moved = true;
+				aDiv[i].index = i;
 
 				aDiv[i].onclick = function(){
 
-					// for(var i=0; i<aDiv.length; i++){
-					// 	aDiv[i].style.transition = '0s';
-					// 	aDiv[i].style.transform = 'scale(1)';
-					// }
+					clearAll();
 
+					// 先生成一个小球运动顺序组成的数组arr
 					var arr = [];
 
-					arr.push(this.index);
 					if(this.index >= aDiv.length/2) {
 						for(var i=1; i<aDiv.length-this.index; i++){
 							arr.push(this.index - i, this.index + i);
@@ -125,22 +114,33 @@
 							arr.push(j);
 						}
 					}
+						
+					var _this = this;
+					shake(this, 'left', function(){
+						move(_this, 'top', 390, 30, 50);
+					});
 
 					timer = setInterval(function(){
-						if(num == arr.length) {
-							clearInterval(timer);
-						}
 						shake(aDiv[arr[num]], 'left', function(){
-							move(aDiv[arr[num]], 'top', 390, 40, 50);
-							
-							
-						})
-						num++;
-						
-					}, 200);
-					
-					
+							move(aDiv[arr[num-1]], 'top', 390, 30, 50);
+							if(num == arr.length){
+								clearInterval(timer);
+							}
+						});
+						num ++;
+					}, 150);
 
+				}
+
+				aDiv[i].onmouseover = function(){
+
+					for(var i=0; i<aDiv.length; i++){
+						aDiv[i].style.transform = 'scale(1)';
+						aDiv[i].style.zIndex = '0';
+					}
+
+					this.style.transform = 'scale(1.5)';
+					this.style.zIndex = '1';
 				}
 			}
 			
