@@ -3,8 +3,204 @@
 <head>
 	<meta charset="UTF-8">
 	<title>新浪数码频道选项卡</title>
+	<style>
+		html, body, p, ul, h2 { margin: 0; padding: 0; }
+		img { border: 0; }
+		h2 { font-size: 14px; font-weight: normal; text-align: center;}
+		ul { overflow: hidden; position: relative; }
+		li { list-style: none; float: left; }
+		#wrap { background: #D6EFF7; border: 1px solid #73BDEF; margin: 50px auto; width: 800px; height: 280px; padding: 10px; position: relative; -overflow: hidden;}
+		.left > img { width: 250px; height: 220px; margin: 10px; margin-bottom: 2px; }
+		.left > p { margin-left: 10px; width: 250px; text-align: center; background: #d6eff7; line-height: 20px; font-size: 12px;}
+		#tabs { margin-left: 300px; }
+		#tabs li { background: #EFEFF7; padding: 6px 30px; margin-right: 15px; font-size: 12px; color: #087B00; border: 1px solid #A5DEF7; }
+		#newcoming, #geek { position: absolute; width: 820px; height: 265px; left: 0; top: 35px; background: #fff; display: none;}
+		#newcoming ul, #geek ul { width: 1800px;}
+		#newcoming ul img, #geek ul img { width: 160px; height: 150px; margin: 10px; margin-top: 0; margin-bottom: 5px; }
+		#newcoming ul p, #geek ul p { font-size: 12px; color: gray; width: 160px; margin: 5px 10px;}
+		#newcoming .nav, #geek .nav { position: absolute; width: 100px; top: 235px; width: 540px; left: 260px; }
+		.nav li { display: block; margin-right: 60px; font-weight: bold; position: relative; left: 200px; width: 20px; height: 20px; border: 1px solid #73BDEF; text-align: center; padding: 0 10px; cursor: pointer; z-index = 2;}
+		#newcoming .bullets, #geek .bullets {
+			position: absolute; top: 240px; left: 510px; width: 55px; -background: red; }
+		#geek .bullets { left: 525px; }
+		#newcoming .bullets li, #geek .bullets li { display: block; width: 10px; height: 10px; background-color: #fff; border: 1px solid #73BDEF; border-radius: 10px; margin: 0 2px;}
+		#newcoming .showbox, #geek .showbox { position: absolute; top: 10px; left: 270px; width: 500px;	width: 540px; height: 220px; overflow: hidden; }
+		.showbox ul { position: absolute; top: 0; left: 0; }
+	</style>
+	<script src = "miaov.js"></script>
+	<script>
+		window.onload = function(){
+			var oNewcoming = document.getElementById('newcoming'),
+				oGeek = document.getElementById('geek'),
+				oTabs = document.getElementById('tabs'),
+				aTabs = oTabs.getElementsByTagName('li');
+				aBullets1 = oNewcoming.getElementsByClassName('bullets')[0].getElementsByTagName('li'),
+				aBullets2 = oGeek.getElementsByClassName('bullets')[0].getElementsByTagName('li'),
+				aArrow1 = oNewcoming.getElementsByClassName('nav')[0].getElementsByTagName('li'),
+				aArrow2 = oGeek.getElementsByClassName('nav')[0].getElementsByTagName('li'),
+				aShowbox = document.getElementsByClassName('showbox'),
+				content1 = aShowbox[0].getElementsByTagName('ul')[0],
+				content2 = aShowbox[1].getElementsByTagName('ul')[1],
+				num = 0;
+
+
+			// 初始化
+			aTabs[0].style.background = '#fff';
+			oNewcoming.style.display = 'block';
+			aBullets1[0].style.background = '#A8A8A8';
+			aBullets2[0].style.background = '#A8A8A8';
+
+			//Tab页的切换
+			aTabs[0].onmouseover = function(){
+				for(var i=0; i<aTabs.length; i++){
+					aTabs[i].style.background = '#EFEFF7';
+				}
+				this.style.background = '#fff';
+				oNewcoming.style.display = 'block';
+				oGeek.style.display = 'none';
+			}
+			aTabs[1].onmouseover = function(){
+				for(var i=0; i<aTabs.length; i++){
+					aTabs[i].style.background = '#EFEFF7';
+				}
+				this.style.background = '#fff';
+				oNewcoming.style.display = 'none';
+				oGeek.style.display = 'block';
+			}
+
+			//箭头的点击事件
+			aArrow1[1].onclick = function(){
+				num++;
+				if(num == aBullets1.length){
+					num = aBullets1.length - 1;
+				}
+				doMove(content1, 'left', 30, -540*num, function(){
+					for(var i=0; i<aBullets1.length; i++){
+							aBullets1[i].style.background = '#fff';
+						}
+					aBullets1[num].style.background = '#A8A8A8';
+				});
+			}
+			aArrow1[0].onclick = function(){
+				num--;
+				if(num < 0){
+					num = 0;
+				}
+				doMove(content1, 'left', 30, -540*num, function(){
+					for(var i=0; i<aBullets1.length; i++){
+							aBullets1[i].style.background = '#fff';
+						}
+					aBullets1[num].style.background = '#A8A8A8';
+				});
+			}
+			
+			
+
+		}
+	</script>
 </head>
 <body>
-	
+	<div id="wrap">
+		<ul id="tabs">
+			<li>新品</li>
+			<li>极客</li>
+		</ul>
+		<div id="newcoming">
+			<div class="left">
+				<img src="9-img/pic1.jpg" />
+				<p>小鸟学飞</p>
+			</div>
+			<div class="showbox">
+				<ul>
+					<li>
+						<img src="9-img/1.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/2.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/3.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/4.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/5.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p></p>
+					</li>
+					<li>
+						<img src="9-img/6.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/7.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/8.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p></p>
+					</li>
+					<li>
+						<img src="9-img/9.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+				</ul>
+			</div>
+			<ul class="nav">
+				<li class="lf">&lt;</li>
+				<li class="rt">&gt;</li>
+			</ul>
+			<ul class="bullets">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="geek">
+			<div class="left">
+				<img src="9-img/pic2.jpg" />
+				<p>三星手机</p>
+			</div>
+			<div class="showbox">
+				<ul>
+					<li>
+						<img src="9-img/ad1.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/ad2.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+					<li>
+						<img src="9-img/ad3.png" alt="">
+						<h2>黑莓Bold Touch真机现身</h2>
+						<p>今天介绍的一款相机产品一向是因多种配色</p>
+					</li>
+				</ul>
+			</div>
+			<ul class="nav">
+				<li class="lf">&lt;</li>
+				<li class="rt">&gt;</li>
+			</ul>
+			<ul class="bullets">
+				<li></li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
