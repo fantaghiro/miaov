@@ -4,29 +4,15 @@
 	<meta charset="UTF-8">
 	<title>时间扩展版</title>
 	<style>
-		#div2, #div3 {
+		#div2 {
 			margin: 50px auto;
 			font-size: 0;
 			text-align: center;
 		}
-		#div2 img, #div3 img {
+		#div2 img{
 			width: 50px;
 			margin: 0;
 			padding: 0;
-		}
-		#div3 img {
-			float: left;
-		}
-		#div3 {
-			width: 400px;
-			height: 70px;
-			overflow: hidden;
-			position: relative;
-		}
-		.showbox {
-			position: absolute;
-			width: 50px;
-			height: 70px;
 		}
 	</style>
 	<script src="miaov.js"></script>
@@ -34,17 +20,9 @@
 		window.onload = function(){
 			var oDiv1 = document.getElementById('div1'),
 				oDiv2 = document.getElementById('div2'),
-				oDiv3 = document.getElementById('div3'),
 				aImg = oDiv2.getElementsByTagName('img'),
-				aShowbox = oDiv3.getElementsByTagName('div'),
 				arrImg = ['10-img/0.JPG', '10-img/1.jpg', '10-img/2.JPG', '10-img/3.JPG', '10-img/4.JPG', '10-img/5.jpg', '10-img/6.JPG', '10-img/7.JPG', '10-img/8.JPG', '10-img/9.JPG', '10-img/colon.JPG'];
 
-			for(var i=0; i<aShowbox.length; i++){
-				aShowbox[i].style.position = 'absolute';
-				aShowbox[i].style.top = '0';
-				aShowbox[i].style.left = 50*i + 'px';
-			}
-				
 			function fnTime(){
 				
 				var myTime = new Date(),
@@ -87,23 +65,7 @@
 
 			fnTime();
 			setInterval(fnTime, 1000);
-
-			setInterval(function(){
-				var time = new Date(),
-					num = time.getSeconds() % 10;
-					secImg = aShowbox[7].getElementsByTagName('img');
-					if(num == 0) num = 10;
-					secImg[0].src = arrImg[num - 1];
-					secImg[1].src = arrImg[num];
-				aShowbox[7].style.top = '0';
-				doMove(aShowbox[7], 'top', 10, -70);
-			}, 1000)
-
 			
-
-
-
-
 		}
 	</script>
 </head>
@@ -118,16 +80,6 @@
 		<img src="10-img/colon.JPG" alt="">
 		<img src="10-img/0.JPG" alt="">
 		<img src="10-img/0.JPG" alt="">
-	</div>
-	<div id="div3">
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/colon.JPG" alt=""><img src="10-img/colon.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/colon.JPG" alt=""><img src="10-img/colon.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
-		<div class="showbox"><img src="10-img/0.JPG" alt=""><img src="10-img/0.JPG" alt=""></div>
 	</div>
 </body>
 </html>

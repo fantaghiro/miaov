@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片时间（动画扩展版）</title>
+	<style>
+		html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+			display: inline-block;
+			width: 50px;
+			height: 70px; 
+			position: relative;
+			overflow: hidden;
+		}
+		img {
+			border: 0;
+			width: 50px;
+			height: 70px;
+		}
+		ul {
+			margin: 50px auto;
+			width: 400px;
+			font-size: 0;
+		}
+		li div {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+	<script src="miaov.js"></script>
+	<script>
+		window.onload = function(){
+			var oUl = document.getElementsByTagName('ul')[0],
+				aLi = document.getElementsByTagName('li');
+
+			function toTwo(n){
+				return n < 10 ? '0' + n : '' + n
+			}
+
+			function fnTime(){
+				var myTime = new Date(),
+					iHours = myTime.getHours(),
+					iMinutes = myTime.getMinutes(),
+					iSeconds = myTime.getSeconds(),
+					str = toTwo(iHours) + ':' + toTwo(iMinutes) + ':' + toTwo(iSeconds);
+
+				function fnFlip(li, idx){
+					var oDiv = li.getElementsByTagName('div')[0],
+						aImg = li.getElementsByTagName('img');
+
+					if (str.charAt(idx) == ':'){
+						aImg[0].src = '10-img/colon.jpg';
+						setTimeout(function(){
+							aImg[0].src = '10-img/colon2.jpg';
+						}, 500)
+					} else {
+						aImg[1].src = '10-img/' + str.charAt(idx) + '.JPG';
+						if(aImg[0].src != aImg[1].src) {
+							doMove(oDiv, 'top', 10, -70, function(){
+								aImg[0].src = aImg[1].src;
+								oDiv.style.top = 0 + 'px';
+							})
+						}
+					}
+				}
+
+				for(var i=0; i<aLi.length; i++){
+					fnFlip(aLi[i], i);
+				}
+	
+			}
+
+			setInterval(fnTime, 1000);
+
+		}
+	</script>
+</head>
+<body>
+	<ul>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/colon.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/colon.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+		<li>
+			<div>
+				<img src="10-img/0.JPG" alt="">
+				<img src="10-img/0.JPG" alt="">
+			</div>
+		</li>
+	</ul>
+</body>
+</html>
