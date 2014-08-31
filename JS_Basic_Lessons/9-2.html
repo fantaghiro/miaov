@@ -12,7 +12,8 @@ function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr]
 
 function shake ( obj, attr, endFn ) {
 
-	if( !obj.shaked ) { return; }
+	if( obj.shaked ) { return; }
+	obj.shaked = true;
 	var pos = parseInt( getStyle(obj, attr) );			// 有隐患的
 	
 	var arr = [];			// 20, -20, 18, -18 ..... 0
@@ -23,17 +24,15 @@ function shake ( obj, attr, endFn ) {
 		arr.push( i, -i );
 	}
 	arr.push(0);
-
-	obj.shaked = false;		
+	
 	clearInterval( obj.shake );
 	obj.shake = setInterval(function (){
 		obj.style[attr] = pos + arr[num] + 'px';
 		num++;
 		if ( num === arr.length ) {
 			clearInterval( obj.shake );
-			obj.shaked = true;
 			endFn && endFn();
-
+			obj.shaked = false;
 		}
 	}, 50);
 }
@@ -43,8 +42,6 @@ window.onload = function () {
 	
 	for ( var i=0; i<aImg.length; i++ ) {
 		aImg[i].style.left = 80+i*110 + 'px';
-
-		aImg[i].shaked = true;
 		
 		aImg[i].onmouseover = function () {
 			shake( this, 'top');

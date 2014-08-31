@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+img { width:100px; height:100px; position:absolute; border-radius:50%; }
+</style>
+
+
+</head>
+
+<body>
+
+<script src="miaov.js"></script>
+<script>
+var str = '';
+var n = 1;
+var arr = [ '9-img/01.jpg', '9-img/02.jpg', '9-img/03.jpg', '9-img/04.jpg', '9-img/05.jpg', '9-img/06.jpg' ];
+for (var i=0; i<4; i++) {
+	for (var j=0; j<8; j++) {
+		str += '<img style="top:'+ (20+i*110) +'px; left:' + (20+j*110) + 'px;" src="'+ arr[n%arr.length] +'" />';
+		n++;
+	}
+}
+document.body.innerHTML = str;
+
+var aImg = document.getElementsByTagName('img');
+
+for (var i=0; i<aImg.length; i++) {
+	aImg[i].index = i;
+	aImg[i].onclick = function () {
+		var arr = getArr( this.index );
+		var num = n = 0;
+		
+		var timer = setInterval(function() {
+			
+			// doMove( aImg[ arr[num] ], 'top', 22, target);
+			shake( aImg[ arr[num] ], 'left' , function() {
+				// alert( num );		// 注意，当第一个抖完以后，num这个数字已经不再是第0个了！！！
+				
+				var target = parseInt( getStyle( aImg[ arr[n] ], 'top' ) ) + 400;
+				doMove( aImg[ arr[n] ], 'top', 22, target);
+				
+				n++;
+			});
+			
+			num++;
+			if ( num == arr.length ) {
+				clearInterval( timer );
+			}
+		}, 50);
+		
+	};
+}
+function getArr( index ) {
+	var arr = [index];
+	var len = Math.max(index, aImg.length-1-index);
+	var a = b = index;
+	for (var i=0; i<len; i++) {
+		if (a > 0) {
+			arr.push(--a);
+		}
+		
+		if (b < aImg.length-1) {
+			arr.push(++b);
+		}
+	}
+	
+	return arr;
+}
+</script>
+
+</body>
+</html>
