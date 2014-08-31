@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body { background:#f1f1f1; }
+ul { margin:0; padding:0; list-style:none; }
+#tab { width:300px; border:1px solid #333; margin:20px auto 0; padding:10px; background:#fff; font-size:14px; font-family:微软雅黑; }
+#tab .nav { height:30px; }
+#tab .nav li { width:80px; height:30px; text-align:center; line-height:30px; margin-right:1px; float:left; background:#9FC; }
+#tab .nav .active { background:#066; color:#fff; }
+
+#tab .box { width:300px; height:90px; padding-top:1px; display:none; }
+#tab .box img { width:200px; height:89px; float:left; }
+#tab .box ul { width:100px; float:right; }
+#tab .box li { height:29px; line-height:29px; background:#f1f1f1; text-indent:20px; margin-bottom:1px; }
+#tab .box .active { background:#69C; color:#fff; }
+</style>
+
+</head>
+
+<body>
+
+<div id="tab">
+	<ul class="nav">
+		<li class="active">菜单一</li>
+		<li>菜单二</li>
+	</ul>
+	<div class="box" style="display:block;">
+		<img src="8-img/01.jpg" />
+		<ul>
+			<li class="active">图片1</li>
+			<li>图片2</li>
+			<li>图片3</li>
+		</ul>
+	</div>
+	<div class="box">
+		<img src="8-img/04.jpg" />
+		<ul>
+			<li class="active">图片4</li>
+			<li>图片5</li>
+			<li>图片6</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+var oTab = document.getElementById('tab');
+var oUl = oTab.getElementsByTagName('ul')[0];
+var aBtn = oUl.getElementsByTagName('li');
+var aDiv = oTab.getElementsByTagName('div');
+var num = iNow = 0;
+var arr = [
+					['8-img/01.jpg', '8-img/02.jpg', '8-img/03.jpg'],
+					['8-img/04.jpg', '8-img/05.jpg', '8-img/06.jpg']
+				];
+
+setInterval(function() {
+	num++;
+	if (num == 3) {
+		num = 0;
+		iNow = iNow == 0?1:0;
+	}
+	
+	// document.title = iNow + ':' + num;
+	var aLi = aDiv[iNow].getElementsByTagName('li');
+	var oImg = aDiv[iNow].getElementsByTagName('img')[0];
+	
+	// 父级li的变化
+	for (var i=0; i<aBtn.length; i++) {
+		aBtn[i].className = '';
+		aDiv[i].style.display = 'none';
+	}
+	aBtn[iNow].className = 'active';
+	aDiv[iNow].style.display = 'block';
+	
+	// 子级li的变化
+	for (var i=0; i<aLi.length; i++) {
+		aLi[i].className = '';
+	}
+	aLi[num].className = 'active';
+	oImg.src = arr[iNow][num];
+	
+}, 1500);
+
+
+</script>
+
+</body>
+</html>
