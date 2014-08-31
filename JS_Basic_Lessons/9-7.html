@@ -22,7 +22,7 @@
 
 		function shake ( obj, attr, endFn ) {
 
-			// if( !obj.shaked ) { return; }
+			if( obj.shaked ) { return; }
 			var pos = parseInt( getStyle(obj, attr) );			// 有隐患的
 			
 			var arr = [];			// 20, -20, 18, -18 ..... 0
@@ -33,14 +33,14 @@
 			}
 			arr.push(0);
 
-			// obj.shaked = false;		
+			obj.shaked = true;		
 			clearInterval( obj.shake );
 			obj.shake = setInterval(function (){
 				obj.style[attr] = pos + arr[num] + 'px';
 				num++;
 				if ( num === arr.length ) {
 					clearInterval( obj.shake );
-					// obj.shaked = true;
+					obj.shaked = false;
 					endFn && endFn();
 
 				}
@@ -48,10 +48,10 @@
 		}
 
 		function move(obj, attr, distance, step, frequency, endFn) {
-			// if(!obj.moved) return;
+			if(obj.moved) return;
 			var startVal = parseInt(getStyle(obj, attr));
 			var times = 0;
-			// obj.moved = false;
+			obj.moved = true;
 			step = distance > 0 ? step : -step;
 			clearInterval(obj.move);
 			obj.move = setInterval(function(){
@@ -60,7 +60,7 @@
 				if(Math.abs(step * times) > Math.abs(distance)) {
 					clearInterval(obj.move);
 					obj.style[attr] = startVal + distance + 'px';
-					// obj.moved = true;
+					obj.moved = false;
 					endFn && endFn();
 				}
 
@@ -74,6 +74,7 @@
 				arrImg = ['9-img/1.jpg', '9-img/2.jpg', '9-img/3.jpg', '9-img/4.jpg', '9-img/5.jpg'],
 				aDiv = oWrap.getElementsByTagName('div'),
 				num = 0,
+				n = 0,
 				timer = null;
 
 			// 在页面中生成小球
@@ -98,6 +99,7 @@
 
 					// 先生成一个小球运动顺序组成的数组arr
 					var arr = [];
+					arr.push(this.index);
 
 					if(this.index >= aDiv.length/2) {
 						for(var i=1; i<aDiv.length-this.index; i++){
@@ -115,20 +117,19 @@
 						}
 					}
 						
-					var _this = this;
-					shake(this, 'left', function(){
-						move(_this, 'top', 390, 30, 50);
-					});
+					
 
 					timer = setInterval(function(){
 						shake(aDiv[arr[num]], 'left', function(){
-							move(aDiv[arr[num-1]], 'top', 390, 30, 50);
-							if(num == arr.length){
-								clearInterval(timer);
-							}
+							move(aDiv[arr[n]], 'top', 390, 30, 50);
+							n++;
+							
 						});
 						num ++;
-					}, 150);
+						if(num == arr.length){
+							clearInterval(timer);
+						}
+					}, 50);
 
 				}
 
