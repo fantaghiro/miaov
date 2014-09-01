@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<script>
+
+var len = 19;
+var cen = Math.floor(len/2);
+var str = '';
+
+for (var i=0; i<len; i++) {
+	if ( i <= cen ) {
+		str += '<div style="top:'+ i*100 +'px; left:'+ i*100 +'px; position:absolute; width:100px; height:100px; background:red;"></div>';
+	}
+	else {
+		// alert(i);
+		// 4-3	1*100
+		// 4-4	0*100
+		str += '<div style="top:'+ (len-1-i)*100 +'px; left:'+ i*100 +'px; position:absolute; width:100px; height:100px; background:red;"></div>';
+	}
+}
+document.body.innerHTML = str;
+
+</script>
+
+</body>
+</html>

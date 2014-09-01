@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{ margin:0; padding:0; list-style:none; font-family:"微软雅黑";}
+#friend{ width:300px; margin:50px auto 0; border-left:1px solid #ccc; border-right:1px solid #dadada;}
+#friend h2{ width:270px; height:35px; line-height:35px; padding-left:30px; background:url(img/icon_lft.png) 10px no-repeat #74a400; color:#fff; font-size:16px; font-weight:100; cursor:pointer;}
+#friend h2.hover{ background:url(img/icon.png) 10px no-repeat #74a400;}
+#friend li{ margin-bottom:1px;}
+#friend li ul li{ width:270px; padding-left:30px; height:30px; line-height:30px; border-bottom:1px solid #ccc; cursor:pointer;}
+/*#friend li ul li:hover,#friend li ul li.hover{ background:#EFF4E0;}*/
+#friend li ul .hover{ background:#EFF4E0;}
+#friend li ul .active{ background:#FFC;}
+#friend li ul{ display:none;}
+#friend li ul.hover{ display:block;}
+</style>
+<script>
+window.onload = function (){
+	var oUl = document.getElementById('friend');
+	var aLi = oUl.getElementsByTagName('li');
+	var aH = oUl.getElementsByTagName('h2');
+	var aUl = oUl.getElementsByTagName('ul');
+	var aLi = null;
+	var arrLi = [];
+	
+	// #friend ul li {}
+	for ( var i=0; i<aUl.length; i++ ) {
+		aLi = aUl[i].getElementsByTagName('li');
+		for ( var j=0; j<aLi.length; j++ ) {
+			arrLi.push( aLi[j] );
+		}
+	}
+	// alert( arrLi.length );
+	
+	for ( var i=0; i<aH.length; i++ ) {
+		
+		aH[i].index = i;
+		
+		aH[i].onclick = function () {
+			
+			for ( var i=0; i<aH.length; i++ ) {
+				if ( this != aH[i] ) {
+						// aH[i].className = '';
+						// aUl[i].className = '';
+				}
+			}
+			
+			if ( this.className == '' ) {
+				this.className = 'hover';
+				aUl[this.index].className = 'hover';
+			} else {
+				this.className = '';
+				aUl[this.index].className = '';
+				
+				var aLi = aUl[this.index].getElementsByTagName('li');
+				for ( var i=0; i<aLi.length; i++ ) {
+					aLi[i].className = '';
+					aLi[i].onOff = true;
+				}
+				
+			}
+			
+			
+		};
+	}
+	
+	for ( var i=0; i<arrLi.length; i++ ) {
+		
+		arrLi[i].onOff = true;
+		
+		arrLi[i].onmouseover = function () {
+			if ( this.onOff ) {
+				this.className = 'active';
+			}
+		};
+		arrLi[i].onmouseout = function () {
+			if ( this.onOff ) {
+				this.className = '';
+			} else {
+				this.className = 'hover';
+			}
+		};
+		
+		arrLi[i].onclick = function () {
+			
+			for ( var i=0; i<arrLi.length; i++ ) {
+				if ( this != arrLi[i] ) {
+					arrLi[i].className = '';
+					arrLi[i].onOff = true;
+				}
+			}
+			
+			if ( this.onOff ) {
+				this.className = 'hover';
+				this.onOff = false;
+			} else {
+				this.className = '';
+				this.onOff = true;
+			}
+		};
+	}
+		
+}
+</script>
+</head>
+<body>
+<ul id="friend">
+	<li>
+    	<h2>我的好友</h2>
+      <ul>
+        <li>王一一</li>            
+        <li>李文化</li>
+        <li>高发展</li>
+      </ul>
+    </li>
+    <li>
+    	<h2>我的同事</h2>
+        <ul>
+        	<li>黄腾达</li>
+        	<li>刘和谐</li>
+        	<li>邢如意</li>
+        	<li>沈从文</li>
+        	<li>张曼玉</li>
+        </ul>
+    </li>
+    <li>
+    	<h2>我的同学</h2>
+        <ul>
+        	<li>郭文明</li>            
+        	<li>尹调整</li>
+        	<li>郑安全</li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

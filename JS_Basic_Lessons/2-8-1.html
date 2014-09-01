@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8" />
+<style type="text/css">
+	body { background: #ccc; }
+	p { text-align:center; }
+	input { font-size:30px; color:gray; padding:20px; box-shadow:3px 3px 13px rgba(0,0,0,0.3); }
+	p .active { border:2px solid #667ca1; color:#667ca1;}
+	#box { width: 800px; margin: 0 auto; border:1px solid #fff; overflow: hidden; border-bottom:none; border-right:1px solid #999; box-shadow:3px 3px 13px rgba(0,0,0,0.3); }
+	#box ul { padding:0; margin:0; float: left; width: 200px; }
+	#box li { list-style: none; height: 99px; border-bottom:1px solid #999; background: #f1f1f1; text-align: center; cursor: pointer; font:40px/99px 'arial'; }
+	#box .active { background: #667ca1; color:#fff; }
+	#box img { float: left; width: 400px; height: 300px; }
+</style>
+</head>
+
+<body>
+	
+	<p>
+		<input type="button" value="下一张" />
+		<input class="active" type="button" value="交叉走" />
+		<input type="button" value="同步走" />
+	</p>
+	<div id="box">
+		<ul>
+			<li class="active">0</li>
+			<li>1</li>
+			<li>2</li>
+		</ul>
+		<img src="2-img/r1.jpg" />
+		<ul>
+			<li>3</li>
+			<li>4</li>
+			<li class="active">5</li>
+		</ul>
+	</div>
+
+<script>
+var aBtn = document.getElementsByTagName('input');
+var aLi = document.getElementsByTagName('li');
+var oImg = document.getElementsByTagName('img')[0];
+var arr = [ '2-img/r1.jpg', '2-img/r2.jpg', '2-img/r3.jpg' ];
+var iNow = 0;
+var onOff = true;
+
+aBtn[0].onclick = function () {
+	// iNow => 3
+	// alert( iNow );
+	
+	// 在交叉状态下，右侧的li点了以后 ，出问题
+	if ( iNow > 2 && onOff  ) {
+		// 3 2
+		// 4 1
+		// 5 0
+		iNow = 5-iNow;
+	}
+	
+	iNow++;
+	iNow%=3;
+	
+	// alert( iNow );	// 1
+	onOff ? cross() : synch();
+};
+aBtn[1].onclick = function () {
+	this.className = 'active';
+	aBtn[2].className = '';
+	
+	onOff = true;
+	cross();
+};
+aBtn[2].onclick = function () {
+	this.className = 'active';
+	aBtn[1].className = '';
+	
+	onOff = false;
+	synch();
+};
+
+for (var i=0; i<aLi.length; i++) {
+	aLi[i].index = i;
+	aLi[i].onclick = function () {
+		iNow = this.index;
+		
+		if ( onOff  ) {
+			// 交叉
+			cross();
+		}
+		else {
+			// 同步
+			synch();
+		}
+	};
+}
+
+function synch() {
+	clearClass();
+	
+	if ( iNow < 3 ) {
+		aLi[iNow].className = 'active';
+		aLi[iNow+3].className = 'active';
+	}
+	else {
+		aLi[iNow].className = 'active';
+		aLi[iNow-3].className = 'active';
+	}
+	
+	oImg.src = arr[ iNow%3 ];
+}
+
+function cross () {
+	clearClass();
+	aLi[iNow].className = 'active';
+	aLi[5-iNow].className = 'active';
+	
+	if ( iNow < 3 ) {
+		oImg.src = arr[ iNow ];
+	}
+	else {
+		oImg.src = arr[ 5-iNow ];
+	}
+}
+
+function clearClass() {
+	for (var i=0; i<aLi.length; i++) {
+		aLi[i].className = '';
+	}
+}
+
+</script>
+
+</body>
+</html>
