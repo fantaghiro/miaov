@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文字搬运工</title>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			background: #C0C0C0;
+		}
+		#wrapper {
+			margin: 50px auto;
+			width: 800px;
+			background: #fff;
+			overflow: hidden;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		textarea {
+			background: #EFEFD6;
+			border: none;
+			width: 320px;
+			height: 220px;
+			float: left;
+			padding: 10px;
+			font-size: 18px;
+		}
+		#right {
+			width: 320px;
+			height: 220px;
+			background: #63EFF7;
+			float: right;
+			padding: 10px;
+		}
+		#center {
+			float: left;
+			width: 120px;
+			text-align: center;
+		}
+		#center a {
+			display: block;
+			color: #fff;
+			background: #F76300;
+			text-decoration: none;
+			padding: 10px;
+			margin: 0 5px;
+			font-family: '微软雅黑';
+		}
+		#center p {
+			font-size: 20px;
+			font-family: '微软雅黑';
+		}
+		#center ul {
+			margin: 0;
+			padding: 0;
+			font-size: 0;
+			opacity: 0;
+		}
+		li {
+			list-style: none;
+			display: inline-block;
+			width: 8px;
+			height: 10px;
+			background: #E7A521;
+			margin: 2px;
+		}
+	</style>
+	<script src="miaov.js"></script>
+	<script>
+		window.onload = function(){
+			var oBtn = document.getElementsByTagName('a')[0],
+				oLeft = document.getElementById('left'),
+				oRight = document.getElementById('right'),
+				oP = document.getElementsByTagName('p')[0],
+				oCurrent = document.getElementById('current'),
+				oAll = document.getElementById('all'),
+				oProgress = document.getElementById('progress'),
+				timer = null;
+
+			oBtn.onclick = function(){
+				if(oLeft.value == ''){
+					alert('请在左侧输入一些文字后再点击按钮');
+					return;
+				}
+				var str = oLeft.value,
+					arr = str.split(''),
+					m = n = 0,
+					aLi = oProgress.getElementsByTagName('li');
+				oAll.innerHTML = arr.length;
+				oCurrent.innerHTML = 0;
+				this.style.opacity = 0.5;
+				oRight.innerHTML = '';
+				opacity(oProgress, 10, 100);
+				timer = setInterval(function(){
+					var lf = oLeft.value;
+					oLeft.value = lf.substring(1);
+					oRight.innerHTML += arr[m];
+					m ++;
+					oCurrent.innerHTML = m;
+
+					for(var i=0; i<aLi.length; i++){
+						aLi[i].style.background = '#E7A521';
+					}
+					aLi[n].style.background = 'red';
+					n ++;
+					if(n == aLi.length) {
+						n = 0;
+					}
+
+					if(m == arr.length){
+						clearInterval(timer);
+						oBtn.style.opacity = 1;
+						opacity(oProgress, 10, 0);
+					}
+				}, 80);
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<textarea id="left"></textarea>
+		<div id="center">
+			<a href="javascript:">把文字右移</a>
+			<p><span id="current">0</span>/<span id="all">0</span></p>
+			<ul id="progress">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="right"></div>
+	</div>
+</body>
+</html>
