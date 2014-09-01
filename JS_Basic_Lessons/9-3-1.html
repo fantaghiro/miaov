@@ -1,0 +1,114 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>点击加分效果-可重复点击</title>
+<style>
+#box { width:500px; height:50px; border:1px solid #333; position:relative; margin:450px auto 0; }
+#box span { width:50px; height:50px; text-align:center; line-height:50px; font-size:30px; position:absolute; top:0; z-index:2; opacity:1; /* 一定得添加 */ }
+#box p { margin:0; width:500px; width:0; height:50px; z-index:1; background:#60F; position:absolute; top:0; left:0; opacity:0; }
+</style>
+</head>
+
+<body>
+
+<div id="box">
+
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+	<span>+1</span>
+
+	<p></p>
+</div>
+
+<script src="miaov.js"></script>
+<script>
+var oDiv = document.getElementById('box');
+var aSpan = document.getElementsByTagName('span');
+var oP = oDiv.getElementsByTagName('p')[0];
+var onOff = true;
+
+for (var i=0; i<aSpan.length; i++) {
+	aSpan[i].style.left = i * 50 + 'px';
+}
+
+oDiv.onclick = function () {
+	
+	if( !onOff ) return;
+	onOff = false;
+	
+	var iNow = num = n = 0;
+	var timer = setInterval(function () {
+		
+		doMove( aSpan[iNow], 'top', 13, -300 , function () {
+			num++;
+			if ( num == aSpan.length ) {
+				// alert('最后一个top结束了');
+				endFn('top');
+			}
+		});
+		
+		opacity( aSpan[iNow], 2, 0  , function () {
+			n++;
+			if ( n == aSpan.length ) {
+				// alert('最后一个opacity结束了');
+				endFn('opacity');
+			}
+		});
+		
+		// 如何找到最后一个运动结束？
+		// 到底是哪个一运动结束的呢？
+		
+		iNow++;
+		if ( iNow == aSpan.length ) {
+			clearInterval( timer );
+		}
+	}, 80);
+	
+	doMove( oP, 'width', 13, 500 );
+	opacity( oP,  3, 100 , function() {
+		opacity( oP, 3, 0 , function() {
+			oP.style.width = 0;
+			//alert(1);
+		});
+	});
+	
+};
+
+var arr = [];
+function  endFn(attr) {
+	arr.push(attr);
+	
+	// alert( arr.length );
+	var iNow = 0;
+	
+	if ( arr.length%2 == 0 ) {
+	// if ( arr.length == 2 ) {
+		
+		for (var i=0; i<aSpan.length; i++) {
+			aSpan[i].style.top = 0;
+			opacity(aSpan[i], 3, 100, function() {
+				iNow++;
+				if (iNow == aSpan.length) {
+					onOff = true;
+				}
+			});
+		}
+		// alert(2);
+		// arr.length = 0;		清空数组
+		// onOff = true;
+	}
+}
+
+</script>
+
+</body>
+</html>

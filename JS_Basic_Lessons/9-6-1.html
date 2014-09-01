@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>图片自动切换-只用两个img标签</title>
+<style>
+body { background:#f1f1f1; }
+#box { width:400px; height:300px; border:10px solid #fff; position:relative; top:100px; margin:0 auto; overflow:hidden; border-radius:10px; box-shadow:3px 3px 13px rgba(0,0,0,0.1); }
+#box .img { width:800px; height:300px; position:absolute; top:0; left:0; }
+#box img { width:400px; height:300px; float:left; }
+#box a { width:50px; height:50px; background:rgba(0,0,0,0.2); color:#fff; text-align:center; line-height:50px; position:absolute; top:125px; text-decoration:none; z-index:2; border-radius:50%; font-size:30px; transition:0.3s; }
+#box .prev { left:10px; }
+#box .next { right:10px; }
+#box a:hover {  background:rgba(0,0,0,0.7); transform:scale(1.3); }
+#box ul { position:absolute; bottom:10px; left:150px; z-index:3; padding:0; margin:0; }
+#box li { width:20px; height:20px; background:#fff; float:left; border-radius:50%; margin-right:8px; list-style:none; cursor: pointer; }
+#box .active { background:yellow; }
+</style>
+</head>
+
+<body>
+
+<div id="box">
+	<a class="prev" href="javascript:;"><</a>
+	<a class="next" href="javascript:;">></a>
+	<ul>
+		<li class="active"></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<div class="img">
+		<img src="9-img/01.jpg" />
+		<img src="9-img/01.jpg" />
+	</div>
+</div>
+
+<script src="miaov.js"></script>
+<script>
+var oDiv = document.getElementById('box');
+var aA = oDiv.getElementsByTagName('a');
+var oImgDiv = oDiv.getElementsByTagName('div')[0];
+var aLi = oDiv.getElementsByTagName('li');
+var aImg = oImgDiv.getElementsByTagName('img');
+var arr = [ '9-img/01.jpg', '9-img/02.jpg', '9-img/03.jpg', '9-img/04.jpg' ];
+var iNow = num = 0;
+var onOff = true;
+
+aA[0].onclick = function () {
+	if ( !onOff ) { return; }
+	onOff = false;
+	
+	iNow--;
+	if ( iNow == -1 ) {
+		iNow = arr.length-1;
+	}
+	
+	fnSlide(-1);
+};
+
+aA[1].onclick = function () {
+	if ( !onOff ) { return; }
+	onOff = false;
+	
+	iNow++;
+	if ( iNow == arr.length ) {
+		iNow = 0;
+	}
+	
+	fnSlide(1);
+};
+
+for (var i=0; i<aLi.length; i++) {
+	aLi[i].index = i;
+	aLi[i].onclick = function () {
+		
+		if ( !onOff || this.index == iNow) { return; }
+		onOff = false;
+		
+		// this.index
+		// alert( num );
+		if ( this.index > num ) {
+			iNow = this.index;
+			fnSlide(1);
+		}
+		if ( this.index < num ) {
+			iNow = this.index;
+			fnSlide(-1);
+		}
+	};
+}
+
+function fnSlide(n) {
+	
+	for (var i=0; i<aLi.length; i++) {
+		aLi[i].className = '';
+	}
+	aLi[iNow].className = 'active';
+	
+	if ( n < 0 ) {
+		// 左边点击以后
+		aImg[0].src = arr[iNow];
+		aImg[1].src = arr[num];
+		oImgDiv.style.left = '-400px';
+		doMove(oImgDiv, 'left', 34, 0, function() { onOff = true; });
+	}
+	
+	if ( n > 0 ) {
+		// 右边点击以后
+		aImg[0].src = arr[num];
+		aImg[1].src = arr[iNow];
+		oImgDiv.style.left = 0;
+		doMove(oImgDiv, 'left', 34, -400, function() { onOff = true; });
+	}
+	
+	num = iNow;
+}
+
+</script>
+
+
+</body>
+</html>
