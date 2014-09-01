@@ -64,6 +64,26 @@
 				oInfo = document.getElementById('info'),
 				aDiv = oInfo.getElementsByTagName('div');
 
+			fnTab();  
+
+			function fnTab(){
+				setTimeout(function(){				
+
+					doMove(aDiv[num], 'top', 20, 0, function(){
+						num++;
+						if(num == aDiv.length) {
+							num = 1;
+							oWrap.style.left = 0;
+						}
+						doMove(oWrap, 'left', 20, -600*num, function(){
+							doMove(aDiv[num], 'top', 20, -97);
+							fnTab();
+						})
+					})					
+				}, 2000)
+			}
+
+				
 									
 		}
 	</script>
