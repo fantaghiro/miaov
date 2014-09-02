@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>随机图片滚动</title>
+	<style>
+		html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		ul {
+			width: 220px;
+			margin: 50px auto;
+		}
+		li {
+			display: inline-block;
+			width: 100px;
+			height: 50px;
+			font-size: 0;
+			overflow: hidden;
+			position: relative;
+		}
+		div {
+			position: absolute;
+			top: 0px;
+			left: 0;
+		}
+	</style>
+	<script src="miaov.js"></script>
+	<script>
+		window.onload = function(){
+
+			var aLi = document.getElementsByTagName('li');
+
+			for(var i=0; i<aLi.length; i++){
+				fnSlide(aLi[i]);
+			}
+
+			function fnSlide(li){
+				var oDiv = li.getElementsByTagName('div')[0];
+
+				function fnOneSlide(){
+					setTimeout(function(){
+						doMove(oDiv, top, 10, -50, function(){
+							setTimeout(function(){
+								doMove(oDiv, top, 10, 0, fnOneSlide);
+							}, Math.round(Math.random() * 3000 + 2000))
+						});
+					}, Math.round(Math.random() * 3000 + 2000))
+				}
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<ul>
+		<li>
+			<div><img src="12-img/1.jpg"><img src="12-img/2.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/3.jpg"><img src="12-img/4.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/5.jpg"><img src="12-img/6.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/7.jpg"><img src="12-img/8.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/9.jpg"><img src="12-img/10.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/11.jpg"><img src="12-img/12.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/13.jpg"><img src="12-img/14.jpg"></div>
+		</li>
+		<li>
+			<div><img src="12-img/15.jpg"><img src="12-img/16.jpg"></div>
+		</li>
+	</ul>
+</body>
+</html>
