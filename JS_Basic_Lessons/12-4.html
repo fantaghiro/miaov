@@ -73,7 +73,7 @@ body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select
 			}
 
 			function qqCreate(){
-				oQQ.innerHTML = '<img style = "position: absolute; top: 0; left: ' + Math.round(Math.random() * 776) + 'px" src = "' + arr[0]+ ' "/>';
+				oQQ.innerHTML = '<img style = "position: absolute; top: 0; left: ' + Math.round(Math.random() * 776) + 'px" src = "' + arr[Math.round(Math.random() * (arr.length - 1))]+ ' "/>';
 			}
 
 			function qqDrop(endFn){
