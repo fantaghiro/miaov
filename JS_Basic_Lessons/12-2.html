@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义字体形状</title>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+		#wrap {
+			background: url(12-img/bg.jpg) 0 0 no-repeat;
+			width: 556px;
+			height: 535px;
+			margin: 10px auto;
+			position: relative;
+			display: block;
+		}
+		#showbox {
+			position: absolute;
+			top: 100px;
+			left: 10px;
+			height: 270px;
+			width: 385px;
+			display: block;
+			font-size: 16px;
+			overflow: auto;
+		}
+		textarea {
+			border: none;
+			position: absolute;
+			width: 385px;
+			height: 75px;
+			left: 10px;
+			top: 415px;
+			font-size: 16px;
+		}
+		select {
+			position: absolute;
+			top: 381px;
+			left: 5px;
+		}
+		input {
+			position: absolute;
+			top: 505px;
+			left: 320px;
+			width: 80px;
+			cursor: pointer;
+		}
+		#showbox div {
+			width: 20px;
+			display: inline-block;
+			font-size: 16px;
+			margin: 2px 0;
+		}
+		div img {
+			width: 16px;
+			height: 16px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oShowbox = document.getElementById('showbox'),
+				oSelect = document.getElementsByTagName('select')[0],
+				oTextarea = document.getElementsByTagName('textarea')[0],
+				oBtn = document.getElementsByTagName('input')[0],
+				json = {
+					'balloon': '12-img/balloon.png',
+					'love': '12-img/heart.gif',
+					'knife': '12-img/knife.gif',
+					'jiong': '12-img/jiong.gif',
+					'shuai': '12-img/shuai.gif'
+				};
+
+			oBtn.onclick = function(){
+				var str = oTextarea.value;
+				if(str == '') {
+					alert('请在下面的输入框中输入文字后点击发送。');
+				}
+
+				if( oSelect.value == 'default' ) {
+					oShowbox.innerHTML += str + '<br/>';
+					oTextarea.value = '';
+				}
+
+				for (attr in json) {
+					useFont(attr, json[attr], str);
+				}
+			}
+
+		function useFont(fontStyle, url, str) {
+
+			if(oSelect.value == fontStyle){
+				var arr = str.split('');
+				str = '';
+				for(var i=0; i<arr.length; i++) {
+					
+					str += '<div><img src = "' + url + '"><span>' + arr[i] + '<span></div>'
+				}
+				oShowbox.innerHTML += str + '<br/>';
+				oTextarea.value = '';
+			}
+
+		}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="showbox">
+			
+		</div>
+		<select name="fontStyle" id="fontStyle">
+			<option value="balloon">气球字体</option>
+			<option value="love">表白字体</option>
+			<option value="knife">砍刀字体</option>
+			<option value="jiong">囧人字体</option>
+			<option value="shuai">衰人字体</option>
+			<option value="default" selected>默认字体</option>
+		</select>
+		<textarea></textarea>
+		<input type="button" value="发送">
+	</div>
+</body>
+</html>
