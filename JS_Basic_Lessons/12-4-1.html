@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>消除QQ表情游戏</title>
+<style>
+body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select: none; }
+#box { width:800px; height:450px; border:1px solid #066; background:#FFF; margin:20px auto 0; position:relative; top:0; left:0; }
+#fraction { width:130px; border:1px solid #066; position:relative; top:-1px; left:-152px; background:#FFC; padding:10px; }
+#fraction p { margin:0; font-family:微软雅黑; font-size:16px; line-height:30px; }
+
+#alert { text-align:center; }
+</style>
+
+<script>
+eval(function(p,a,c,k,e,r){e=function(c){return(c<62?'':e(parseInt(c/62)))+((c=c%62)>35?String.fromCharCode(c+29):c.toString(36))};if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'([a-hj-moq-wyzA-Z]|1\\w)'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('c getId(X){F s.y(X)}c getTag(Y,Z){F Y.G(Z)}c 13(a,h,o,f,k){o=z(l(a,h))<f?o:-o;q(a.A);a.A=L(c(){b e=z(l(a,h))+o;r(e>f&&o>0||e<f&&o<0){e=f}a.B[h]=e+\'M\';r(e==f){q(a.A);k&&k()}},30)}c l(a,h){F a.15?a.15[h]:getComputedStyle(a)[h]}c t(a,h,k){r(a.N)F;a.N=16;b 17=z(l(a,h));b C=[];b m=0;b A=null;for(b i=12;i>0;i-=2){C.18(i,-i)}C.18(0);q(a.t);a.t=L(c(){a.B[h]=17+C[m]+\'M\';m++;r(m===C.19){q(a.t);k&&k();a.N=1a}},50)}c j(a,n,f,k){n=u.O(l(a,\'j\')*H)<f?n:-n;q(a.j);a.j=L(c(){b e=u.O(l(a,\'j\')*H)+n;r(e>f&&n>0||e<f&&n<0){e=f}a.B.1b=\'1c(j:\'+e+\')\';a.B.j=e/H;r(e==f){q(a.j);k&&k()}},30)}window.onload=c(){b D=s.y(\'D\');b P=s.y(\'qq\');b Q=s.y(\'Q\');b E=Q.G(\'p\');b 1e=s.y(\'1f\');b v=1e.G(\'input\')[0];b m=1;b R=0;b I=0;b S=z(l(D,\'S\'));b T=z(l(D,\'T\'));b U=[\'d/1.g\',\'d/2.g\',\'d/3.g\',\'d/4.g\',\'d/5.g\',\'d/6.g\',\'d/7.g\',\'d/8.g\',\'d/9.g\',\'d/10.g\',\'d/11.g\'];v.onclick=J;c J(){v.1g=16;v.1h=\'游戏进行中……\';b x=u.round(u.1i()*(S-24));b n=u.O(u.1i()*U.19);b V=s.G(\'d\');P.w=\'<d B="1b:1c(j:H); j:1; position:absolute; W:0px; 1k:\'+x+\'M;" 1l="\'+U[n]+\'" />\';13(V[0],\'W\',m,T-24,c(){E[1].w=\'失分：\'+(++I)+\' 分\';r(I<10){t(D,\'W\');J()}else{P.w=\'\';1f(\'失败了~~重新开始吧！\');m=1;R=0;I=0;E[1].w=\'失分：0 分\';E[0].w=\'得分：0 分\';v.1g=1a;v.1h=\'开始游戏\'}});V[0].onmousedown=c(){b K=this;K.1l=\'d/qq.g\';q(K.A);E[0].w=\'得分：\'+(++R)+\' 分\';t(K,\'1k\',c(){m++;J()})}}};',[],84,'||||||||||obj|var|function|img|speed|target|png|attr||opacity|endFn|getStyle|num||dir||clearInterval|if|document|shake|Math|oBtn|innerHTML||getElementById|parseInt|timer|style|arr|box|aP|return|getElementsByTagName|100|losePoints|createImg|that|setInterval|px|onOff|floor|QQ|fraction|score|width|height|arrQQ|aImg|top|id|parent|tag||||doMove||currentStyle|true|pos|push|length|false|filter|alpha||oAlert|alert|disabled|value|random||left|src'.split('|'),0,{}))
+</script>
+</head>
+
+<body>
+
+<div id="alert">
+	<h2>你的鼠标有多快？</h2>
+  <p>游戏说明：点击“开始游戏”，随机掉下QQ表情，点中它，千万别让它掉下去！！</p>
+  <input type="button" value="开始游戏" />
+</div>
+
+<div id="box">
+	<div id="fraction">
+  	<p>得分：0 分</p>
+  	<p>失分：0 分</p>
+  </div>
+  <div id="qq"></div>
+</div>
+
+</body>
+</html>
