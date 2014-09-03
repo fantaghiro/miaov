@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>消除QQ表情游戏</title>
+<style>
+body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select: none; }
+#box { width:800px; height:450px; border:1px solid #066; background:#FFF; margin:20px auto 0; position:relative; top:0; left:0; }
+#fraction { width:130px; border:1px solid #066; position:relative; top:-1px; left:-152px; background:#FFC; padding:10px; }
+#fraction p { margin:0; font-family:微软雅黑; font-size:16px; line-height:30px; }
+#alert { text-align:center; }
+#qq {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 800px;
+	height: 450px;
+}
+</style>
+<script src = "miaov.js"></script>
+<script>
+	
+	window.onload = function(){
+
+		var oBtn = document.getElementById('alert').getElementsByTagName('input')[0],
+			aScore = document.getElementById('fraction').getElementsByTagName('p'),
+			score1 = score2 = 0,
+			oBox = document.getElementById('box'),
+			oQQ = document.getElementById('qq'),
+			arr = ['12-img/1.png', '12-img/2.png', '12-img/3.png', '12-img/4.png', '12-img/5.png', '12-img/6.png', '12-img/7.png', '12-img/8.png', '12-img/9.png', '12-img/10.png', '12-img/11.png'],
+			dropSpeed = 1;
+
+		oBtn.onclick = function(){
+
+			this.value = '游戏进行中...';
+			this.style.color = '#808080';
+			this.style.background = '#fff';
+			this.style.opacity = '0.5';
+			this.disabled = 'disabled';
+
+			fnQQ();
+
+			function fnQQ(){
+				qqCreate();
+				qqDrop(fnQQ);
+				
+			}
+
+			function checkScore(){
+				if(score1 == 25) {
+					alert('真厉害！你已经通过了考验！');
+					init();
+					return true;
+				}
+				if(score2 == 5) {
+					alert('真遗憾……你的鼠标太慢啦！');
+					init();
+					return true;
+				}
+			}
+
+			function init(){
+				oBtn.value = '开始游戏';
+				oBtn.style.color = '#000';
+				oBtn.style.background = '#eee';
+				oBtn.style.opacity = '1';
+				oBtn.disabled = '';
+				oQQ.innerHTML = '';
+				aScore[0].innerHTML = '得分：0 分';
+				aScore[1].innerHTML = '失分：0 分';
+				dropSpeed = 1;
+				score1 = score2 = 0;
+			}
+
+			function qqCreate(){
+				oQQ.innerHTML = '<img style = "position: absolute; top: 0; left: ' + Math.round(Math.random() * 776) + 'px" src = "' + arr[0]+ ' "/>';
+			}
+
+			function qqDrop(endFn){
+				var icon = oQQ.getElementsByTagName('img')[0];
+				dropSpeed += 0.8;
+				doMove(icon, 'top', dropSpeed, 426, function(){
+					oQQ.innerHTML = '';
+					score2 ++;
+					aScore[1].innerHTML = '失分：' + score2 + ' 分';
+
+					shake(oBox, 'top', function(){	
+						
+						if(checkScore()) {
+							return;
+						}		
+						endFn && endFn();
+						
+					});;
+				});
+				icon.onmouseover = function(){
+					clearInterval(icon.timer);
+					icon.src = '12-img/qq.png';
+		
+					shake(icon, 'left', function(){
+						oQQ.innerHTML = '';						
+						score1 ++;
+						aScore[0].innerHTML = '得分：' + score1 + ' 分';
+						if(checkScore()) {
+							return;
+						}
+
+						endFn && endFn();
+						
+					})
+				}
+			}
+
+			
+		}
+
+	}
+
+</script>
+</head>
+
+<body>
+
+<div id="alert">
+	<h2>你的鼠标有多快？</h2>
+  <p>游戏说明：点击“开始游戏”，随机掉下QQ表情，把鼠标划上去，千万别让它掉下去！！<br/>划掉25个算你赢；掉下5个算你输 :)</p>
+  <input type="button" value="开始游戏" />
+</div>
+
+<div id="box">
+	<div id="fraction">
+  	<p>得分：0 分</p>
+  	<p>失分：0 分</p>
+  </div>
+  <div id="qq"></div>
+</div>
+
+</body>
+</html>
