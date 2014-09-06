@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getElementsByClassName增强</title>
+	<script>
+		window.onload = function(){
+
+			//要求getElementsByClassName函数可以选取含有多个class其中任意一个的元素，多个class用逗号、空格分开
+
+			function getElementsByClassName(parent, tagName, className){
+
+				var arrClassName = className.split(', '),
+					arr = [],
+					allElems = parent.getElementsByTagName(tagName);
+
+					for(var i=0; i<arrClassName.length; i++){
+
+						for(var j=0; j<allElems.length; j++){
+
+							var aClassName = allElems[j].className.split(' ');
+
+							for(var k=0; k<aClassName.length; k++){
+
+								if(aClassName[k] == arrClassName[i]){
+									arr.push(allElems[j]);
+									break;
+								}
+
+							}
+						}
+
+					}
+
+					return arr;
+
+			}
+
+			var arrChosen = getElementsByClassName(document, '*', 'box, box1');
+			
+			for(var i=0; i<arrChosen.length; i++){
+				arrChosen[i].style.background = 'red';
+			}
+			
+
+		}
+	</script>
+</head>
+<body>
+	<ul id="ul1">
+		<li class="box3 box5">1111111111</li>
+		<li class="box box2">2222222222</li>
+		<li>3333333333</li>
+		<li class="box1">4444444444</li>
+		<li class="box6">5555555555</li>
+	</ul>
+	<div class="box">div</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>留言板加强，批量删除</title>
+	<script>
+		window.onload = function(){
+
+			var oText = document.getElementById('text1'),
+				oBtn = document.getElementById('btn'),
+				oUl = document.getElementById('ul1'),
+				oDelete = document.getElementById('btn1'),
+				flag = true;
+
+			oBtn.onclick = function(){
+
+				if (!oText.value){
+					return;
+				}
+
+				var oLi = document.createElement('li');
+				oLi.innerHTML = oText.value;
+
+				if (oUl.children[0]) {
+					oUl.insertBefore(oLi, oUl.children[0]);
+				} else {
+					oUl.appendChild(oLi);
+				}
+
+				oText.value = '';
+
+				for (var i = 0; i < oUl.children.length; i++) {
+					oUl.children[i].onclick = function(){
+						if (flag) {
+							this.mark = '1';
+							this.style.background = 'yellow';
+							flag = !flag;
+						} else {
+							this.mark = '';
+							this.style.background = '';
+							flag = !flag;
+						}
+					}
+				};
+
+			}
+
+				
+
+			oDelete.onclick = function(){
+
+				for (var i = 0; i < oUl.children.length; i++) {
+
+					if(oUl.children[i].mark) {
+						oUl.removeChild(oUl.children[i]);
+						i--;
+					}
+
+				};
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id='text1' /><input type="button" value="留言" id="btn" /><input type="button" value="批量删除" id="btn1" />
+	<ul id="ul1"></ul>
+</body>
+</html>

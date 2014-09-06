@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>留言板加强，限制条数</title>
+	<script>
+		window.onload = function(){
+
+			var oText = document.getElementById('text1'),
+				oBtn = document.getElementById('btn'),
+				oUl = document.getElementById('ul1'),
+				n = 5; //此处可以设置保留条目的数量
+
+			oBtn.onclick = function(){
+
+				if (!oText.value){
+					return;
+				}
+
+				var oLi = document.createElement('li');
+				oLi.innerHTML = oText.value;
+
+				if (oUl.children[0]) {
+					oUl.insertBefore(oLi, oUl.children[0]);
+				} else {
+					oUl.appendChild(oLi);
+				}
+
+				if (oUl.children[n]){
+					oUl.removeChild(oUl.children[n]);
+				}
+
+				oText.value = '';
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id='text1' /><input type="button" value="留言" id="btn" />
+	<ul id="ul1"></ul>
+</body>
+</html>
