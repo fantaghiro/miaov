@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组操作+弹出层提示</title>
+	<style>
+		body {font-size: 14px;}
+		body ul {margin: 0; padding: 0;}
+		li {list-style:none;}
+
+		#container {
+			margin: 100px auto 0;
+			width: 1000px;
+		}
+
+		#header {
+			height: 35px; border-bottom: 2px solid #EE7510;
+		}
+		#header li {
+			float: left; padding: 0 10px; margin-right: 5px;
+			height: 35px;
+			line-height: 35px; font-size: 18px; cursor: pointer;
+		}
+		#header li.focus {
+			background-color: #EE7510;
+			color: white; font-weight: bold;
+		}
+
+		.list {
+			margin-top: 5px;
+		}
+		.list li {
+			position: relative;
+			height: 35px;
+			line-height: 35px; font-size: 16px;
+		}
+		.list li a {
+			display : inline-block;
+			height: 35px;
+		}
+		.list .date {
+			position: absolute; right: 0;
+			line-height: 35px;
+		}
+
+		#tips {
+			padding: 5px; position: absolute; left: 0px; top: 0px;
+			width: 400px; height: 200px; display: none;
+			border: 2px solid #FF7700; background-color: white;
+		}
+		#tips li.col {
+			width: 180px; height: 30px; float: left;
+			line-height: 30px; border-bottom: 1px solid #CCC;
+		}
+		#arrow {
+			position: absolute; left: -11px; top: 120px;
+			width: 11px; height: 17px; background: url("1-img/arrow.png") no-repeat;
+		}
+	</style>
+	<script>
+		var data = [
+			{
+				'name'	:	'前端',
+				'list'	:	[
+					{
+						'title'	:	'前端工程师',
+						'company'	:	'北京魔方国际旅行社有限公司',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'网站前端页面设计',
+						'company'	:	'北京中联讯通网络科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'5人',
+						'workingLocation'	:	'北京月坛',
+						'workExperience'	:	'不限',
+						'education'	:	'大专',
+						'wage'	:	'7000',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'高级web前端工程师',
+						'company'	:	'星职场教育培训公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'12人',
+						'workingLocation'	:	'军博',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'HTML5前端工程师',
+						'company'	:	'北京育智兴邦教育科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'朝阳',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'前端工程师',
+						'company'	:	'北京恩跃时代教育科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'网站前端设计',
+						'company'	:	'北京创美时代办公家具有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'诚招web前端开发工程师',
+						'company'	:	'北京中新美迪文化发展中心 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'东城',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'web前端DIV+CSS',
+						'company'	:	'北京华夏安业科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'西城',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'前端设计',
+						'company'	:	'北京鲁艺轩网络科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'3人',
+						'workingLocation'	:	'通州',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'招聘 前端页面工作者',
+						'company'	:	'千言万语（北京）教育科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'页面前端工程师',
+						'company'	:	'北京奇点时空投资管理有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'4人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'高级web前端工程师',
+						'company'	:	'星职场教育培训公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'12人',
+						'workingLocation'	:	'军博',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'HTML5前端工程师',
+						'company'	:	'北京育智兴邦教育科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'朝阳',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'前端工程师',
+						'company'	:	'北京恩跃时代教育科技有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'网站前端设计',
+						'company'	:	'北京创美时代办公家具有限公司 ',
+						'position'	:	'前端页面',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					}
+				]
+			},
+			
+			{
+				'name'	:	'后端',
+				'list'	:	[
+					{
+						'title'	:	'PHP工程师',
+						'company'	:	'北京创美时代办公家具有限公司 ',
+						'position'	:	'PHP后台',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'诚招java开发工程师',
+						'company'	:	'北京中新美迪文化发展中心 ',
+						'position'	:	'java开发',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'东城',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'java工程师',
+						'company'	:	'北京华夏安业科技有限公司 ',
+						'position'	:	'java后台',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'西城',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'.net工程师',
+						'company'	:	'北京鲁艺轩网络科技有限公司 ',
+						'position'	:	'.net程序员',
+						'recruitingNumbers'	:	'3人',
+						'workingLocation'	:	'通州',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'招聘php程序员',
+						'company'	:	'千言万语（北京）教育科技有限公司 ',
+						'position'	:	'php程序员',
+						'recruitingNumbers'	:	'2人',
+						'workingLocation'	:	'北京',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					},
+					{
+						'title'	:	'PHP高级工程师',
+						'company'	:	'北京奇点时空投资管理有限公司 ',
+						'position'	:	'PHP高级工程师',
+						'recruitingNumbers'	:	'4人',
+						'workingLocation'	:	'北京海淀',
+						'workExperience'	:	'不限',
+						'education'	:	'不限',
+						'wage'	:	'面议',
+						'addDate'	:	'2013-12-14'
+					}
+				]
+			}
+		];		
+	</script>
+	<script>
+		function getPos(obj){
+
+			var pos = {left: 0, top: 0};
+			while(obj){
+
+				pos.left += obj.offsetLeft;
+				pos.top += obj.offsetTop;
+				obj = obj.offsetParent;
+			}
+
+			return pos;
+
+		}
+
+		function getStyle ( obj, attr ) { 
+			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr]; 
+		}
+	</script>
+	<script>
+		window.onload = function(){
+
+			var oHeader = document.getElementById('header'),
+				oListContent = document.getElementById('listContent'),
+				oTips = document.getElementById('tips'),
+				oTipsContent = document.getElementById('tipsContent');
+
+			//生成一级标题
+			for(var i=0; i<data.length; i++){
+
+				var oLi = document.createElement('li');
+				oLi.innerHTML = data[i].name;
+				oHeader.appendChild(oLi);
+
+			}
+			oHeader.children[0].className = 'focus'; //页面初始一级标题高亮状态
+
+			//生成二级标题的函数
+			function addTitle(index){
+
+				var oUl = document.createElement('ul');
+				for(var i=0; i<data[index].list.length; i++) {
+					var oLi = document.createElement('li');
+					oLi.innerHTML = '<a href="javascript:;">' + data[index].list[i].title + '</a>';
+					oUl.appendChild(oLi);
+				}
+				oListContent.innerHTML = '';
+				oListContent.appendChild(oUl);
+				oUl.className = 'list';
+
+			}
+
+			// 页面初始化
+			addTitle(0);
+			showTitle();
+			
+
+
+			//生成二级标题的操作
+			for(var i=0; i<oHeader.children.length; i++){
+				oHeader.children[i].index = i;
+				oHeader.children[i].onclick = function(){
+
+					//更改一级标题样式
+					for(var i=0; i<oHeader.children.length; i++){
+						oHeader.children[i].className = '';
+					}
+					this.className = 'focus';
+
+					//生成对应的二级标题
+					addTitle(this.index);
+					showTitle();
+				}
+			}
+
+			//生成悬浮窗的函数
+			function showTips(title){
+
+				var pos = getPos(title);
+				if(pos.top - 120 > document.body.scrollTop + document.documentElement.clientHeight - 220) {
+					oTips.style.top = document.body.scrollTop + document.documentElement.clientHeight - 220 + 'px';
+				} else {
+					oTips.style.top = pos.top - 120 + 'px';
+				}
+				if(pos.top - 120 < document.body.scrollTop){
+					oTips.style.top = document.body.scrollTop + 10 + 'px';
+				}
+				oTips.style.left = pos.left + parseInt(getStyle(title, 'width')) + 20 + 'px';
+
+			}
+
+
+			// 鼠标悬浮事件函数
+			function showTitle(){
+				var oList = oListContent.getElementsByTagName('ul')[0],
+					aTitle = oList.getElementsByTagName('a');
+				for(var i=0; i<aTitle.length; i++){
+					aTitle[i].onmouseover = function(){	
+						oTips.style.display = 'block';
+						showTips(this);
+					}
+					aTitle[i].onmouseout = function(){
+						oTips.style.display = 'none';
+					}
+				}
+			}
+
+
+
+		}
+	</script>
+</head>
+<body>
+	<div id="container">
+		<ul id="header"></ul>
+		
+		<div id="listContent"></div>
+	</div>
+	
+	<div id="tips">
+		<span id="arrow"></span>
+        <div id="tipsContent"></div>
+	</div>
+</body>
+</html>
