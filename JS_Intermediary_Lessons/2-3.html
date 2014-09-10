@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>关键字title提示</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		p {
+			width: 600px;
+			position: fixed;
+			bottom: 5px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oP = document.getElementsByTagName('p')[0];
+			oP.style.left = (document.documentElement.clientWidth - parseInt(oP.style.width)) / 2 + 'px';
+
+		}
+	</script>
+</head>
+<body>
+	<p>
+		<span>JavaScript</span>是面向Web的编程语言，绝大多数现代网站都使用了<span>JavaScript</span>，并且所有的现代<span>Web</span>浏览器——基于桌面系统、游戏机、平板电脑和智能手机的浏览器——均包含了<span>JavaScript</span>解释器。这使得<span>JavaScript</span>能够称得上史上最广泛的编程语言。<span>JavaScript</span>也是前端开发工程师必须掌握的三种技能之一，描述网页内容的<span>HTML</span>、描述网页样式的<span>CSS</span>以及描述网页行为的<span>JavaScript</span>。
+	</p>
+</body>
+</html>
