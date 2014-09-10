@@ -357,7 +357,7 @@
 
 			// 页面初始化
 			addTitle(0);
-			showTitle();
+			showTitle(0);
 			
 
 
@@ -374,13 +374,14 @@
 
 					//生成对应的二级标题
 					addTitle(this.index);
-					showTitle();
+					showTitle(this.index);
 				}
 			}
 
 			//生成悬浮窗的函数
 			function showTips(title){
 
+				//确定悬浮窗的位置
 				var pos = getPos(title);
 				if(pos.top - 120 > document.body.scrollTop + document.documentElement.clientHeight - 220) {
 					oTips.style.top = document.body.scrollTop + document.documentElement.clientHeight - 220 + 'px';
@@ -394,15 +395,28 @@
 
 			}
 
+			//生成悬浮窗中的内容的函数
+			function tipsContent(m, n){
+
+				oTipsContent.innerHTML = '';
+				var oUl = document.createElement('ul');
+				var str = '<li><h2>' + data[m].list[n].company + '</h2></li><li class="col"><span style="font-weight: bold">职位：</span><span>' + data[m].list[n].position + '</span></li><li class="col"><span style="font-weight: bold">招聘人数：</span><span>' + data[m].list[n].recruitingNumbers + '</span></li><li class="col"><span style="font-weight: bold">工作地点：</span><span>' + data[m].list[n].workingLocation + '</span></li><li class="col"><span style="font-weight: bold">工作经历：</span><span>' + data[m].list[n].workExperience + '</span></li><li class="col"><span style="font-weight: bold">学历：</span><span>' + data[m].list[n].education + '</span></li><li class="col"><span style="font-weight: bold">薪资：</span><span>' + data[m].list[n].wage + '</span></li>';
+        		oUl.innerHTML = str;
+        		oTipsContent.appendChild(oUl);
+
+			}
+
 
 			// 鼠标悬浮事件函数
-			function showTitle(){
+			function showTitle(idx){
 				var oList = oListContent.getElementsByTagName('ul')[0],
 					aTitle = oList.getElementsByTagName('a');
 				for(var i=0; i<aTitle.length; i++){
+					aTitle[i].index = i;
 					aTitle[i].onmouseover = function(){	
 						oTips.style.display = 'block';
 						showTips(this);
+						tipsContent(idx, this.index);
 					}
 					aTitle[i].onmouseout = function(){
 						oTips.style.display = 'none';
