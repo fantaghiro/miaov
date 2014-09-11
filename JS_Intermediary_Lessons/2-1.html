@@ -318,9 +318,6 @@
 
 		}
 
-		function getStyle ( obj, attr ) { 
-			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr]; 
-		}
 	</script>
 	<script>
 		window.onload = function(){
@@ -391,7 +388,7 @@
 				if(pos.top - 120 < document.body.scrollTop){
 					oTips.style.top = document.body.scrollTop + 10 + 'px';
 				}
-				oTips.style.left = pos.left + parseInt(getStyle(title, 'width')) + 20 + 'px';
+				oTips.style.left = pos.left + title.offsetWidth + 20 + 'px';
 
 			}
 

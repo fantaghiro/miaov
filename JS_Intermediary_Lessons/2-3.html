@@ -36,9 +36,6 @@
 		}
 	</style>
 	<script>
-		function getStyle(obj, attr){
-			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
-		}
 		function getPos(obj){
 
 			var pos = {left: 0, top: 0};
@@ -61,11 +58,11 @@
 				aTitle = [];
 
 			//设置oP的位置始终位于页面正中
-			oP.style.left = (document.documentElement.clientWidth - parseInt(getStyle(oP, 'width'))) / 2 + 'px';
+			oP.style.left = (document.documentElement.clientWidth - oP.offsetWidth) / 2 + 'px';
 
 			window.onresize = function(){
 
-				oP.style.left = (document.documentElement.clientWidth - parseInt(getStyle(oP, 'width'))) / 2 + 'px';
+				oP.style.left = (document.documentElement.clientWidth - oP.offsetWidth) / 2 + 'px';
 
 			}
 

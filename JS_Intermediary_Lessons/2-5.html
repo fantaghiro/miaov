@@ -42,10 +42,6 @@
 			return arr;
 		}
 
-		function getStyle ( obj, attr ) { 
-			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr]; 
-		}
-
 		window.onload = function(){
 
 			var aAd = getClass(document, 'div', 'ad');
@@ -53,7 +49,7 @@
 			function atMiddle(){
 
 				for(var i=0; i<aAd.length; i++){
-					aAd[i].style.top = document.body.scrollTop + document.documentElement.clientHeight/2 - parseInt(getStyle(aAd[i], 'height'))/2 + 'px';
+					aAd[i].style.top = document.body.scrollTop + document.documentElement.clientHeight/2 - aAd[i].offsetHeight/2 + 'px';
 				}
 
 			}
