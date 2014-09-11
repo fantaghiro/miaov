@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择筛选</title>
+	<style>
+		dd {
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var aDL = document.getElementsByTagName('dl'),
+				oDiv = document.getElementById('div1'),
+				location = '',
+				position = '',
+				salary = '';
+
+			function fn(n){
+
+				var aDD = aDL[n].getElementsByTagName('dd');
+				for(var i=0; i<aDD.length; i++){
+					aDD[i].onclick = function(){
+						switch(n){
+							case 0:
+								location = this.innerHTML + ' ';
+								break;
+							case 1:
+								position = this.innerHTML + ' ';
+								break;
+							case 2:
+								salary = this.innerHTML + ' ';
+								break;	
+						}
+						
+						oDiv.innerHTML = location + position + salary;
+					}
+				}	
+
+			}
+
+			for(var i=0; i<aDL.length; i++){
+				fn(i);
+			}
+			
+
+		}
+	</script>
+</head>
+<body>
+	<dl>
+		<dt>地区</dt>
+		<dd>东城</dd>
+		<dd>西城</dd>
+		<dd>朝阳</dd>
+		<dd>昌平</dd>
+	</dl>
+	<dl>
+		<dt>职位</dt>
+		<dd>美工设计</dd>
+		<dd>前端工程师</dd>
+		<dd>后台开发</dd>
+	</dl>
+	<dl>
+		<dt>薪资</dt>
+		<dd>4000</dd>
+		<dd>5000</dd>
+		<dd>6000</dd>
+	</dl>
+	<div id="div1"></div>
+</body>
+</html>
