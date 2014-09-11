@@ -1,74 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>登陆弹窗</title>
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			height: 2000px;
-		}
-		input {
-			display: block;
-			margin: 50px auto;
-			padding: 20px;
-			font-size: 36px;
-		}
-		#mask {
-			background: black;
-			opacity: 0.3;
-			filter:alpha(opacity=30);
-			position: absolute;
-			left: 0;
-			top: 0;
-			display: none;
-		}
-		#pop {
-			width: 300px;
-			height: 200px;
-			padding: 10px;
-			background: white;
-			border: 5px solid #333;
-			position: absolute;
-			display: none;
-		}
-		#close {
-			position: absolute;
-			right: 5px;
-			top: 5px;
-			text-decoration: none;
-			color: black;
-		}
-		#close:hover {
-			background: #333; 
-			color: white;
-		}
-	</style>
-	<script>
-		window.onload = function(){
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body {margin: 0;}
+#mask {background: black; opacity: 0.3; filter: alpha(opacity=30); position: absolute; left: 0; top: 0; display: none;}
+#box { width: 300px; height: 200px; padding: 10px; background: white; border: 5px solid #333; position: absolute; display: none;}
+#close { position: absolute; right: 5px; top: 5px; text-decoration: none; color: black;}
+#close:hover {background: #333; color: white;}
+</style>
 
-			var oBtn = document.getElementById('login'),
-				oMask = document.getElementById('mask'),
-				oPop = document.getElementById('pop');
-				oClose = document.getElementById('close');
+<script>
 
-			oBtn.onclick = function(){
-				oMask.style.width = document.body.offsetWidth + 'px';
-				oMask.style.height = document.body.offsetHeight + 'px';
-				oMask.style.display = 'block';
+//Math.max();返回数值参数中最大的一个值
+//Math.min()
 
-			}
+//alert( Math.max( 123,234,324,3,345 ) );
 
-		}
-	</script>
+window.onload = function() {
+	
+	var oBtn = document.getElementById('btn');
+	var oMask = document.getElementById('mask');
+	var oBox = document.getElementById('box');
+	var oClose = document.getElementById('close');
+	
+	oClose.onclick = function() {
+		
+		oMask.style.display = 'none';
+		oBox.style.display = 'none';
+		
+	}
+	
+	oBtn.onclick = function() {
+		
+		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+		
+		//遮罩层
+		oMask.style.display = 'block';
+		
+		//oMask.style.width = document.body.offsetWidth + 'px';
+		//oMask.style.height = document.body.offsetHeight + 'px';
+		
+		oMask.style.width = Math.max( document.body.offsetWidth, document.documentElement.clientWidth ) + 'px';
+		oMask.style.height = Math.max( document.body.offsetHeight, document.documentElement.clientHeight ) + 'px';
+		
+		//弹出层
+		oBox.style.display = 'block';
+		oBox.style.left = ( document.documentElement.clientWidth - oBox.offsetWidth ) / 2 + scrollLeft + 'px';
+		oBox.style.top = ( document.documentElement.clientHeight - oBox.offsetHeight ) / 2 + scrollTop + 'px';
+		
+		
+	}
+	
+	window.onscroll = function() {
+		
+		if (oBox.style.display == 'none') return ;
+		
+		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+		
+		oBox.style.left = ( document.documentElement.clientWidth - oBox.offsetWidth ) / 2 + scrollLeft + 'px';
+		oBox.style.top = ( document.documentElement.clientHeight - oBox.offsetHeight ) / 2 + scrollTop + 'px';
+		
+	}
+	
+	window.onresize = function() {
+		
+		if (oMask.style.display == 'none') return ;
+		
+		oMask.style.width = Math.max( document.body.offsetWidth, document.documentElement.clientWidth ) + 'px';
+		oMask.style.height = Math.max( document.body.offsetHeight, document.documentElement.clientHeight ) + 'px';
+		
+		if (oBox.style.display == 'none') return ;
+		
+		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+		
+		oBox.style.left = ( document.documentElement.clientWidth - oBox.offsetWidth ) / 2 + scrollLeft + 'px';
+		oBox.style.top = ( document.documentElement.clientHeight - oBox.offsetHeight ) / 2 + scrollTop + 'px';
+		
+	}
+	
+}
+</script>
 </head>
-<body>
-	<input type="button" value="登陆" id="login" />
-	<div id="mask"></div>
-	<div id="pop">
-		<a href="javascript:;" id="close">×</a>
-		这里是登陆的表单等内容。
-	</div>
+
+<body style="height:2000px;">
+	<input type="button" value="登陆" id="btn" />
+    
+    <div id="mask"></div>
+    <div id="box">
+    	<a href="javascript:;" id="close">×</a>
+        这里是登陆的表单等内容
+    </div>
 </body>
 </html>
