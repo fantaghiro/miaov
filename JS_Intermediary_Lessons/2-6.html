@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登陆弹窗</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			height: 2000px;
+		}
+		input {
+			display: block;
+			margin: 50px auto;
+			padding: 20px;
+			font-size: 36px;
+		}
+		#mask {
+			background: black;
+			opacity: 0.3;
+			filter:alpha(opacity=30);
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: none;
+		}
+		#pop {
+			width: 300px;
+			height: 200px;
+			padding: 10px;
+			background: white;
+			border: 5px solid #333;
+			position: absolute;
+			display: none;
+		}
+		#close {
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			text-decoration: none;
+			color: black;
+		}
+		#close:hover {
+			background: #333; 
+			color: white;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oBtn = document.getElementById('login'),
+				oMask = document.getElementById('mask'),
+				oPop = document.getElementById('pop');
+				oClose = document.getElementById('close');
+
+			oBtn.onclick = function(){
+				oMask.style.width = document.body.offsetWidth + 'px';
+				oMask.style.height = document.body.offsetHeight + 'px';
+				oMask.style.display = 'block';
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="登陆" id="login" />
+	<div id="mask"></div>
+	<div id="pop">
+		<a href="javascript:;" id="close">×</a>
+		这里是登陆的表单等内容。
+	</div>
+</body>
+</html>
