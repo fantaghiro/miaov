@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>页面左右两侧居中广告</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			height: 2000px;
+		}
+		.ad {
+			height: 200px;
+			width: 60px;
+			background: red;
+			position: absolute;
+		}
+		.left {
+			left: 0;
+		}
+		.right {
+			right: 0;
+		}
+	</style>
+	<script>
+		function getClass(parent, tagName, className) {
+
+			var aEls = parent.getElementsByTagName(tagName);
+			var arr = [];
+
+			for(var i=0; i<aEls.length; i++) {
+				var aClassName = aEls[i].className.split(' ');
+				for(var j=0; j<aClassName.length; j++){
+					if(aClassName[j] == className){
+						arr.push(aEls[i]);
+						break;
+					}
+				}
+			}
+			return arr;
+		}
+
+		function getStyle ( obj, attr ) { 
+			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr]; 
+		}
+
+		window.onload = function(){
+
+			var aAd = getClass(document, 'div', 'ad');
+
+			function atMiddle(){
+
+				for(var i=0; i<aAd.length; i++){
+					aAd[i].style.top = document.body.scrollTop + document.documentElement.clientHeight/2 - parseInt(getStyle(aAd[i], 'height'))/2 + 'px';
+				}
+
+			}
+
+			atMiddle();
+
+			window.onscroll = atMiddle;
+			window.onresize = atMiddle;
+			
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="ad left"></div>
+		<div class="ad right"></div>
+	</div>
+</body>
+</html>
