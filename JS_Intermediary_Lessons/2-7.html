@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>封装函数-获取表单控件radio、checkbox的选中值</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+		}
+		form {
+			border: 1px solid #eee;
+			border-radius: 10px;
+			width: 600px;
+			margin: 50px auto;
+			padding: 20px;
+			line-height: 28px;
+			position: relative;
+		}
+		form label {
+			display: block;
+			font-weight: bold;
+			padding: 10px 0;
+		}
+		form input {
+			margin-left: -3px;
+			margin-right: 5px;
+		}
+		#showbox1, #showbox2 {
+			border: 1px solid #eee;
+			width: 160px;
+			position: absolute;
+			right: 30px;
+			top: 30px;
+			background: #DEFEF3;
+			padding: 20px;
+			display: none;
+		}
+		input[type="reset"]{
+			float: right;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oForm1 = document.getElementById('form1'),
+				oForm2 = document.getElementById('form2'),
+				oShowbox1 = document.getElementById('showbox1'),
+				oShowbox2 = document.getElementById('showbox2');
+
+			function getChecked(form, name){
+				var arr = [];
+				for(var i=0; i<form[name].length; i++){
+					if(form[name][i].checked){
+						arr.push(form[name][i].value);
+					}
+				}
+				if(form[name][0].type == 'radio'){
+					return arr[0];
+				}
+				if(form[name][0].type == 'checkbox'){
+					return arr;
+				}
+			}
+
+			for(var i=0; i<oForm1.income.length; i++){
+				oForm1.income[i].onclick = function(){
+					oShowbox1.style.display = 'block';
+					oShowbox1.innerHTML = '您现在的月收入是：' + getChecked(oForm1, 'income');
+				}
+			}
+
+			for(var i=0; i<oForm2.character.length; i++){
+				oForm2.character[i].onclick = function(){
+					oShowbox2.style.display = 'block';
+					oShowbox2.innerHTML = '您的性格属于：' + getChecked(oForm2, 'character').join('，');
+				}
+			}
+
+			oForm1.onreset = function(){
+				var re = confirm('你确定要重置吗？');
+				if(re){
+					oShowbox1.style.display = 'none';
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			oForm2.onreset = function(){
+				var re = confirm('你确定要重置吗？');
+				if(re){
+					oShowbox2.style.display = 'none';
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<form id="form1">
+		<label>您的月收入水平是：</label>
+		<input type="radio" name="income" value="1000元以下">1000元以下<br/>
+		<input type="radio" name="income" value="1000~3000元">1000~3000元<br/>
+		<input type="radio" name="income" value="3000~5000元">3000~5000元<br/>
+		<input type="radio" name="income" value="5000~10000元">5000~10000元<br/>
+		<input type="radio" name="income" value="10000~20000元">10000~20000元<br/>
+		<input type="radio" name="income" value="20000元以上">20000元以上
+		<div id="showbox1"></div>
+		<input type="reset" name="reset" value="重置">
+	</form>
+	<form id="form2">
+		<label>您的性格是：</label>
+		<input type="checkbox" name="character" value="开朗">开朗
+		<br>
+		<input type="checkbox" name="character" value="随性">随性
+		<br>
+		<input type="checkbox" name="character" value="阴郁">阴郁
+		<br>
+		<input type="checkbox" name="character" value="果断">果断
+		<br>
+		<input type="checkbox" name="character" value="冷静">冷静
+		<br>
+		<input type="checkbox" name="character" value="奔放">奔放
+		<br>
+		<input type="checkbox" name="character" value="内敛">内敛
+		<br>
+		<input type="checkbox" name="character" value="稳重">稳重
+		<div id="showbox2"></div>
+		<input type="reset" name="reset" value="重置">
+	</form>
+</body>
+</html>
