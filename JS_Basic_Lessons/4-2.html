@@ -11,7 +11,7 @@
 		oBtn.onclick = function(){
 			if(oInp.value === '') {
 				alert('1. 没有输入内容');
-			} else if (isNaN(parseInt(oInp.value))) {
+			} else if (isNaN(oInp.value)) {
 				alert('2. 输入内容不是数字');
 			} else if (oInp.value.charAt(0) == 0) {
 				alert('3. 输入内容不能以0开头');
