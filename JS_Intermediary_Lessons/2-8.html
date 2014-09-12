@@ -101,13 +101,9 @@
 				oTd.innerHTML = data[i].age;
 				oTr.appendChild(oTd);
 
-				if(i%2){
-					oTr.style.background = '#EDF3FA';
-				} else {
-					oTr.style.background = '#fff';
-				}
-
 				oTbody.appendChild(oTr);
+
+				colorLine();
 			}
 
 			checkbox();
