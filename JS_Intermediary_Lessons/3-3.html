@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>模拟select - 单选</title>
+	<title>模拟select - 多选</title>
 	<style>
 		body { margin: 0; padding: 0; }
 		ul { padding: 0; margin: 0; }
@@ -17,11 +17,13 @@
 		window.onload = function(){
 
 			var oDiv = document.getElementById('div1'),
-				oUl = document.getElementById('ul1');
+				oUl = document.getElementById('ul1'),
+				arr = [];
 
 			document.onclick = function(){
 
 				oUl.style.display = 'none';
+				arr = [];
 
 			}
 			oDiv.onclick = function(ev){
@@ -33,19 +35,43 @@
 			}
 			for(var i=0; i<oUl.children.length; i++){
 
-				oUl.children[i].onclick = function(){
+				oUl.children[i].onclick = function(ev){
 
-					for(var i=0; i<oUl.children.length; i++){
+					var ev = ev || event;
 
-						oUl.children[i].children[0].style.background = '';
-						oUl.children[i].children[0].style.color = '';
-
+					if(ev.shiftKey){
+						ev.cancelBubble = true;						
 					}
 
-					oDiv.innerHTML = this.children[0].innerHTML;
-					this.children[0].style.background = '#fe6601';
-					this.children[0].style.color = '#fff';
+					for(var i=0; i<arr.length; i++){
+						if(arr[i] == this.children[0].innerHTML){
+							arr.splice(i, 1);
+							oDiv.innerHTML = arr.join(', ');
+							bgColor();
+							return;
+						}
+					}
 
+					arr.push(this.children[0].innerHTML);
+					oDiv.innerHTML = arr.join(', ');
+					bgColor();
+
+					function bgColor(){
+						for(var i=0; i<oUl.children.length; i++){
+							oUl.children[i].children[0].style.background = '';
+							oUl.children[i].children[0].style.color = '';
+						}
+						var arr1 = oDiv.innerHTML.split(', ');
+						for(var i=0; i<arr1.length; i++){
+							for(var j=0; j<oUl.children.length; j++){
+								if(oUl.children[j].children[0].innerHTML == arr1[i]){
+									oUl.children[j].children[0].style.background = '#fe6601';
+									oUl.children[j].children[0].style.color = '#fff';
+								}
+							}
+						}
+					}	
+					
 				}
 
 			}
@@ -54,7 +80,7 @@
 	</script>
 </head>
 <body>
-	<div id="div1"></div>
+	<div id="div1">按住shift多选</div>
 	<ul id="ul1">
 		<li><a href="javascript:;">宋体</a></li>
 		<li><a href="javascript:;">黑体</a></li>
