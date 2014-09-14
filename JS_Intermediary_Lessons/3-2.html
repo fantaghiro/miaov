@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟select</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		ul { padding: 0; margin: 0; }
+		li { list-style: none; }
+		a { text-decoration: none; color: #000; display: block; }
+		#div1 { width: 250px; height: 20px; border: 1px solid #fe6601; padding: 5px; line-height:20px; margin: 20px auto 0 auto;}
+		#ul1 { margin: 0 auto; width: 260px; line-height: 20px; border: 1px solid #fe6601; display: none;}
+		#ul1 li a { padding: 5px; }
+		#ul1 li a:hover { background: #fe6601; color: #fff; }
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oDiv = document.getElementById('div1'),
+				oUl = document.getElementById('ul1');
+
+			document.onclick = function(){
+
+				oUl.style.display = 'none';
+
+			}
+			oDiv.onclick = function(ev){
+
+				var ev = ev || event;
+				ev.cancelBubble = true;
+				oUl.style.display = 'block';
+
+			}
+			for(var i=0; i<oUl.children.length; i++){
+
+				oUl.children[i].onclick = function(){
+
+					for(var i=0; i<oUl.children.length; i++){
+
+						oUl.children[i].children[0].style.background = '';
+						oUl.children[i].children[0].style.color = '';
+
+					}
+
+					oDiv.innerHTML = this.children[0].innerHTML;
+					this.children[0].style.background = '#fe6601';
+					this.children[0].style.color = '#fff';
+
+				}
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+	<ul id="ul1">
+		<li><a href="javascript:;">宋体</a></li>
+		<li><a href="javascript:;">黑体</a></li>
+		<li><a href="javascript:;">楷体</a></li>
+		<li><a href="javascript:;">微软雅黑</a></li>
+		<li><a href="javascript:;">新宋体</a></li>
+		<li><a href="javascript:;">仿宋</a></li>
+	</ul>
+</body>
+</html>
