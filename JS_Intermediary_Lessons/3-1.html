@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>键盘控制div移动，解决停顿的问题</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#div1 { width: 100px; height: 100px; border: 1px solid #eee; background: #24a8a3; position: absolute;}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var oDiv = document.getElementById('div1'),
+				key = { l: null, t: null, r: null, b: null };
+
+			setInterval(function(){
+				if(key.l){
+					oDiv.style.left = oDiv.offsetLeft - 20 + 'px';
+				}
+				if(key.t){
+					oDiv.style.top = oDiv.offsetTop - 20 + 'px';
+				}
+				if(key.r){
+					oDiv.style.left = oDiv.offsetLeft + 20 + 'px';
+				}
+				if(key.b){
+					oDiv.style.top = oDiv.offsetTop + 20 + 'px';
+				}
+			}, 50)
+
+			document.onkeydown = function(ev){
+				var ev = ev || event;
+				switch(ev.keyCode){
+					case 37:
+						key.l = true;
+						break;
+					case 38: 
+						key.t = true;
+						break;
+					case 39: 
+						key.r = true;
+						break;
+					case 40: 
+						key.b = true;
+						break;
+				}
+			}
+
+			document.onkeyup = function(ev){
+				var ev = ev || event;
+				switch(ev.keyCode){
+					case 37:
+						key.l = false;
+						break;
+					case 38: 
+						key.t = false;
+						break;
+					case 39: 
+						key.r = false;
+						break;
+					case 40: 
+						key.b = false;
+						break;
+				}
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+</body>
+</html>
