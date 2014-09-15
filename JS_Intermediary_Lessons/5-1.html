@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟滚动条</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#div1 { width: 28px; height: 498px; position: absolute; border: 1px solid #000; left: 100px; top: 100px;}
+		#div2 { width: 28px; height: 28px; background: gray; position: absolute; top: 0; left: 0; }
+		#div3 { position: absolute; width: 498px; height: 498px; left: 130px; border: 1px solid #000; top: 100px; overflow: hidden; }
+		#div4 { width: 480px; padding: 10px; position: absolute; top: 0; left: 0;}
+		textarea { position: absolute; left: 98px; top: 610px; width: 510px; height: 180px; padding: 10px; }
+	</style>
+	<script>
+		window.onload = function(){
+			var oDiv1 = document.getElementById('div1');
+			var oDiv2 = document.getElementById('div2');
+			var oDiv3 = document.getElementById('div3');
+			var oDiv4 = document.getElementById('div4');
+			var oText = document.getElementsByTagName('textarea')[0];
+			var iScale = oDiv3.clientHeight / oDiv4.offsetHeight > 1 ? 1 : oDiv3.clientHeight / oDiv4.offsetHeight;
+
+			function barHeight(){
+				var iScale = oDiv3.clientHeight / oDiv4.offsetHeight > 1 ? 1 : oDiv3.clientHeight / oDiv4.offsetHeight;
+				oDiv2.style.height = oDiv1.clientHeight * iScale + 'px';
+			}
+
+			barHeight();
+
+			oText.onkeyup = function(){
+				oDiv4.innerHTML = oText.value;
+
+				barHeight();
+			}
+
+			oDiv2.onmousedown = function(ev){
+				var ev = ev || event;
+				var disY = ev.clientY - this.offsetTop;
+
+				if(oDiv2.setCapture){
+					oDiv2.setCapture();
+				}
+
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					var T = ev.clientY - disY;
+					var minT = 0;
+					var maxT = oDiv1.clientHeight - oDiv2.offsetHeight;
+					if(T < minT){
+						T = minT;
+					}
+					if(T > maxT){
+						T = maxT;
+					}
+					oDiv2.style.top = T + 'px';
+					oDiv4.style.top = (oDiv3.clientHeight - oDiv4.offsetHeight) * ( T / maxT) + 'px';
+
+				}
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+
+					if(oDiv2.releaseCapture){
+						oDiv2.releaseCapture();
+					}
+				}
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2"></div>
+	</div>
+	<div id="div3">
+		<div id="div4">
+			
+		</div>
+	</div>
+	<textarea placeholder="请在文本框中输入足够的文字，查看上方模拟滚动条的效果。"></textarea>
+</body>
+</html>
