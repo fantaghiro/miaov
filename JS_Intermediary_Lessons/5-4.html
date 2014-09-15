@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>检测重合</title>
+	<style>
+		#div2 { width: 100px; height: 100px; background: #fe6601; margin-left: 223px; margin-top: 147px; }
+		#div1 { width: 100px; height: 100px; background: #1b8da9; position: absolute; top: 0; left: 0; line-height: 100px; text-align: center; color: #fff; }
+	</style>
+	<script>
+		window.onload = function(){
+			var oDiv1 = document.getElementById('div1');
+			var oDiv2 = document.getElementById('div2');
+
+
+			oDiv1.onmousedown = function(ev){
+				var ev = ev || event;
+				var T = ev.clientY - oDiv1.offsetTop;
+				var L = ev.clientX - oDiv1.offsetLeft;
+
+				if(oDiv1.setCapture){
+					oDiv1.setCapture();
+				}
+
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					var T2 = ev.clientY - T;
+					var L2 = ev.clientX - L;
+
+					if(T2 < 0){
+						T2 = 0;
+					} else if(T2 > document.documentElement.clientHeight - oDiv1.offsetHeight){
+						T2 = document.documentElement.clientHeight - oDiv1.offsetHeight;
+					}
+					if(L2 < 0){
+						L2 = 0;
+					} else if(L2 > document.documentElement.clientWidth - oDiv1.offsetWidth){
+						L2 = document.documentElement.clientWidth - oDiv1.offsetWidth;
+					}
+
+					oDiv1.style.top = T2 + 'px';
+					oDiv1.style.left = L2 + 'px';
+
+					document.title = L2 + ':' + oDiv2.offsetLeft + ' || ' + T2 + ':' + oDiv2.offsetTop;
+					
+					if(T2 == oDiv2.offsetTop && L2 == oDiv2.offsetLeft){
+						alert('我们两个已经完美重合！');
+						document.onmousemove = document.onmouseup = null
+						if(oDiv1.releaseCapture){
+							oDiv1.releaseCapture();
+						}
+					}
+				}
+
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+					if(oDiv1.releaseCapture){
+						oDiv1.releaseCapture();
+					}
+				}
+				return false;
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">让我们合体！</div>
+	<div id="div2"></div>
+</body>
+</html>
