@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>鼠标绘制方块</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#container { width: 700px; height: 500px; border: 1px solid #000; margin: 60px auto 10px auto; position: relative; }
+		#container div { position: absolute; }
+		p { text-align: center; margin: 0; padding: 10px; }
+	</style>
+	<script>
+		window.onload = function(){
+			var oDiv = document.getElementById('container');
+
+			oDiv.onmousedown = function(ev){
+				var ev = ev || event;
+				var L1 = ev.clientX - oDiv.offsetLeft;
+				var T1 = ev.clientY - oDiv.offsetTop;
+				var oAddedDiv = document.createElement('div');
+
+				if(oDiv.setCapture){
+					oDiv.setCapture();
+				}
+
+				oDiv.appendChild(oAddedDiv);
+
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					var L2 = ev.clientX - oDiv.offsetLeft;
+					var T2 = ev.clientY - oDiv.offsetTop;
+					L2 = L2 < 0 ? 0 : L2;
+					L2 = L2 > oDiv.clientWidth ? oDiv.clientWidth : L2;
+					T2 = T2 < 0 ? 0 : T2;
+					T2 = T2 > oDiv.clientHeight ? oDiv.clientHeight : T2;
+
+					oAddedDiv.style.cssText = 'border: 1px solid green;';
+					oAddedDiv.style.left = L1 > L2 ? (L2 + 'px') : (L1 + 'px');
+					oAddedDiv.style.top = T1 > T2 ? (T2 + 'px') : (T1 + 'px');
+					oAddedDiv.style.width = Math.abs(Math.abs(L1 - L2) - 2) + 'px';
+					oAddedDiv.style.height = Math.abs(Math.abs(T1 - T2) - 2) + 'px';
+					
+				}
+
+				document.onmouseup = function(ev){
+					document.onmousemove = document.onmouseup = null;
+
+					if(oDiv.releaseCapture){
+						oDiv.releaseCapture();
+					}
+				}
+				return false;	
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="container"></div>
+	<p>可以在上面的方框中任意拉出方块</p>
+</body>
+</html>
