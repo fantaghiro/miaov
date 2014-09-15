@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽回放</title>
+	<style>
+		#div1 { height: 100px; width: 100px; background: #fe6601; position: absolute; }
+	</style>
+	<script>
+		window.onload = function(){
+			var oBtn = document.getElementById('btn');
+			var oDiv = document.getElementById('div1');
+			var arrL = [];
+			var arrT = [];
+
+			oDiv.onmousedown = function(ev){
+				var ev = ev || event;
+				var T = ev.clientY - oDiv.offsetTop;
+				var L = ev.clientX - oDiv.offsetLeft;
+
+				if(oDiv.setCapture){
+					oDiv.setCapture();
+				}
+
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					var T2 = ev.clientY - T;
+					var L2 = ev.clientX - L;
+
+					if(T2 < 0){
+						T2 = 0;
+					} else if(T2 > document.documentElement.clientHeight - oDiv.offsetHeight){
+						T2 = document.documentElement.clientHeight - oDiv.offsetHeight;
+					}
+					if(L2 < 0){
+						L2 = 0;
+					} else if(L2 > document.documentElement.clientWidth - oDiv.offsetWidth){
+						L2 = document.documentElement.clientWidth - oDiv.offsetWidth;
+					}
+
+					arrT.push(T2);
+					arrL.push(L2);
+
+					oDiv.style.top = T2 + 'px';
+					oDiv.style.left = L2 + 'px';
+				}
+
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+					if(oDiv.releaseCapture){
+						oDiv.releaseCapture();
+					}
+				}
+				return false;
+			}
+			oBtn.onclick = function(){
+				var i = 0;
+				arrL.reverse();
+				arrT.reverse();
+				oBtn.timer = setInterval(function(){
+					oDiv.style.left = arrL[i] + 'px';
+					oDiv.style.top = arrT[i] + 'px';
+					i++;
+					if(i == arrL.length){
+						clearInterval(oBtn.timer);
+						arrL = [];
+						arrT = [];
+					}
+				}, 20);
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="回放">
+	<div id="div1"></div>
+</body>
+</html>
