@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>第一个ajax页面</title>
+<script>
+window.onload = function() {
+	
+	var oBtn = document.getElementById('btn');
+	
+	
+	oBtn.onclick = function() {
+		
+		//打开浏览器
+		var xhr = new XMLHttpRequest();
+		//在地址栏输入地址
+		xhr.open('get','1-1.txt', true);
+		//提交
+		xhr.send();
+		
+		//等待服务器返回内容
+		xhr.onreadystatechange = function() {
+			
+			if ( xhr.readyState == 4 ) {
+				alert( xhr.responseText );
+			}
+			
+		}
+		
+	}
+}
+</script>
+</head>
+
+<body>
+	<input type="button" value="按钮" id="btn" />
+</body>
+</html>

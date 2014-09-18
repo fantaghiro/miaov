@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用get方法</title>
+	<script>
+	window.onload = function(){
+		var oBtn = document.getElementById('btn');
+		oBtn.onclick = function(){
+			var xhr = new XMLHttpRequest();
+			xhr.open('get', '1-2-get.php?username=' + encodeURI('小明') + '&age=31&' + new Date().getTime(),true);
+			xhr.send();
+
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					alert(xhr.responseText);
+				}
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="按钮" />
+</body>
+</html>
