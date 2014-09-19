@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>从getNews.php获取数据</title>
+	<script src="JSON.js"></script>
+	<script>
+	window.onload = function(){
+		var oBtn = document.getElementById('btn');
+		oBtn.onclick = function(){
+			var xhr = null;
+			try {
+				xhr = new XMLHttpRequest();
+			} catch(e){
+				xhr = new ActiveXObject('Microsoft.XMLHTTP');
+			}
+			xhr.open('get', '1-5-getNews.php', true);
+			xhr.send();
+
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4){
+					if(xhr.status == 200){
+						var arr = JSON.parse(xhr.responseText);
+						var oUl = document.createElement('ul');
+						for(var i=0; i<arr.length; i++){
+							var oLi = document.createElement('li');
+							var oH2 = document.createElement('h2');
+							var oP = document.createElement('p');
+							
+							oH2.innerHTML = arr[i].title;
+							oP.innerHTML = arr[i].date;
+							oLi.appendChild(oH2);
+							oLi.appendChild(oP);
+							oUl.appendChild(oLi);
+						}
+						document.body.appendChild(oUl);
+					} else {
+						alert('出错了，Error：' + xhr.status);
+					}
+				}
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="按钮">
+</body>
+</html>

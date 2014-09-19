@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax函数封装</title>
+	<script src="JSON.js"></script>
+	<script>
+	function ajax(conf){
+		var type = conf.type;
+		var url = conf.url;
+		var data = conf.data;
+		var success = conf.success;
+
+		if(!type) {
+			type == 'get';
+		}
+		if(!data){
+			data == '';
+		}
+		if(!success){
+			success == null;
+		}
+
+		var xhr = null;
+		
+		try{
+			xhr = new XMLHttpRequest();
+		} catch(e) {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+
+		if (type == 'get' || 'GET') {
+			url = url + '?' + data;
+			xhr.open(type, url, true);
+			xhr.send();
+		} else if(type == 'post' || 'POST') {
+			xhr.open(type, url, true);
+			xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+			xhr.send(data);
+		}
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					success && success(JSON.parse(xhr.responseText));
+				} else {
+					alert('出错了，Error：' + xhr.status);
+				}
+			}
+		}
+	}
+	</script>
+	<script>
+	window.onload = function(){
+		var oBtn = document.getElementById('btn');
+		var oUl = document.getElementById('ul1');
+		oBtn.onclick = function(){
+			function getNews(){
+				ajax({
+					'url': '1-5-getNews.php',
+					'success': function(data){
+						oUl.innerHTML = '';
+						for(var i=0; i<data.length; i++){
+							var oLi = document.createElement('li');
+							var oH2 = document.createElement('h2');
+							var oP = document.createElement('p');
+							
+							oH2.innerHTML = data[i].title;
+							oP.innerHTML = data[i].date;
+							oLi.appendChild(oH2);
+							oLi.appendChild(oP);
+							oUl.appendChild(oLi);
+						}
+					}
+				});
+			}
+			getNews();
+			setInterval(getNews, 1000);
+				
+		}
+	}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="按钮">
+	<ul id="ul1"></ul>
+</body>
+</html>
