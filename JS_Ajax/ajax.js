@@ -5,15 +5,11 @@ function ajax(conf){
 	var success = conf.success;
 
 	if(!type) {
-		type == 'get';
+		type = 'get';
 	}
-	if(!data){
-		data == '';
+	if(!data) {
+		data = '';
 	}
-	if(!success){
-		success == null;
-	}
-
 	var xhr = null;
 	
 	try{
@@ -22,11 +18,11 @@ function ajax(conf){
 		xhr = new ActiveXObject('Microsoft.XMLHTTP');
 	}
 
-	if (type == 'get' || 'GET') {
+	if (type == 'get' || type == 'GET') {
 		url = url + '?' + data;
 		xhr.open(type, url, true);
 		xhr.send();
-	} else if(type == 'post' || 'POST') {
+	} else if(type == 'post' || type == 'POST') {
 		xhr.open(type, url, true);
 		xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
 		xhr.send(data);

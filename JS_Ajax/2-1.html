@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流布局</title>
+	<style>
+		body {margin: 0;}
+		#ul1 {width: 1080px; margin: 100px auto 0;}
+		li { width: 247px; list-style: none; float: left; margin-right: 10px; }
+		li div {border: 1px solid #000; padding: 10px; margin-bottom: 10px;}
+		li div img { width: 225px; display: block;}
+	</style>
+	<script src="ajax.js"></script>
+	<script>
+	window.onload = function(){
+		var oUl = document.getElementById('ul1');
+		var aLi = oUl.getElementsByTagName('li');
+		var iPage = 1;
+		var flag = true;
+
+		loadPic();
+
+		function loadPic(){
+			ajax({
+				'url': '2-getPics.php',
+				'data': 'cpage=' + iPage,
+				'success': function(data){
+					if ( !data.length ) {
+						return ;
+					}
+					for(var i=0; i<data.length; i++){
+						var _index = getShort();
+						var oDiv = document.createElement('div');
+						var oImg = document.createElement('img');
+						var oP = document.createElement('p');
+
+						oImg.src = data[i].preview;
+						oImg.style.width = '225px';
+						oImg.style.height =  data[i].height * ( 225 / data[i].width ) + 'px';
+						oP.innerHTML = data[i].title;
+						oDiv.appendChild(oImg);
+						oDiv.appendChild(oP);
+						aLi[_index].appendChild(oDiv);
+					}
+					flag = true;
+				}
+			});
+		}
+
+		function getShort(){ //获得高度最小的li
+			var index = 0;
+			var ih = aLi[index].offsetHeight;
+			for(var i=1; i<aLi.length; i++){
+				if (aLi[i].offsetHeight < ih){
+					index = i;
+					ih = aLi[i].offsetHeight;
+				}
+			}
+			return index;
+		}
+
+		function getTop(obj){
+			var iTop = 0;
+			while(obj){
+				iTop += obj.offsetTop;
+				obj = obj.offsetParent;
+			}
+			return iTop;
+		}
+
+		window.onscroll = function(){
+			var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+			var _index = getShort();
+			if(document.documentElement.clientHeight + scrollTop > aLi[_index].offsetHeight + getTop(aLi[_index])){
+				if(flag){
+					flag = false;
+					iPage++;
+					loadPic();
+				}
+					
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<ul id="ul1">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</body>
+</html>
