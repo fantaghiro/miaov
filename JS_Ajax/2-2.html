@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度搜索框提示</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#inp { width: 300px; height: 30px; border: 1px solid orange; margin: 10px auto 0; display: block; padding: 5px; font-size: 18px; }
+		#ul1 { margin: 0; padding: 0; margin: 0 auto; line-height: 30px; border-left: 1px solid orange; border-right: 1px solid orange; width: 310px; }
+		#ul1 li { list-style: none; border-bottom: 1px solid orange; width: 310px; }
+		#ul1 li a { display: block; text-decoration: none; color: black; padding: 5px; font-weight: bold; }
+		#ul1 li a:hover { background: orange; color: #fff; }
+	</style>
+	<script>
+		function amanda(data){
+
+			var oInp = document.getElementById('inp');
+			var oUl = document.getElementById('ul1');
+			var html = '';
+			var aA = oUl.getElementsByTagName('a');
+
+			if(data.s.length){
+
+				oUl.style.display = 'block';
+				for(var i=0; i<data.s.length; i++){
+					html += '<li><a target="_blank" href=http://www.baidu.com/s?wd='+ data.s[i] +'>'+ data.s[i] +'</a></li>';
+					oUl.innerHTML = html;
+				}
+				for(var i=0; i<aA.length; i++){
+					aA[i].onclick = function(){
+						oInp.value = '';
+						oUl.style.display = 'none';
+					}
+				}
+
+			} else {
+				oUl.style.display = 'none';
+			}
+				
+
+		}
+		window.onload = function(){
+
+			var oInp = document.getElementById('inp');
+			var oUl = document.getElementById('ul1');
+
+			oInp.onkeyup = function(){
+
+				if(oInp.value){
+
+					var oScript = document.createElement('script');
+					oUl.style.display = 'block';
+					oScript.src = 'http://suggestion.baidu.com/su?wd='+ oInp.value +'&json=1&cb=amanda';
+					document.body.appendChild(oScript);
+
+				} else {
+					oUl.style.display = 'none';
+				}
+
+					
+
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id="inp" placeholder="请在此处输入关键词">
+	<ul id="ul1"></ul>
+</body>
+</html>
