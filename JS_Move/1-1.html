@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>淡入淡出图片</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#wrapper { border: 1px solid #000; margin: 50px auto 0; width: 520px; position: relative; height: 280px;}
+		img { margin: 0; position: absolute; top: 0; left: 0; }
+		a { text-decoration: none; color: #fff; display: block; background: #000; opacity: 0.3; filter: alpha(opacity=30); width: 50px; height: 50px; text-align: center; line-height: 50px; border-radius: 50%; font-size: 30px; position: absolute; top: 115px; }
+		a:hover { opacity: 0.8; filter: alpha(opacity=80); }
+		#lf { left: 10px; }
+		#rt { right: 10px; }
+	</style>
+	<script src="move.js"></script>
+	<script>
+		window.onload = function(){
+
+			var arr = [
+				'img/1.jpg',
+				'img/2.jpg',
+				'img/3.jpg',
+				'img/4.jpg',
+				'img/5.jpg',
+				'img/6.jpg'
+			];
+			var oImg1 = document.getElementById('img1');
+			var oImg2 = document.getElementById('img2');
+			var oLf = document.getElementById('lf');
+			var oRt = document.getElementById('rt');
+			var iCur = 0;
+			var onOff = true;
+
+			//初始化页面
+			oImg1.src = arr[0];
+
+			oRt.onclick = function(){
+				if(!onOff){ return; }
+				onOff = false;
+				oImg1.style.opacity = 1;
+				iCur++;
+				if(iCur == arr.length){
+					iCur = 0;
+				}
+				oImg2.src = arr[iCur];
+				oImg2.style.opacity = 0;
+				startMove(oImg1, {
+					opacity: 0
+				})
+				startMove(oImg2, {
+					opacity: 100
+				}, function(){
+					oImg1.src = oImg2.src;
+					onOff = true;
+				})
+						
+			}
+
+			oLf.onclick = function(){
+				if(!onOff){ return; }
+				onOff = false;
+				oImg1.style.opacity = 1;
+				iCur--;
+				if(iCur < 0) {
+					iCur = arr.length - 1;
+				} 
+				oImg2.src = arr[iCur];
+				oImg2.style.opacity = 0;
+				startMove(oImg1, {
+					opacity: 0
+				})
+				startMove(oImg2, {
+					opacity: 100
+				}, function(){
+					oImg1.src = oImg2.src;
+					onOff = true;
+				})
+					
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<img src="" id="img1">
+		<img src="" id="img2">
+		<a href="javascript:;" id="lf">&lt;</a>
+		<a href="javascript:;" id="rt">&gt;</a>
+	</div>
+</body>
+</html>

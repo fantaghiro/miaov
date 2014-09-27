@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>右键菜单淡入淡出</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		ul { margin: 0; padding: 0; border: 1px solid #000; width: 100px; position: absolute; display: none; }
+		li { line-height: 30px; text-align: center; list-style: none; }
+		a { text-decoration: none; color: gray; display: block; border-bottom: 1px dotted #000; }
+		a:hover { background: #000; color: #fff; }
+	</style>
+	<script src="move.js"></script>
+	<script>
+		window.onload = function(){
+			var oUl = document.getElementById('menu');
+			document.oncontextmenu = function(ev){
+				ev = ev || event;
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+
+				oUl.style.opacity = 0;
+				oUl.style.display = 'block';
+				oUl.style.left = scrollLeft + ev.clientX + 'px';
+				oUl.style.top = scrollTop + ev.clientY + 'px';
+				startMove(oUl, {
+					opacity: 100
+				})
+
+				return false;
+			}
+
+			document.onclick = function(){
+				startMove(oUl, {
+					opacity: 0
+				}, function(){
+					oUl.style.display = 'none';
+				})
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="menu">
+		<li><a href="#">剪切</a></li>
+		<li><a href="#">粘贴</a></li>
+		<li><a href="#">添加</a></li>
+		<li><a href="#">删除</a></li>
+		<li><a href="#">后退</a></li>
+	</ul>
+</body>
+</html>

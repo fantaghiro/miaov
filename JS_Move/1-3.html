@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		#div1 { border: 1px solid gray; width: 150px; height: 300px; position: absolute; top: 0; background: black; left: -152px;}
+		#div2 { border: 1px solid gray;  padding: 10px 8px; line-height: 24px; position: absolute; left: 150px; top: 116px; background: #000; color: #fff; }
+	</style>
+	<script src="move.js"></script>
+	<script>
+		window.onload = function(){
+
+			var oDiv1 = document.getElementById('div1');
+			var oDiv2 = document.getElementById('div2');
+
+			setPos();
+
+			function setPos(){
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+				oDiv1.style.top = scrollTop + document.documentElement.clientHeight/2 - oDiv1.offsetHeight/2 + 'px';
+			}
+
+			window.onscroll = setPos;
+			window.onresize = setPos;
+
+			oDiv1.onmouseover = function(){
+				startMove(oDiv1, {
+					left: 0
+				})
+			}
+			oDiv1.onmouseout = function(){
+				startMove(oDiv1, {
+					left: -152
+				})
+			}
+			
+
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2">分享</div>
+	</div>
+</body>
+</html>
