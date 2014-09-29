@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>钟摆运动</title>
+    <style>
+    body { margin: 0; padding: 0; }
+    #div1 { width: 20px; height: 20px; position: absolute; background: black; left: 0; top: 300px; }
+    #bar { width: 1px; height: 380px; background: black; position: absolute; left: 300px; }
+    </style>
+    <script>
+    window.onload = function() {
+
+        var oDiv = document.getElementById('div1');
+        
+        swing();
+
+       	function swing(){
+
+       	  var iTimer = null;
+          var iSpeedX = 0;
+
+          clearInterval(iTimer);
+          iTimer = setInterval(function(){
+
+            if(oDiv.offsetLeft < 300){
+              iSpeedX += 5;
+            } else {
+              iSpeedX -= 5;
+            }
+
+            if(oDiv.offsetLeft < 300 && iSpeedX > 0 || oDiv.offsetLeft > 300 && iSpeedX < 0){
+              iSpeedY = 8;
+            } else if (oDiv.offsetLeft > 300 && iSpeedX > 0 || oDiv.offsetLeft < 300 && iSpeedX < 0){
+              iSpeedY = -8;
+            }
+
+            oDiv.style.left = oDiv.offsetLeft + iSpeedX + 'px';
+            oDiv.style.top = oDiv.offsetTop + iSpeedY + 'px';    
+          }, 30)
+
+       	}
+
+    }
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+    <div id="bar"></div>
+</body>
+</html>
