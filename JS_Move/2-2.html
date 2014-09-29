@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body { background:#f1f1f1; }
+#btn1 { position:absolute; top:200px; left:50%; margin-left:-20px; }
+#pendulum { position:absolute; top:80px; left:50%; margin-left:-40px;  }
+#pendulum span { position:absolute; top:0; left:0; width:70px; height:70px; background:red; border-radius:50%; opacity:0; transition:.3s opacity; }
+</style>
+</head>
+
+<body>
+
+<input id="btn1" type="button" value="钟摆" />
+
+<div id="pendulum"><span></span></div>
+
+<script>
+var oBtn = document.getElementById('btn1');
+var oDiv = document.getElementById('pendulum');
+var oSpan = oDiv.getElementsByTagName('span')[0];
+
+oBtn.onclick = function () {
+        this.disabled = true;
+        
+        oSpan.style.opacity = 1;
+        oSpan.style.left = getLT(80, 300).x + 'px';
+        oSpan.style.top = getLT(80, 300).y + 'px';
+        
+        startMove( oSpan, -60, 0, 300, 3000 );
+};
+
+function startMove(obj,iDeg,iTarget,iR,time,callBack){
+        var iNowTime=new Date().getTime();
+        clearInterval(obj.oTimer);
+        obj.oTimer=setInterval(function(){
+                var iTime=time-Math.max(0,iNowTime-new Date().getTime()+time);
+                var iVal=elasticOut(iTime,iDeg,iTarget-iDeg,time);
+                obj.style.top=getLT(iVal,iR).y+"px";
+                obj.style.left=getLT(iVal,iR).x+"px";
+                if(iTime==time){
+                        clearInterval(obj.oTimer);
+                        callBack && callBack.call(obj);
+                }
+        },14);
+        function elasticOut(t, b, c, d, a, p){    
+                if (t === 0) {
+                        return b;
+                }
+                if ( (t /= d) == 1 ) {
+                        return b+c;
+                }
+                if (!p) {
+                        p=d*0.15;        // 幅度
+                }
+                if (!a || a < Math.abs(c)) {
+                        a = c;
+                        var s = p / 4;
+                } else {
+                        var s = p/(2*Math.PI) * Math.asin (c/a);
+                }
+                return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+        }
+}
+function getLT(iDeg,iR){
+        var iLeft=Math.round(iR*Math.sin(iDeg/180*Math.PI));
+        var iTop=Math.round(iR*Math.cos(iDeg/180*Math.PI));
+        return {x:iLeft,y:iTop};
+}
+
+</script>
+
+</body>
+</html>
