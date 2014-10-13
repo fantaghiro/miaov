@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>抽奖-减速切换（切换总时间随机）</title>
+	<style>
+		body, ul { margin: 0; padding: 0; font-family: '微软雅黑'; background-color: #F2E1AC;}
+		input { margin: 30px auto; display: block; padding: 0 20px; font-size: 20px; outline: none; border: none; background-color: #f2594b; color: #fff; border-radius: 3px; line-height: 55px; cursor: pointer; font-weight: bold; }
+		ul { width: 366px; padding: 10px; margin: 30px auto; }
+		.clear { zoom: 1; }
+		.clear:after { content: ""; display: block; clear: both; }
+		li { list-style: none; border: 1px solid #000; width: 100px; height: 100px; line-height: 100px; text-align: center; margin: 10px; float: left; border-radius: 50%; font-size: 22px; }
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function(){
+			var chances = 3; //总共有三次抽奖机会
+			var idx = 0; //当前有色的div的eq
+			var timer = null;
+			var onOff = false;
+
+
+			$('input').click(function(){
+				if(onOff){
+					return;
+				}
+				onOff = true;
+				
+				var duration = Math.round(Math.random()*3000);
+				var iSpeed = 40; //初始速度
+
+				chances--;
+				$(this).val('还有'+ chances +'次机会');
+				if(chances == 0){
+					$(this).val('没有机会了');
+					$(this).css('background', 'gray');
+					this.disabled = 'disabled';
+				}
+
+				changeDiv();
+
+				function changeDiv(){
+					
+					timer = setTimeout(function(){
+
+						$('li').eq(idx++%9)
+							.css('background', 'red')
+							.css('color', '#fff')
+							.siblings()
+								.css('background', '')
+								.css('color', '#000');
+
+						if(duration <=0 ){
+							clearTimeout(timer);
+							alert('恭喜你中了'+$('li').eq((idx-1)%9).html());
+							iSpeed = 40;
+							idx = 0;
+							onOff = false;
+							return;
+						}
+
+						iSpeed += 30;
+						duration -= iSpeed;
+						changeDiv();
+
+					}, iSpeed)
+				}	
+			});
+	
+		})
+	</script>
+</head>
+<body>
+	<input type="button" value="幸运大抽奖">
+	<ul class="clear">
+		<li>1等奖</li>
+		<li>2等奖</li>
+		<li>3等奖</li>
+		<li>4等奖</li>
+		<li>5等奖</li>
+		<li>6等奖</li>
+		<li>7等奖</li>
+		<li>8等奖</li>
+		<li>9等奖</li>
+	</ul>
+</body>
+</html>
