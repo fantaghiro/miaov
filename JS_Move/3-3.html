@@ -17,14 +17,13 @@
 			var aLi = document.getElementsByTagName('li');
 
 			for(var i=0; i<aLi.length; i++){
-				aLi[i].index = i;
 
 				aLi[i].onmouseover = function(){
-					flexMove(aLi[this.index], 300);
+					flexMove(this, 300);
 				}
 
 				aLi[i].onmouseout = function(){
-					flexMove(aLi[this.index], 30);
+					flexMove(this, 30);
 				}
 			}
 
