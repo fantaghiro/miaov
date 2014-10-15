@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>按钮控制商品图片上下滚动</title>
+	<style>
+		html, body, p, h2, h3, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		a {
+			text-decoration: none;
+			color: #ffffff;
+		}
+		h2 {
+			width: 170px;
+			background: #294A73;
+			color: #FFFFFF;
+			font-size: 14px;
+			padding: 5px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			margin: 20px auto 0 auto;
+		}
+		h2 a {
+			float: right;
+		}
+		#container {
+			width: 160px;
+			height: 450px;
+			background: #fff;
+			overflow: hidden;
+			padding: 20px 10px;
+			margin: 0 auto;
+			border-left: 1px solid #eee;
+			border-right: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			position: relative;
+		}
+		#container h3 {
+			font-size: 14px;
+			line-height: 28px;
+		}
+		#container ul{
+			position: relative;
+			top: 0;
+		}
+		#container li {
+			border-bottom: 1px solid #A4A4A4;
+			position: relative;
+			padding-bottom: 5px;
+		}
+		#container img {
+			max-width: 80px;
+			max-height: 60px;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+		#container p {
+			font-size: 12px;
+			width: 80px;
+		}
+		#container .time {
+			padding-top: 10px;
+			color: gray;
+		}
+		#up, #down {
+			width: 100%;
+			height: 20px;
+			position: absolute;
+			left: 0;
+			cursor: pointer;
+			z-index: 1;
+		}
+		#up {
+			top: 0;
+			background: url('8-img/arrowUp.png') no-repeat center center #EFEFE7;
+		}
+		#down {
+			bottom: 0;
+			background: url('8-img/arrowDown.png') no-repeat center center #EFEFE7;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var oUp = document.getElementById('up'),
+				oDown = document.getElementById('down'),
+				oUl = document.getElementsByTagName('ul')[0],
+				timerUp = null,
+				timerDown = null;
+			// 设置向上向下按钮hover时的样式
+			oUp.onmouseover = oDown.onmouseover  = function(){
+				this.style.backgroundColor = '#E7EFEF';
+			}
+			oUp.onmouseout = oDown.onmouseout  = function(){
+				this.style.backgroundColor = '#EFEFE7';
+				
+			}
+
+			var sp=0;
+		    oUp.onclick=function(){
+		        clearInterval(timerDown);
+		        clearInterval(timerUp);
+		        timerUp=setInterval(function(){
+		            sp++;
+		            oUl.style.top=-sp+'px';
+		            if(sp>=180){
+		                clearInterval(timerUp);
+		                oUl.style.top=-180+'px';
+		            }
+		        },14)
+		    }
+		    oDown.onclick=function(){
+		        clearInterval(timerUp);
+		        clearInterval(timerDown);
+		        timerDown=setInterval(function(){
+		            oUl.style.top=-sp+'px';
+		            sp--;
+		            if(sp<=0){
+		                oUl.style.top=0+'px';
+		                clearInterval(timerDown);
+		            }
+		        },14)
+		    }
+
+		}
+	</script>
+</head>
+<body>
+	<h2>妙味课堂<a href="#">>>更多</a></h2>
+	<div id="container">
+		<div id="up"></div>
+		<ul>
+			<li>
+				<h3>标题一</h3>
+				<p>Mac翻新产品<br/>iPod翻新产品</p>
+				<p class="time">12:35</p>
+				<img src="8-img/ad1.png" alt="">
+			</li>
+			<li>
+				<h3>标题二</h3>
+				<p>RMB5,780起<br/>最低降了30%</p>
+				<p class="time">21:29</p>
+				<img src="8-img/ad2.png" alt="">
+			</li>
+			<li>
+				<h3>标题三</h3>
+				<p>Mac完全解析</p>
+				<p class="time">22:38</p>
+				<img src="8-img/ad3.png" alt="">
+			</li>
+			<li>
+				<h3>标题四</h3>
+				<p>无线网络基础</p>
+				<p class="time">12:00</p>
+				<img src="8-img/ad4.png" alt="">
+			</li>
+			<li>
+				<h3>标题五</h3>
+				<p>从PC到Mac：<br/>基础知识</p>
+				<p class="time">23:12</p>
+				<img src="8-img/ad5.png" alt="">
+			</li>
+			<li>
+				<h3>标题六</h3>
+				<p>转移到Mac</p>
+				<p class="time">15:30</p>
+				<img src="8-img/ad6.png" alt="">
+			</li>
+			<li>
+				<h3>标题七</h3>
+				<p>各种Mac机</p>
+				<p class="time">3:23</p>
+				<img src="8-img/ad7.png" alt="">
+			</li>
+			<li>
+				<h3>标题八</h3>
+				<p>RMB348起<br/>最多降低了43%</p>
+				<p class="time">15:48</p>
+				<img src="8-img/ad8.png" alt="">
+			</li>
+		</ul>
+		<div id="down"></div>
+	</div>
+</body>
+</html>

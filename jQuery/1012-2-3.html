@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>评分效果</title>
+<style type="text/css">
+#list li{width:50px;height:50px;background:red;float:left;margin-left:5px;list-style:none;}
+</style>
+<script type="text/javascript" src="jquery-1.11.1.js"></script>
+<script type="text/javascript">
+        $(function(){
+                $li = $("#list").find("li");
+                $li.bind("mouseover",function(){
+                        $li.css("background","red");
+                        $li.slice(0,$(this).index('li')+1).css("background","blue");
+                }).bind("mouseout",function(){
+                        $li.css("background","red");
+                }).bind("click",function(){
+                        $li.unbind();
+                }); 
+        });        
+</script>
+</head>
+<body>
+<ul id="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+</ul>
+</body>
+</html>

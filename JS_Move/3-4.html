@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>刚性菜单</title>
+	<style>
+		body { margin: 0; padding: 0; }
+		ul { margin: 0; padding: 0; }
+		li { background: red; list-style: none; width: 100px; line-height: 30px; height: 30px; float: left; margin-right: 10px; text-align: center; cursor: pointer; color: #fff; }
+		a { display: block; color: #fff; text-decoration: none; }
+		#div2, #div1 { margin: 0; padding: 0; position: absolute; top: 300px; background: #000; height: 2px; width: 430px; }
+		#div1 { top: 30px; }
+	</style>
+	<script>
+		window.onload = function(){
+
+			var aLi = document.getElementsByTagName('li');
+
+			for(var i=0; i<aLi.length; i++){
+				aLi[i].index = i;
+
+				aLi[i].onmouseover = function(){
+					flexMove(aLi[this.index], 300);
+				}
+
+				aLi[i].onmouseout = function(){
+					flexMove(aLi[this.index], 30);
+				}
+			}
+
+			function flexMove(obj, iTarget){
+				var iSpeed = 30;
+
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					iSpeed += 10;
+
+					var H = obj.offsetHeight + iSpeed;
+
+					if(H > iTarget){
+						H = iTarget;
+						iSpeed *= -1;
+					}
+					iSpeed *= 0.85;
+
+					if( iTarget - H < 1 && Math.abs(iSpeed) < 1 ){
+						clearInterval(obj.timer);
+						obj.style.height = iTarget + 'px';
+						iSpeed = 30;
+					} else {
+						obj.style.height = H + 'px';
+					}
+					
+				}, 30)
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+	<ul>
+		<li><a href="#">菜单一</a></li>
+		<li><a href="#">菜单二</a></li>
+		<li><a href="#">菜单三</a></li>
+		<li><a href="#">菜单四</a></li>
+	</ul>
+	<div id="div2"></div>
+</body>
+</html>
