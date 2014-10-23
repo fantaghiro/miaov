@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>随机移动图片</title>
+	<style>
+		body {margin: 0; padding: 0;}
+		#container img {width: 100px; height: 100px; display: block; position: absolute;}
+		#container {width: 300px; height: 300px; border: 1px solid #000; position: relative; margin: 50px auto;}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function(){
+			var blank = [3, 3]; //一开始空白的位置
+			var movedImg = []; //被移动的图片的位置
+
+			function $nextImg(){ //获取下一个要移动的图片
+				var $next;
+				var arr = []; 
+				var json = {
+					'0': [],
+					'1': [],
+					'2': [], 
+					'3': []
+				}
+				//每个空白位置上下左右有四个位置
+				json[0].push(blank[0]+1, blank[1]);
+				json[1].push(blank[0]-1, blank[1]);
+				json[2].push(blank[0], blank[1]+1);
+				json[3].push(blank[0], blank[1]-1);
+
+				for(i in json){ //通过判断去除掉越过边界的位置
+					if(json[i][0] * json[i][1] != 0 && json[i][0] < 4 && json[i][1] < 4){
+						arr.push(json[i]); //把可以移动的图片的位置放到数组arr中
+					}
+				}
+
+				arr.sort(function(a, b){ //arr随机排序一下，然后arr中的第一个数组会被用到
+					return Math.random() - 0.5;
+				});
+
+				if(arr[0][0] == movedImg[0] && arr[0][1] == movedImg[1]){ //如果arr中第一个数组的位置刚好是上次被移动图片的位置，那么就把arr[0]在arr中去除
+					arr.shift();
+				}
+
+				$('img').each(function(i, elem){
+					//遍历图片，找到如何arr[0]所标示位置的图片存到$next中
+					if($(this).attr('row') == arr[0][0] && $(this).attr('col') == arr[0][1]){
+						$next = $(this); 
+						return false;
+					}
+				});
+				return $next; //整个$nextImg()函数返回的就是下次要移动的图片
+			}
+
+			function shift(){
+				var $next = $nextImg();
+				movedImg[0] = blank[0];
+				movedImg[1] = blank[1];
+				$next.animate({ //将图片移到空白位置
+					'left': (blank[0] - 1) * 100,
+					'top': (blank[1] - 1) * 100
+				}, 1000, function(){
+					//回调就是被移动图片和原本的空白的位置对调，然后调用本身再次执行
+					blank[0] = parseInt($next.attr('row'));
+					blank[1] = parseInt($next.attr('col'));
+					$next.attr('row', movedImg[0]);
+					$next.attr('col', movedImg[1]);
+					shift();
+				});
+			}
+
+			shift();
+				
+		})
+	</script>
+</head>
+<body>
+	<div id="container">
+		<img src="1019-img/01.jpg" row='1' col='1' style="left: 0; top: 0">
+		<img src="1019-img/02.jpg" row='1' col='2' style="left: 0; top: 100px">
+		<img src="1019-img/03.jpg" row='1' col='3' style="left: 0; top: 200px;">
+		<img src="1019-img/04.jpg" row='2' col='1' style="left: 100px; top: 0">
+		<img src="1019-img/05.jpg" row='2' col='2' style="left: 100px; top: 100px;">
+		<img src="1019-img/06.jpg" row='2' col='3' style="left: 100px; top: 200px;">
+		<img src="1019-img/07.jpg" row='3' col='1' style="left: 200px; top: 0">
+		<img src="1019-img/08.jpg" row='3' col='2' style="left: 200px; top: 100px;">
+	</div>
+</body>
+</html>

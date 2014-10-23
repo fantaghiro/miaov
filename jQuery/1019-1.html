@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>淘宝轮播图</title>
+	<style>
+		body {margin: 0; padding: 0;}
+		#container {margin: 50px auto; width: 470px; height: 150px; position: relative; overflow: hidden;}
+		#box {width: 940px; font-size: 0; position: absolute;}
+		#nav {position: absolute; right: 0; bottom: 0; padding: 5px 10px;}
+		#nav span {display: inline-block; background: #fff; color: #F37A29; width: 18px; height: 18px; text-align: center; font-weight: bold; font-size: 14px; cursor: pointer;}
+		#nav span.active {background: #f37a29; color: #fff;}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function(){
+
+			var arr = ['1019-img/1.jpg', '1019-img/2.jpg', '1019-img/3.jpg', '1019-img/4.jpg', '1019-img/5.jpg'];
+			var iNow = 0;
+			var iNext;
+			var timer = null;
+			var btn = true;
+
+			
+			timer = setInterval(function(){
+				iNext = (iNow+1)%5;
+				slide(true);
+			}, 2500);
+
+			$('#container').on('mouseover', function(){
+				clearInterval(timer);
+			})
+
+			$('#container').on('mouseout', function(){
+				timer = setInterval(function(){
+					iNext = (iNow+1)%5;
+					slide(true);
+				}, 2500);
+			})
+			
+
+			$('#nav').delegate('span', 'mouseover', function(){
+				if(!btn){return;}
+				if(iNext == $(this).index()){return;}
+				$(this).addClass('active').siblings().attr('class', '');
+				iNext = $(this).index();
+				if(iNext > iNow){
+					slide(true);
+				} else {
+					slide(false);
+				}		
+			})
+
+			function slide(flag){
+				if(!btn){return;}
+				btn = false;				
+				$('#nav').find('span').eq(iNext)
+					.addClass('active')
+					.siblings().attr('class', '');
+				if(flag){
+					$('#box')
+					.append($('<img src='+ arr[iNext] +'>'))
+					.animate({
+						'left': '-470px'
+					}, 600, function(){
+						$('#box')
+							.css('left', '0')
+							.find('img').first().remove();
+							iNow = iNext;
+							btn = true;
+					});	
+				} else {
+					$('#box')
+					.css('left', '-470px')
+					.prepend($('<img src='+ arr[iNext] +'>'))
+					.animate({
+						'left': '0'
+					}, 600, function(){
+						$('#box').find('img').last().remove();
+						iNow = iNext;
+						btn = true;
+					})
+				}
+							
+			}
+
+		})
+	</script>
+</head>
+<body>
+	<div id="container">
+		<div id="box">
+			<img src="1019-img/1.jpg" height="150" width="470" alt="">
+		</div>
+		<div id="nav">
+			<span class="active">1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+		</div>		
+	</div>	
+</body>
+</html>

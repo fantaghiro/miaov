@@ -22,30 +22,7 @@
     <favorites_list name="MiaoV" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="9-7-1.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7-1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="34" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.93028843" vertical-offset="154" max-vertical-offset="1305">
-              <folding>
-                <marker date="1409102360979" expanded="false" signature="773:798" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="9-7.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="38" selection-start="1839" selection-end="2114" vertical-scroll-proportion="-8.142858" vertical-offset="1311" max-vertical-offset="3040">
-              <folding>
-                <marker date="1409042523112" expanded="false" signature="1889:1914" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -140,12 +117,20 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="vcs.Git" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/妙味笔记" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -156,23 +141,15 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
       <setting name="configLocationType" value="CONFIG_FILE" />
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -250,20 +227,34 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7-1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="34" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.0" vertical-offset="532" max-vertical-offset="779">
+          <folding>
+            <marker date="1409541644611" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="38" selection-start="1839" selection-end="2114" vertical-scroll-proportion="-8.142858" vertical-offset="1311" max-vertical-offset="3040">
-          <folding>
-            <marker date="1409042523112" expanded="false" signature="1889:1914" placeholder="..." />
-          </folding>
+        <state line="81" column="38" selection-start="1839" selection-end="2114" vertical-scroll-proportion="0.0" vertical-offset="1539" max-vertical-offset="3002">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="38" selection-start="1763" selection-end="1763" vertical-scroll-proportion="0.022836538" vertical-offset="1406" max-vertical-offset="3078">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JS_Basic_Lessons/9-7-1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="34" selection-start="1016" selection-end="1016" vertical-scroll-proportion="0.93028843" vertical-offset="154" max-vertical-offset="1305">
+        <state line="10" column="7" selection-start="221" selection-end="221" vertical-scroll-proportion="0.022836538" vertical-offset="171" max-vertical-offset="1577">
           <folding>
-            <marker date="1409102360979" expanded="false" signature="773:798" placeholder="..." />
+            <marker date="1409541644611" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
