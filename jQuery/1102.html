@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实战开发项目</title>
+	<style>
+		html, body, ul {margin: 0; padding: 0;}
+		ul {border: 1px solid #000; position: absolute; top: 0; left: 300px; line-height: 30px; width: 200px; margin-top: 10px; display: none;}
+		li {list-style: none; padding: 5px; cursor: pointer;}
+		li.active {background: #88D7AD; color: #fff; font-weight: bold;}
+		#container {width: 300px; position: fixed;}
+		.block {width: 100%; -height: 30px; line-height: 30px; position: relative; margin: 10px 0;}
+		.content {width: 200px; min-height: 30px; border: 1px solid #000; display: inline-block; vertical-align: middle;  margin: 10px; cursor: no-drop; font-size: 20px; border: 1px solid blue;}
+		input {width: 30px; height: 30px;}
+		#container span {display: inline-block; line-height: 30px; font-size: 14px; padding: 0 5px; margin: 0 3px;}
+		#container span img {position: absolute; cursor: pointer;}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function(){
+
+			var $container = $('#container');
+
+			//将#container上下居中放在页面上
+			function centerContainer(){
+				$container.css({
+					top: ($(window).height() - $container.outerHeight())/2,
+					left: ($(window).width() - $container.outerWidth())/2
+				})
+			}
+			
+			centerContainer();
+			$(window).on('resize', centerContainer);
+
+			var ul1data = ['第一行内容', '第二行内容', '第三行内容'];
+			var ul2data = ['<a href="javascript:">全选</a>', '第1行', '第2行', '第3行', '第4行', '第5行', '第6行', '第7行', '第8行', '第9行'];
+			var ul3data = ['<a href="javascript:">全选</a>', '第a行', '第b行', '第c行', '第d行', '第e行', '第f行', '第g行', '第h行', '第i行'];
+			var $box1 = $('#box1');
+			var $addBtn1 = $box1.siblings('input[value="+"]');
+			var $deleteBtn1 = $box1.siblings('input[value="-"]');
+			var $box2 = $('#box2');
+			var $addBtn2 = $box2.siblings('input[value="+"]');
+			var $deleteBtn2 = $box2.siblings('input[value="-"]');
+			var $box3 = $('#box3');
+			var $addBtn3 = $box3.siblings('input[value="+"]');
+			var $deleteBtn3 = $box3.siblings('input[value="-"]');
+
+			//动态生成弹窗的函数
+			function createUl(box, data){
+				var $ul = $('<ul>');
+				$.each(data, function(i, val){
+					var $li = $('<li>' + val + '</li>');
+					$li.appendTo($ul);
+				})
+				$ul.appendTo(box.parent());
+				return $ul;
+			}
+
+			var $pop1 = createUl($box1, ul1data);
+			var $pop2 = createUl($box2, ul2data);
+			var $pop3 = createUl($box3, ul3data);
+
+			//点击加号，显示对应弹窗，隐藏其他弹窗
+			$container.find('input[value="+"]').each(function(){
+				$(this).on('click', function(){
+					$container.find('ul').hide();
+					$(this).parent().find('ul').show();
+					return false;
+				})
+			})
+
+			$(document).on('click', function(){
+				$container.find('ul').hide();
+			})
+
+			//第一个弹窗中的点击效果
+			$pop1.find('li').on('click', function(){
+				$(this).siblings().attr('class', '');
+				$box1.empty();
+			})
+			//三个弹窗中点击各行的效果
+			$container.find('ul').on('click', 'li', function(){
+				var This = this;
+				$(this).toggleClass('active');
+				if($(this).attr('class') == 'active') {
+					$span = $('<span>' + $(this).html() + '<img src="1102-img/delete.png"></span>');
+					$span.appendTo($(this).parent().siblings('div'));
+					$span.prop('index', $(this).index());
+				} else {
+					$(this).parent().siblings('div').find('span').each(function(){
+						if($(this).prop('index') == $(This).index()){
+							$(this).remove();
+						}
+					})
+				} 
+
+
+				return false;					
+			})
+
+			//三个box中点击删除图片的动作
+			$container.find('.content').each(function(){
+				var $This = $(this);
+				$(this).on('click', 'img', function(){
+					var idx = $(this).parent().prop('index');
+					$This.siblings('ul').find('li').eq(idx).attr('class', '');
+					$(this).parent().remove();
+					return false;
+				})
+			})
+
+		})
+	</script>
+</head>
+<body>
+	<div id="container">
+		<div class="block">
+			<div class="content" id="box1"></div>
+			<input type="button" value="+">
+			<input type="button" value="-">
+		</div>
+		<div class="block">
+			<div class="content" id="box2"></div>
+			<input type="button" value="+">
+			<input type="button" value="-">
+		</div>
+		<div class="block">
+			<div class="content" id="box3"></div>
+			<input type="button" value="+">
+			<input type="button" value="-">
+		</div>
+	</div>
+</body>
+</html>

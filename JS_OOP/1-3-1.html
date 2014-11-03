@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任意学过的效果改为面向对象——QQ展开收缩效果</title>
+	<style>
+		ul, h2 {padding: 0;	margin: 0;}
+		li {list-style: none;}
+		#list1 h2, #list2 h2, .lis li {font-size: 18px;	padding: 5px;}
+		#list1, #list2 {width: 240px;margin: 30px auto;border: 1px solid black;}
+		.lis li {border-bottom: 1px solid black;text-indent: 15px;cursor: pointer;}
+		.lis ul {display: none;}
+		#list1 h2, #list2 h2 {background: url(ico1.gif) no-repeat 5px center;	text-indent: 15px;	background-color: #38e9ff;	cursor: pointer}
+		#list1 h2.active, #list2 h2.active {background: url(ico2.gif) no-repeat 5px center #ffa33c;}
+		#list1 .selected, #list2 .selected {background: #eee;}
+	</style>
+	<script>
+
+		window.onload = function(){
+			qqGroups = new Groups('list1');
+			qqGroups.init();
+
+			group2 = new Groups('list2');
+			group2.init();
+		}
+
+		function Groups(id){
+			this.oUl = document.getElementById(id);
+			this.aH2 = this.oUl.getElementsByTagName('h2');
+			this.aUl = this.oUl.getElementsByTagName('ul');
+			this.aLi;
+			this.arrLi = [];
+			this.prevLiIndex = 0;
+			this.flag = 1;
+		}
+
+		Groups.prototype.init = function(){
+			var This = this;
+			for(var i=0; i<this.aH2.length; i++) {
+				this.aH2[i].index = i;
+				this.aH2[i].onclick = function(){
+					This.changeGroup(this);
+				}
+			}
+
+			for(var i=0; i<this.aUl.length; i++) {
+				this.aLi = this.aUl[i].getElementsByTagName('li');
+				for(var j=0; j<this.aLi.length; j++) {
+					this.arrLi.push(this.aLi[j]);
+				}
+			}
+
+			for(i=0; i<this.arrLi.length; i++) {
+				this.arrLi[i].index = i;
+				this.arrLi[i].onclick = function(){
+					This.selectItem(this);
+				}
+			}
+		}
+
+		Groups.prototype.changeGroup = function(obj){
+			for (var i=0; i<this.aH2.length; i++) {
+				this.aUl[i].style.display = 'none';
+				this.aH2[i].className = '';
+			}
+			this.aUl[obj.index].style.display = 'block';
+			this.aH2[obj.index].className = 'active';
+		}
+
+		Groups.prototype.selectItem = function(obj){
+			if(this.arrLi[this.prevLiIndex]!=obj){
+				this.arrLi[this.prevLiIndex].className = '';
+			}
+			if(this.arrLi[obj.index].className) {
+				this.arrLi[obj.index].className = '';
+			} else {
+				this.arrLi[obj.index].className = 'selected';
+			}
+			this.prevLiIndex = obj.index;
+		}
+
+	</script>
+</head>
+<body>
+	<ul id="list1">
+		<li class="lis">
+			<h2>我的好友</h2>
+			<ul>
+				<li>张三</li>
+				<li>张三</li>
+				<li>张三</li>
+				<li>张三</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>企业好友</h2>
+			<ul>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>黑名单</h2>
+			<ul>
+				<li>王五</li>
+				<li>王五</li>
+			</ul>
+		</li>
+	</ul>
+	<br>
+	<ul id="list2">
+		<li class="lis">
+			<h2>我的知识</h2>
+			<ul>
+				<li>英语</li>
+				<li>音乐</li>
+				<li>美术</li>
+				<li>程序</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>我的素质</h2>
+			<ul>
+				<li>勤奋</li>
+				<li>好学</li>
+				<li>热情</li>
+				<li>好奇</li>
+				<li>开朗</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>我的想法</h2>
+			<ul>
+				<li>不切实际</li>
+				<li>天马行空</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

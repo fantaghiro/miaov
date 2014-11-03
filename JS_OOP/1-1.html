@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>为数组对象添加求和、最大值；为字符串对象添加判断是不是最后一个字母</title>
+	<script>
+		Array.prototype.sum = function(){
+			var sum = 0;
+			for(var i=0; i<this.length; i++){
+				sum += this[i];
+			}
+			return sum;
+		}
+
+		Array.prototype.max = function(){
+			var max = this[0];
+			for(var i=0; i<this.length; i++){
+				if(this[i] > max) {
+					max = this[i];
+				}
+			}
+			return max;
+		}
+		String.prototype.lastChar = function(char){
+			if(char === this.charAt(this.length - 1) ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+		var arr1 = [-3, -6, -8, 0, 2, 9, -7];
+		var str = "this is a string";
+		alert(arr.sum());
+		alert(arr1.max());
+		alert(str.lastChar('g'));
+		alert(str.lastChar(' '));
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象的选项卡（添加自动播放方法）</title>
+	<style>
+		#div1 div, #div2 div {width: 200px; height: 200px; border: 1px solid #000; display: none;}
+		.active {background: red;}
+	</style>
+	<script>
+
+		window.onload = function(){
+
+			var t1 = new Tab('div1');
+
+			t1.init();
+			t1.autoplay();
+
+			var t2 = new Tab('div2');
+			t2.init();
+		}
+
+		function Tab(id){
+			this.oParent = document.getElementById(id);
+			this.aInput = this.oParent.getElementsByTagName('input');
+			this.aDiv = this.oParent.getElementsByTagName('div');
+			this.iNow = 0;
+		}
+
+		Tab.prototype.init = function(){
+			var This = this;
+			for(var i=0; i<this.aInput.length; i++){
+				this.aInput[i].onclick = function(){
+					This.change(this);
+				}
+				this.aInput[i].index = i;
+			}
+		}
+
+		Tab.prototype.change = function(obj){
+			for(var i=0; i<this.aInput.length; i++){				
+				this.aInput[i].className = '';
+				this.aDiv[i].style.display = 'none';
+			}
+
+			obj.className = 'active';
+			this.aDiv[obj.index].style.display = 'block';
+			this.iNow = obj.index;
+		}
+
+		Tab.prototype.autoplay = function(){
+			var This = this;
+			clearInterval(This.timer);
+			This.timer = setInterval(function(){
+				This.iNow++;
+				if (This.iNow == This.aInput.length){
+					This.iNow = 0;
+				}
+
+			for(var i=0; i<This.aInput.length; i++){				
+				This.aInput[i].className = '';
+				This.aDiv[i].style.display = 'none';
+			}
+
+			This.aInput[This.iNow].className = 'active';
+			This.aDiv[This.iNow].style.display = 'block';
+
+			}, 3000);
+		}
+		
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<input type="button" value="Tab1" class="active">
+		<input type="button" value="Tab2">
+		<input type="button" value="Tab3">
+		<div style="display: block;">第一页内容</div>
+		<div>第二页内容</div>
+		<div>第三页内容</div>
+	</div>
+
+	<div id="div2">
+		<input type="button" value="Tab1" class="active">
+		<input type="button" value="Tab2">
+		<input type="button" value="Tab3">
+		<div style="display: block;">第一页内容</div>
+		<div>第二页内容</div>
+		<div>第三页内容</div>
+	</div>
+</body>
+</html>
