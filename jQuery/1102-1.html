@@ -8,45 +8,30 @@
 		ul {border: 1px solid #000; position: absolute; top: 0; left: 300px; line-height: 30px; width: 200px; margin-top: 10px; display: none;}
 		li {list-style: none; padding: 5px; cursor: pointer;}
 		li.active {background: #88D7AD; color: #fff; font-weight: bold;}
-		#container {width: 300px; position: fixed;}
+		#container {width: 300px; margin: 0 auto; padding: 300px 0;}
 		.block {width: 100%; -height: 30px; line-height: 30px; position: relative; margin: 10px 0;}
 		.content {width: 200px; min-height: 30px; border: 1px solid #000; display: inline-block; vertical-align: middle;  margin: 10px; cursor: no-drop; font-size: 20px; border: 1px solid blue;}
 		input {width: 30px; height: 30px;}
 		#container span {display: inline-block; line-height: 30px; font-size: 14px; padding: 0 5px; margin: 0 3px; cursor: move;}
 		#container span img {position: absolute; cursor: pointer;}
 		#container li a {display: block;}
-		body span {font-size: 14px; line-height: 30px; cursor: move;}
+		body span {cursor: text;}
+		body div span {font-size: 14px; line-height: 30px; cursor: move;}
 	</style>
 	<script src="jquery-1.11.1.js"></script>
 	<script>
 		$(function(){
 
 			var $container = $('#container');
-
-			//将#container上下居中放在页面上
-			function centerContainer(){
-				$container.css({
-					top: ($(window).height() - $container.outerHeight())/2,
-					left: ($(window).width() - $container.outerWidth())/2
-				})
-			}
-			
-			centerContainer();
-			$(window).on('resize', centerContainer);
-
 			var ul1data = ['第一行内容', '第二行内容', '第三行内容'];
 			var ul2data = ['<a href="javascript:">全选</a>', '第1行', '第2行', '第3行', '第4行', '第5行', '第6行', '第7行', '第8行', '第9行', '第10行', '第11行', '第12行', '第13行'];
 			var ul3data = ['<a href="javascript:">全选</a>', '第a行', '第b行', '第c行', '第d行', '第e行', '第f行', '第g行', '第h行', '第i行'];
 			var $box1 = $('#box1');
-			var $addBtn1 = $box1.siblings('input[value="+"]');
 			var $box2 = $('#box2');
-			var $addBtn2 = $box2.siblings('input[value="+"]');
 			var $box3 = $('#box3');
-			var $addBtn3 = $box3.siblings('input[value="+"]');
-			var disX = 0;
-			var disY = 0;
+			var $allList = null;
 
-			//动态生成弹窗的函数
+			//自动生成弹出列表数据，一开始弹出列表是隐藏的
 			function createUl(box, data){
 				var $ul = $('<ul>');
 				$.each(data, function(i, val){
@@ -54,20 +39,22 @@
 					$li.appendTo($ul);
 				})
 				$ul.appendTo(box.parent());
-				return $ul;
 			}
+			createUl($box1, ul1data);
+			createUl($box2, ul2data);
+			createUl($box3, ul3data);
 
-			var $pop1 = createUl($box1, ul1data);
-			var $pop2 = createUl($box2, ul2data);
-			var $pop3 = createUl($box3, ul3data);
+			$allList = $container.find('ul');
 
-			//点击加号，显示对应弹窗，隐藏其他弹窗
+			//点击加号按钮，弹出列表的操作
 			$container.find('input[value="+"]').each(function(){
 				$(this).on('click', function(){
-					var $pop = $(this).parent().find('ul');
+					var $pop = $(this).parent().find('ul'); 
 					var disY = null;
-					$container.find('ul').hide();
-					$pop.show();
+					$allList.hide(); //隐藏所有列表
+					$pop.show(); //对应列表显示
+
+					//如果对应列表超出可视区，则运动上来
 					disY = $(document).scrollTop() + $(window).height() - $pop.offset().top - $pop.outerHeight();
 					if( disY < 0 ) {
 						$pop.animate({
@@ -78,24 +65,29 @@
 				})
 			})
 
+			//点击document，隐藏并归位列表
 			$(document).on('click', function(){
-				$container.find('ul').hide().css('top', '0');
+				$allList.hide().css('top', '0');
 			})
 
-			//第一个弹窗中的点击效果
-			$pop1.find('li').on('click', function(){
-				$(this).siblings().attr('class', '');
-				$box1.empty();
-			})
-			//三个弹窗中点击各行的效果
-			$container.find('ul').on('click', 'li', function(){
+			//三个列表中的li被点击的操作
+			$allList.on('click', 'li', function(){
 				var This = this;
+
+				//如果点的是第一个弹出列表的话，因为是单选，所以要清空一下其余li的状态
+				if($(this).parent().siblings('div').attr('id') == 'box1'){
+					$(this).siblings().attr('class', '');
+				$box1.empty();
+				}
+
+				//当前被点的li变换状态
 				$(this).toggleClass('active');
+				//如果当前li被选中，就加到方框中，并且在span的index属性中记录下该li在列表中的index
 				if($(this).attr('class') == 'active') {
 					$span = $('<span>' + $(this).html() + '<img src="1102-img/delete.png"></span>');
 					$span.appendTo($(this).parent().siblings('div'));
 					$span.prop('index', $(this).index());
-				} else {
+				} else { //如果从选中变成未选中，就在方框中遍历span，将对应index的数据删除
 					$(this).parent().siblings('div').find('span').each(function(){
 						if($(this).prop('index') == $(This).index()){
 							$(this).remove();
@@ -105,7 +97,7 @@
 				return false;					
 			})
 
-			//三个box中点击删除图片的动作
+			//三个方框中，点击删除图片时的操作
 			$container.find('.content').each(function(){
 				var $This = $(this);
 				$(this).on('click', 'img', function(){
@@ -118,21 +110,20 @@
 
 			//点击全选的操作
 			function selectAll(){
-				var $lis = $(this).parent().siblings();
-				var $box = $(this).closest('div').find('div');
+				var $lis = $(this).parent().siblings(); //找到处全选以外的所有li
+				var $box = $(this).closest('div').find('div'); //找到对应的方框
 				$lis.attr('class', 'active');
 				$box.empty();
-				$lis.each(function(){
+				$lis.each(function(){ //遍历其余li的值，加到方框中，同时给添加进去的span添加index属性值
 					$span = $('<span>' + $(this).html() + '<img src="1102-img/delete.png"></span>');
 					$box.append($span);
 					$span.prop('index', $(this).index());
 				})
 				return false;
 			}
-			$pop2.on('click', 'a', selectAll);
-			$pop3.on('click', 'a', selectAll);
+			$allList.on('click', 'a', selectAll);
 
-			//点击减号按钮的操作，全部取消选择
+			//点击减号按钮的操作，取消全部选择
 			$container.find('input[value="-"]').each(function(){
 				$(this).on('click', function(){
 					$(this).siblings('div').empty();
@@ -145,8 +136,7 @@
 			$box2.add($box3).on('mousedown', 'span', function(ev){
 				var This = this;
 				var $closestSpan = null;
-				disX = ev.pageX - $(this).offset().left;
-                disY = ev.pageY - $(this).offset().top;
+
 				$(this).css('opacity', '0.5');
 				var $clone = $(this).clone();
 				$clone.html($(this).text());
@@ -164,25 +154,22 @@
 					})
 
 					
-					var minDistance = 1000;
+					var minDistance = 1000; //minDistance用于记录鼠标与span左侧中点的最短距离，一开始随便写了一个大一点的数值
 					$(This).siblings('span').each(function(){
-						var distance = Math.pow((ev.pageX - $(this).offset().left), 2) + Math.pow((ev.pageY - $(this).offset().top - $(this).outerWidth()/2), 2);
+						var distance = Math.pow((ev.pageX - $(this).offset().left), 2) + Math.pow((ev.pageY - $(this).offset().top - $(this).outerWidth()/2), 2); //计算出鼠标到各个span左侧中点的距离（这里其实是这个距离的乘方）
 						if(distance < minDistance){
 							minDistance = distance;
-							$closestSpan = $(this);
+							$closestSpan = $(this); //最终把最小的那个span记录到$closestSpan里面
 						}
-
 					})
 
-					$separator.appendTo('body').css({
+					$separator.appendTo('body').css({ //找到$closestSpan之后，把竖线放到$closestSpan的左侧位置
 						top: $closestSpan.offset().top,
 						left: $closestSpan.offset().left - 2
 					});
-
-
 				})
 				$(document).on('mouseup.drag', function(){
-					$(this).off('.drag');
+					$(document).off('.drag');
 					$(This).css('opacity', '1');
 					$clone.remove();
 					$separator.remove();
