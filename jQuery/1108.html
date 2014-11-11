@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>塔防游戏</title>
+	<style>
+		html, body { margin: 0; padding: 0; }
+		#map { position: relative; margin: 100px auto; border: 5px solid gray;}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function(){
+
+			var row = 8;
+			var col = 15;
+			var blockSize = 50;
+
+			createMap();
+
+			function createMap(){
+				var $block = null;
+				initMap();
+				createPath();
+			}
+
+			function initMap(){
+				$('#map').css({
+					'width': blockSize*col,
+					'height': blockSize*row
+				});
+				for(var i=0; i<row*col; i++){
+					$('<div style="position: absolute; top: ' + (Math.floor(i/col))*blockSize +'px; left: ' + (i%col)*blockSize+ 'px; width: ' + blockSize + 'px; height: ' + blockSize + 'px; background: black;"></div>').appendTo($('#map'));
+				}
+			}
+
+			function createPath(){
+				$block = $('#map').find('div');
+				$block.eq(0).css('background', '#fff');
+			}
+			
+
+		});
+	</script>
+</head>
+<body>
+	<div id="map"></div>
+</body>
+</html>
