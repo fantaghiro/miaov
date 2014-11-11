@@ -5,14 +5,14 @@
 	<title>塔防游戏</title>
 	<style>
 		html, body { margin: 0; padding: 0; }
-		#map { position: relative; margin: 100px auto; border: 5px solid gray;}
+		#map { position: relative; margin: 100px auto; border: 5px solid gray; color: yellow; text-align: center; line-height: 50px;}
 	</style>
 	<script src="jquery-1.11.1.js"></script>
 	<script>
 		$(function(){
 
-			var row = 8;
-			var col = 15;
+			var row = 3;
+			var col = 7;
 			var blockSize = 50;
 
 			createMap();
@@ -29,13 +29,25 @@
 					'height': blockSize*row
 				});
 				for(var i=0; i<row*col; i++){
-					$('<div style="position: absolute; top: ' + (Math.floor(i/col))*blockSize +'px; left: ' + (i%col)*blockSize+ 'px; width: ' + blockSize + 'px; height: ' + blockSize + 'px; background: black;"></div>').appendTo($('#map'));
+					$('<div style="position: absolute; top: ' + (Math.floor(i/col))*blockSize +'px; left: ' + (i%col)*blockSize+ 'px; width: ' + blockSize + 'px; height: ' + blockSize + 'px; background: black;">' + i + '</div>').appendTo($('#map'));
 				}
 			}
 
 			function createPath(){
 				$block = $('#map').find('div');
-				$block.eq(0).css('background', '#fff');
+				$block.eq(0).attr('class', 'path').css('background', '#fff');
+				findVacantPlaces($block.eq(0));
+			}
+			function findVacantPlaces($div){ //针对每一个div，找到与它相邻的可以设置炮塔或者作为路径的位置
+				var arr = [];
+				var idx = $div.index();
+				$block.each(function(){
+					var curIdx = $(this).index();
+					if(curIdx == idx - col || curIdx == idx + 1 || curIdx == idx + col || curIdx == idx - 1 ) {
+						arr.push(curIdx);
+					}
+				})
+				console.log(arr);
 			}
 			
 
