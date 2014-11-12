@@ -5,44 +5,196 @@
 	<title>塔防游戏</title>
 	<style>
 		html, body { margin: 0; padding: 0; }
-		#map { position: relative; margin: 100px auto; border: 5px solid gray;}
+		#map { position: relative; margin: 20px auto; border: 5px solid gray; color: gray; text-align: center; line-height: 50px; font-family: '微软雅黑'; background: #000;}
 	</style>
 	<script src="jquery-1.11.1.js"></script>
 	<script>
 		$(function(){
 
-			var row = 8;
-			var col = 15;
+			var row = 10;
+			var col = 10;
+			var totalBlocks = row*col;
 			var blockSize = 50;
+			var startIdx = 2;
+			var $start = null;
+			var $blocks = null;
+			var arrPath = [];
 
-			createMap();
+			createMapBg();
 
-			function createMap(){
-				var $block = null;
-				initMap();
+			$('#createMap').on('click', function(){
+				arrPath = [];
+
+				row = parseInt($('#row').val());
+				col = parseInt($('#col').val());
+				totalBlocks = row * col;
+
+				createMapBg();
 				createPath();
-			}
+				setFire();
 
-			function initMap(){
+			});
+
+			
+
+			function createMapBg(){
+				var str = '';
 				$('#map').css({
 					'width': blockSize*col,
 					'height': blockSize*row
 				});
-				for(var i=0; i<row*col; i++){
-					$('<div style="position: absolute; top: ' + (Math.floor(i/col))*blockSize +'px; left: ' + (i%col)*blockSize+ 'px; width: ' + blockSize + 'px; height: ' + blockSize + 'px; background: black;"></div>').appendTo($('#map'));
+				for(var i=0; i<totalBlocks; i++){
+					str += '<div style="position: absolute; top: ' + (Math.floor(i/col))*blockSize +'px; left: ' + (i%col)*blockSize+ 'px; width: ' + blockSize + 'px; height: ' + blockSize + 'px; "></div>';
+					$('#map').html(str);
 				}
 			}
 
 			function createPath(){
-				$block = $('#map').find('div');
-				$block.eq(0).css('background', '#fff');
+				$blocks = $('#map').find('div');
+				$start = $blocks.eq(startIdx);
+
+				//绘制起始点
+				$start.attr('class', 'path').css('background', '#e0e0e0').text('起');
+
+				//用递归绘制路径
+				paintNextBlock($start);
+
+				function paintNextBlock($div){
+					if($div.index() >= totalBlocks - col){
+						if($div.prev().index() >= totalBlocks - col){
+							$div.prev().attr('class', 'cannon');
+						}
+						if($div.next().index() < totalBlocks){
+							$div.next().attr('class', 'cannon');
+						}
+
+						//绘制终点
+						$div.css('background', '#e0e0e0').text('终');
+						return false;
+					}
+					var json = findBlocks($div);
+					var $nextPath = json.path;
+					var nextCannon = json.cannon;
+
+					if($.isEmptyObject(json)){
+						$('#createMap').trigger('click');
+						return false;
+					}
+
+					$nextPath.attr('class', 'path').css('background', '#fff');
+					$.each(nextCannon, function(i, val){
+						val.attr('class', 'cannon');
+					})
+
+					$div = json.path;
+					paintNextBlock($div);
+					
+				}
+				
+			}
+
+			function findBlocks($div){
+
+				var nearBlocks = [];
+				var json = {};
+				var side = null;
+				var direction = null;
+				
+				findAvailableBlocks();
+				function findAvailableBlocks(){
+					$blocks.each(function(){
+						var left = $(this).offset().left;
+						var top = $(this).offset().top;
+						var curLeft = $div.offset().left;
+						var curTop = $div.offset().top;
+						if ( ( ( (left == curLeft) && (Math.abs(top - curTop) == blockSize) )  || ( (top == curTop) && (Math.abs(left - curLeft) == blockSize) ) ) && ($(this).attr('class') != 'path') && ($(this).attr('class') != 'cannon')  ) {
+							nearBlocks.push($(this));
+						}
+					})
+				}
+
+				if(nearBlocks.length != 0) {
+					nearBlocks.sort(function(a, b){
+						return Math.random() - 0.5;
+					})
+					
+					json.path = nearBlocks.pop();
+					json.cannon = nearBlocks;
+
+					if(Math.abs(json.path.index() - $div.index()) == 1) {
+						side = '"left"' + ':';
+					} else {
+						side = '"top"' + ':';
+					}
+
+					if(json.path.index() > $div.index()) {
+						direction = '"+=' +  blockSize + '"';
+					} else {
+						direction = '"-=' +  blockSize + '"';
+					}
+
+					arrPath.push('{' + side + direction + '}');
+				}
+				return json;
+			}
+
+			function setFire(){
+				$('#map').delegate('.cannon', 'mouseover', function(){
+					$(this).css('background', 'green');
+				}).delegate('.cannon', 'mouseout', function(){
+						$(this).css('background', '#000');
+				})
+
+				$('#map').delegate('.cannon', 'click', function(){
+					
+					$(this).attr('class', 'setFire');
+					$(this).css('background', 'url("1108-img/pt1.jpg")');
+					
+				})
 			}
 			
+			$('#createMonster').on('click', function(){
+				createMonster();
 
+			}) 
+
+			function createMonster(){
+				var $monster = $('<img src="1108-img/gw1.jpg" class="monster" style="position: absolute;">');
+				$monster.css({
+					left: $start.css('left'),
+					top: $start.css('top')
+				}).appendTo($('#map'));
+
+				moveMonster();
+
+				function moveMonster(){
+					$.each(arrPath, function(i, val){
+						$monster.animate($.parseJSON(val), 600, 'linear', function(){
+							if(i == arrPath.length - 1){
+								alert('小妖怪闯进你家啦！');
+								$monster.siblings('img').stop(true);
+							}
+						});
+					})
+				}	
+
+			}
+	
 		});
 	</script>
 </head>
 <body>
+	<div id="toolbar">
+		<label for="">行数：</label><input type="text" name="row" value='6' id="row">
+		<br>
+		<label for="">列数：</label><input type="text" name="col" value='6' id="col">
+		<br>
+		<input type="button" value="200RMB" id="money">
+		<br>
+		<input type="button" value="生成地图" id="createMap">
+		<br>
+		<input type="button" value="生成小怪" id="createMonster">
+	</div>
 	<div id="map"></div>
 </body>
 </html>
